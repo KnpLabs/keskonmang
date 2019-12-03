@@ -25,8 +25,6 @@ $ make start
 and browse [http://localhost:3001/](http://localhost:3001/).
 
 ### Tests
-- [Jest](https://jestjs.io/)
-- [Test Renderer](https://reactjs.org/docs/test-renderer.html)
 
 To run the tests :
 ```bash
