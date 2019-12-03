@@ -3,6 +3,11 @@ import { connect } from 'react-redux'
 import { compose } from 'ramda'
 import { signOut } from './../../Redux/State/SignIn'
 
+// mapStateToProps :: State -> Props
+const mapStateToProps = state => ({
+  user: state.SignIn.user,
+})
+
 // mapDispatchToProps :: (Action * -> State) -> Props
 const mapDispatchToProps = dispatch => ({
   signOut: compose(dispatch, signOut),
@@ -10,6 +15,6 @@ const mapDispatchToProps = dispatch => ({
 
 // Menu :: Props -> React.Component
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(Menu)

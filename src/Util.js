@@ -1,4 +1,5 @@
 import { 
+  always,
   identity,
   pipe,
   prop,
@@ -12,6 +13,12 @@ import { of } from 'rxjs'
 export const createReducer = (initialState, handlers) =>
   (state = initialState, action = {}) =>
     propOr(identity, prop('type', action), handlers)(state, action)
+
+// logObservableError :: Observable Error -> () -> Observable
+export const logObservableError = () => catchError((err, source) => pipe(
+  tap(console.error),
+  always(source),
+)(err))
 
 // logObservableErrorAndTriggerAction :: Observable Error -> (() -> Action *) -> Observable
 export const logObservableErrorAndTriggerAction = action => catchError(

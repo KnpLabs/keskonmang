@@ -1,10 +1,21 @@
 import { ofType, combineEpics } from 'redux-observable'
 import { mergeMap, map, filter } from 'rxjs/operators'
-import { complement, isNil, pipe } from 'ramda'
-import { logObservableErrorAndTriggerAction } from './../Util'
+import { 
+  apply,
+  complement,
+  isNil,
+  pipe,
+  prop,
+} from 'ramda'
+import { 
+  logObservableErrorAndTriggerAction,
+  logObservableError,
+} from './../Util'
 import {
   SIGN_IN_BUTTON_MOUNTED,
+  SIGN_IN_SUCCESS,
   SIGN_OUT,
+  profileReceived,
   signInFailure,
   signInSuccess,
   signOutFailure,
@@ -49,7 +60,37 @@ export const signOutEpic = (action$, state$, { getGoogleApi }) =>
     logObservableErrorAndTriggerAction(signOutFailure)
   )
 
+// formatProfile :: (GoogleBasicProfile, GoogleAuthResponse) -> User
+const formatProfile = (gprofile, gresponse) => ({
+  token: gresponse.id_token,
+  name: gprofile.getName(),
+  giveName: gprofile.getGivenName(),
+  familyName: gprofile.getFamilyName(),
+  imageUrl: gprofile.getImageUrl(),
+  email: gprofile.getEmail(),
+})
+
+// https://developers.google.com/identity/sign-in/web/people
+// https://developers.google.com/identity/sign-in/web/backend-auth
+//
+// getBasicProfileEpic :: Epic -> Observable Action 
+export const getBasicProfileEpic = (action$, state$, { getGoogleApi }) =>
+  action$.pipe(
+    ofType(SIGN_IN_SUCCESS),
+    map(pipe(
+      prop('user'),
+      user => [
+        user.getBasicProfile(),
+        user.getAuthResponse()
+      ],
+      apply(formatProfile),
+      profileReceived,
+    )),
+    logObservableError(),
+  )
+
 export default combineEpics(
+  getBasicProfileEpic,
   signInEpic,
   signOutEpic,
 )
