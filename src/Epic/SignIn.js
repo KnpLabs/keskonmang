@@ -74,7 +74,7 @@ const formatProfile = (gprofile, gresponse) => ({
 // https://developers.google.com/identity/sign-in/web/backend-auth
 //
 // getBasicProfileEpic :: Epic -> Observable Action 
-export const getBasicProfileEpic = (action$, state$, { getGoogleApi }) =>
+export const getBasicProfileEpic = action$ =>
   action$.pipe(
     ofType(SIGN_IN_SUCCESS),
     map(pipe(
