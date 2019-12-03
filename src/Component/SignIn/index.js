@@ -20,6 +20,3 @@ export default connect(
   null,
   mapDispatchToProps,
 )(lifecycles)
-
-
-// export default SignIn

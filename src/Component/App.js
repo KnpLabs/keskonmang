@@ -1,12 +1,12 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import SignIn from './SignIn'
+import Firewall from './Firewall'
 
 export default ({
   store,
 }) =>
   <Provider store={store}>
-    <div>
-      <SignIn/>
-    </div>
+    <Firewall>
+      coucou
+    </Firewall>
   </Provider>
