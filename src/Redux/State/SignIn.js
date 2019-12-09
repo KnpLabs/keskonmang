@@ -17,6 +17,9 @@ export const SIGN_OUT = '@knp-keskonmange/SignIn/SIGN_OUT'
 export const SIGN_OUT_SUCCESS = '@knp-keskonmange/SignIn/SIGN_OUT_SUCCESS'
 export const SIGN_OUT_FAILURE = '@knp-keskonmange/SignIn/SIGN_OUT_FAILURE'
 export const PROFILE_RECEIVED = '@knp-keskonmange/SignIn/PROFILE_RECEIVED'
+export const CREATE_USER = '@knp-keskonmange/SignIn/CREATE_USER'
+export const USER_CREATED = '@knp-keskonmange/SignIn/USER_CREATED'
+export const USER_ALREADY_EXISTS = '@knp-keskonmange/SignIn/USER_ALREADY_EXISTS'
 
 // signInButtonMounted :: () -> Action
 export const signInButtonMounted = always({ type: SIGN_IN_BUTTON_MOUNTED })
@@ -54,6 +57,19 @@ export const profileReceived = profile => ({
   profile,
 })
 
+// createUser :: String -> Action
+export const createUser = token => ({
+  type: CREATE_USER,
+  token,
+})
+
+// userCreated :: () -> Action
+export const userCreated = always({ type: USER_CREATED })
+
+// userAlreadyExists :: () -> Action
+export const userAlreadyExists = always({ type: USER_ALREADY_EXISTS })
+
+// SignIn :: (State, Action *) -> State
 export default createReducer(INITIAL_STATE, {
   [SIGN_IN_SUCCESS]: state => ({
     ...state,

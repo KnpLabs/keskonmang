@@ -10,6 +10,7 @@ import {
 import { 
   logObservableErrorAndTriggerAction,
   logObservableError,
+  jsonStringify,
 } from './../Util'
 import {
   SIGN_IN_BUTTON_MOUNTED,
@@ -20,6 +21,9 @@ import {
   signInSuccess,
   signOutFailure,
   signOutSuccess,
+  PROFILE_RECEIVED,
+  userCreated,
+  userAlreadyExists,
 } from './../Redux/State/SignIn'
 
 // @see https://developers.google.com/identity/sign-in/web/build-button
@@ -89,7 +93,23 @@ export const getBasicProfileEpic = action$ =>
     logObservableError(),
   )
 
+// createUserEpic :: Epic -> Observable Action USER_CREATED USER_ALREADY_EXISTS
+export const createUserEpic = (action$, state$, { fetchApi }) => 
+  action$.pipe(
+    ofType(PROFILE_RECEIVED),
+    mergeMap(({ profile }) => fetchApi(
+      `/users/create`,
+      { 
+        method: 'POST',
+        body: jsonStringify({ id_token: profile.token })
+      }
+    )),
+    map(userCreated),
+    logObservableErrorAndTriggerAction(userAlreadyExists),
+  )
+
 export default combineEpics(
+  createUserEpic,
   getBasicProfileEpic,
   signInEpic,
   signOutEpic,
