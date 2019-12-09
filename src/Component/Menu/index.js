@@ -5,7 +5,7 @@ import { signOut } from './../../Redux/State/SignIn'
 
 // mapStateToProps :: State -> Props
 const mapStateToProps = state => ({
-  user: state.SignIn.user,
+  user: state.Session.user,
 })
 
 // mapDispatchToProps :: (Action * -> State) -> Props

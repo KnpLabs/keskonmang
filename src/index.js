@@ -8,10 +8,12 @@ import rootEpic from './Epic'
 import { default as mainReducer, debug } from './Redux/State'
 import { createFetchApi } from './FetchApi'
 
+const getGoogleApi = () => window.gapi
+
 const epicMiddleware = createEpicMiddleware({
   dependencies: {
-    getGoogleApi: () => window.gapi,
-    fetchApi: createFetchApi(fetch),
+    getGoogleApi,
+    fetchApi: createFetchApi(fetch, getGoogleApi),
   },
 })
 

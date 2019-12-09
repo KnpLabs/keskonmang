@@ -1,7 +1,6 @@
 import { ofType, combineEpics } from 'redux-observable'
 import { mergeMap, map, filter } from 'rxjs/operators'
-import { 
-  apply,
+import {
   complement,
   isNil,
   pipe,
@@ -10,21 +9,19 @@ import {
 import { 
   logObservableErrorAndTriggerAction,
   logObservableError,
-  jsonStringify,
 } from './../Util'
 import {
   SIGN_IN_BUTTON_MOUNTED,
   SIGN_IN_SUCCESS,
   SIGN_OUT,
-  profileReceived,
   signInFailure,
   signInSuccess,
   signOutFailure,
   signOutSuccess,
-  PROFILE_RECEIVED,
-  userCreated,
-  userAlreadyExists,
 } from './../Redux/State/SignIn'
+import {
+  profileReceived
+} from './../Redux/State/Session'
 
 // @see https://developers.google.com/identity/sign-in/web/build-button
 // 
@@ -64,9 +61,8 @@ export const signOutEpic = (action$, state$, { getGoogleApi }) =>
     logObservableErrorAndTriggerAction(signOutFailure)
   )
 
-// formatProfile :: (GoogleBasicProfile, GoogleAuthResponse) -> User
-const formatProfile = (gprofile, gresponse) => ({
-  token: gresponse.id_token,
+// formatProfile :: GoogleBasicProfile -> User
+const formatProfile = gprofile => ({
   name: gprofile.getName(),
   giveName: gprofile.getGivenName(),
   familyName: gprofile.getFamilyName(),
@@ -83,33 +79,14 @@ export const getBasicProfileEpic = action$ =>
     ofType(SIGN_IN_SUCCESS),
     map(pipe(
       prop('user'),
-      user => [
-        user.getBasicProfile(),
-        user.getAuthResponse()
-      ],
-      apply(formatProfile),
+      user => user.getBasicProfile(),
+      formatProfile,
       profileReceived,
     )),
     logObservableError(),
   )
 
-// createUserEpic :: Epic -> Observable Action USER_CREATED USER_ALREADY_EXISTS
-export const createUserEpic = (action$, state$, { fetchApi }) => 
-  action$.pipe(
-    ofType(PROFILE_RECEIVED),
-    mergeMap(({ profile }) => fetchApi(
-      `/users/create`,
-      { 
-        method: 'POST',
-        body: jsonStringify({ id_token: profile.token })
-      }
-    )),
-    map(userCreated),
-    logObservableErrorAndTriggerAction(userAlreadyExists),
-  )
-
 export default combineEpics(
-  createUserEpic,
   getBasicProfileEpic,
   signInEpic,
   signOutEpic,
