@@ -1,7 +1,6 @@
 import { ofType, combineEpics } from 'redux-observable'
 import { mergeMap, map, filter } from 'rxjs/operators'
-import { 
-  apply,
+import {
   complement,
   isNil,
   pipe,
@@ -15,12 +14,14 @@ import {
   SIGN_IN_BUTTON_MOUNTED,
   SIGN_IN_SUCCESS,
   SIGN_OUT,
-  profileReceived,
   signInFailure,
   signInSuccess,
   signOutFailure,
   signOutSuccess,
 } from './../Redux/State/SignIn'
+import {
+  profileReceived
+} from './../Redux/State/Session'
 
 // @see https://developers.google.com/identity/sign-in/web/build-button
 // 
@@ -60,9 +61,8 @@ export const signOutEpic = (action$, state$, { getGoogleApi }) =>
     logObservableErrorAndTriggerAction(signOutFailure)
   )
 
-// formatProfile :: (GoogleBasicProfile, GoogleAuthResponse) -> User
-const formatProfile = (gprofile, gresponse) => ({
-  token: gresponse.id_token,
+// formatProfile :: GoogleBasicProfile -> User
+const formatProfile = gprofile => ({
   name: gprofile.getName(),
   giveName: gprofile.getGivenName(),
   familyName: gprofile.getFamilyName(),
@@ -79,11 +79,8 @@ export const getBasicProfileEpic = action$ =>
     ofType(SIGN_IN_SUCCESS),
     map(pipe(
       prop('user'),
-      user => [
-        user.getBasicProfile(),
-        user.getAuthResponse()
-      ],
-      apply(formatProfile),
+      user => user.getBasicProfile(),
+      formatProfile,
       profileReceived,
     )),
     logObservableError(),

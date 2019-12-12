@@ -1,7 +1,6 @@
 import {
   default as reducer,
   INITIAL_STATE,
-  profileReceived,
   signOutFailure,
   signOutSuccess,
   signInFailure,
@@ -58,17 +57,6 @@ describe('Redux :: State :: SignIn', () => {
     ).toEqual({
       ...INITIAL_STATE,
       signOutError: true,
-    })
-  })
-
-  it('reduces profileReceived action', () => {
-    expect(
-      reducer(INITIAL_STATE, profileReceived({ name: 'knpeer' }))
-    ).toEqual({
-      ...INITIAL_STATE,
-      user: {
-        name: 'knpeer',
-      },
     })
   })
 })

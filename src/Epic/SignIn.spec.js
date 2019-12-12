@@ -1,5 +1,6 @@
 import * as epic from './SignIn'
 import * as reducer from './../Redux/State/SignIn'
+import * as session from './../Redux/State/Session'
 import { ActionsObservable } from 'redux-observable'
 
 describe('Epic :: SignIn :: signInEpic', () => {
@@ -63,18 +64,14 @@ describe('Epic :: SignIn :: getBasicProfileEpic', () => {
         getImageUrl: () => 'http://www.noop.org/img.jpg',
         getEmail: () => 'test@knpeer.com'
       }),
-      getAuthResponse: () => ({
-        id_token: 'a google token',
-      }),
     }
     const action$ = ActionsObservable.of(reducer.signInSuccess(userMock))
 
     epic.getBasicProfileEpic(action$)
       .toPromise(Promise)
       .then(action => {
-        expect(action.type).toEqual(reducer.PROFILE_RECEIVED)
+        expect(action.type).toEqual(session.PROFILE_RECEIVED)
         expect(action.profile).toEqual({
-          token: 'a google token',
           name: 'KNP Labs',
           giveName: 'KNP',
           familyName: 'Labs',

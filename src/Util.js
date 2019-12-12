@@ -29,3 +29,6 @@ export const logObservableErrorAndTriggerAction = action => catchError(
     ),
   )(err)
 )
+
+// jsonStringify :: Object -> String
+export const jsonStringify = a => JSON.stringify(a)

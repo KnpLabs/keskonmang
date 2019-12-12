@@ -1,6 +1,7 @@
 import { tap, pipe } from 'ramda'
 import { combineReducers } from 'redux'
 import SignIn from './SignIn'
+import Session from './Session'
 
 // debug :: ((State, Action *) -> State) -> State -> Action * -> State
 export const debug = reducer => (state = reducer(), action = {}) => pipe(
@@ -18,5 +19,6 @@ export const debug = reducer => (state = reducer(), action = {}) => pipe(
 
 // State :: (State, Action *) -> State
 export default combineReducers({
+  Session,
   SignIn,
 })
