@@ -1,9 +1,15 @@
 import * as Module from './index'
 
 describe('Redux :: Module', () => {
-  it('contains the Dog state', () => {
-    const state = Module.default();
+  it('contains the SignIn state', () => {
+    const state = Module.default()
 
-    expect(state.Dog).toBeDefined();
-  });
+    expect(state.SignIn).toBeDefined()
+  })
+
+  it('contains the Session state', () => {
+    const state = Module.default()
+
+    expect(state.Session).toBeDefined()
+  })  
 })
