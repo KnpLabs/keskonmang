@@ -1,5 +1,5 @@
 import { ofType, combineEpics } from 'redux-observable'
-import { logObservableError, shuffle } from './../Util'
+import { logObservableError, shuffle, getRandomElementFromArray } from './../Util'
 import {
   complement,
   isNil,
@@ -64,8 +64,9 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
     )),
     map(pipe(
       defaultTo([]),
-      shuffle,
-      head,
+      // shuffle,
+      // head,
+      getRandomElementFromArray,
       restaurantReceived,
     )),
     logObservableError(),
