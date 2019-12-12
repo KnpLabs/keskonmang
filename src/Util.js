@@ -1,4 +1,4 @@
-import { 
+import {
   always,
   identity,
   pipe,
@@ -32,3 +32,16 @@ export const logObservableErrorAndTriggerAction = action => catchError(
 
 // jsonStringify :: Object -> String
 export const jsonStringify = a => JSON.stringify(a)
+
+// this fn use the Fisher-Yates algorithm
+//
+// @see https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
+//
+// shuffle :: [Any] -> [Any]
+export const shuffle = a => {
+  for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}

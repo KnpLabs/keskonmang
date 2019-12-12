@@ -1,19 +1,22 @@
 import RestaurantWheel from './RestaurantWheel'
 import { connect } from 'react-redux'
 import { handleAddress, getCoordinates } from '../../Redux/State/RestaurantWheel'
+import { compose, path, pipe, tap } from 'ramda'
 
 // mapStateToProps :: State -> Props
 const mapStateToProps = state => ({
-  address: state.address,
+  address: state.RestaurantWheel.address,
+  restaurant: state.RestaurantWheel.restaurant,
 })
 
 // mapDispatchToProps :: (Action * -> State) -> Props
 const mapDispatchToProps = dispatch => ({
-    handleChange: e => dispatch(handleAddress(e.target.value)),
-    submitForm: e => { 
-        e.preventDefault(); 
-        dispatch(getCoordinates());
-    }
+  handleChange: compose(dispatch, handleAddress, path(['target', 'value'])),
+  submitForm: pipe(
+    tap(e => e.preventDefault()),
+    getCoordinates,
+    dispatch,
+  ),
 })
 
 // RestaurantWheel :: Props -> React.Component

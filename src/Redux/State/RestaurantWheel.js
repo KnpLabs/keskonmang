@@ -1,14 +1,17 @@
 import { createReducer } from './../../Util'
+import { always } from 'ramda'
 
 // initial stare
 export const INITIAL_STATE = {
-  address: null,
+  address: '',
+  restaurant: null,
 }
 
 // action types
 export const HANDLE_ADDRESS = '@knp-keskonmange/RestaurantWheel/HANDLE_ADDRESS'
 export const GET_COORDINATES = '@knp-keskonmange/RestaurantWheel/GET_COORDINATES'
 export const GET_RESTAURANT = '@knp-keskonmange/RestaurantWheel/GET_RESTAURANT'
+export const RESTAURANT_RECEIVED = '@knp-keskonmange/RestaurantWheel/RESTAURANT_RECEIVED'
 
 // handleAddress :: String -> Action
 export const handleAddress = address => ({
@@ -16,14 +19,29 @@ export const handleAddress = address => ({
   address,
 })
 
-// getCoordinates :: ()) -> Action
-export const getCoordinates = () => ({
-  type: GET_COORDINATES,
-})
-// getRestaurant :: ()) -> Action
-export const getRestaurant = coordinates => ({
+// getCoordinates :: () -> Action
+export const getCoordinates = always({ type: GET_COORDINATES })
+
+// getRestaurant :: (Double, Double) -> Action
+export const getRestaurant = (latitude, longitude) => ({
   type: GET_RESTAURANT,
-  coordinates: coordinates
+  latitude,
+  longitude,
+})
+
+// @type Restaurant = {
+//  categories :: [Category],
+//  hasPerk :: Boolean,
+//  id :: String,
+//  location :: Location,
+//  name :: String,
+//  referralId :: String,
+// }
+//
+// restaurantReceived :: Restaurant -> Action
+export const restaurantReceived = restaurant => ({
+  type: RESTAURANT_RECEIVED,
+  restaurant,
 })
 
 // Session :: (State, Action *) -> State
@@ -32,4 +50,9 @@ export default createReducer(INITIAL_STATE, {
     ...state,
     address: address,
   }),
+
+  [RESTAURANT_RECEIVED]: (state, { restaurant }) => ({
+    ...state,
+    restaurant,
+  })
 })
