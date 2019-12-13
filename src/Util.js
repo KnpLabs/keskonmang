@@ -36,9 +36,9 @@ export const logObservableErrorAndTriggerAction = action => catchError(
 export const jsonStringify = a => JSON.stringify(a)
 
 // getRandomElementFromArray :: [Any] -> Any
-export const getRandomElementFromArray = a => pipe(
+export const getRandomElementFromArray = array => pipe(
   length,
   multiply(Math.random()),
   Math.floor,
-  k => a[k],
-)(a)
+  key => array[key],
+)(array)

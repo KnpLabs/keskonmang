@@ -1,5 +1,5 @@
 import { ofType, combineEpics } from 'redux-observable'
-import { logObservableError, shuffle, getRandomElementFromArray } from './../Util'
+import { logObservableError, getRandomElementFromArray } from './../Util'
 import {
   complement,
   isNil,
@@ -9,7 +9,6 @@ import {
   apply,
   join,
   defaultTo,
-  head,
 } from 'ramda'
 import {
   filter,
@@ -49,7 +48,7 @@ export const getCoordinatesEpic = (action$, state$, { getHerePlatform }) =>
     logObservableError(),
   )
 
-// getRestaurantEpic :: Epic -> Observable Action GET_RESTAURANT
+// getRestaurantEpic :: Epic -> Observable Action RESTAURANT_RECEIVED
 export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
   action$.pipe(
     ofType(GET_RESTAURANT),
@@ -64,8 +63,6 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
     )),
     map(pipe(
       defaultTo([]),
-      // shuffle,
-      // head,
       getRandomElementFromArray,
       restaurantReceived,
     )),
