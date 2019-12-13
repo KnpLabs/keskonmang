@@ -16,6 +16,7 @@ export const GET_COORDINATES = '@knp-keskonmange/RestaurantWheel/GET_COORDINATES
 export const COORDINATES_RECEIVED = '@knp-keskonmange/RestaurantWheel/COORDINATES_RECEIVED'
 export const GET_RESTAURANT = '@knp-keskonmange/RestaurantWheel/GET_RESTAURANT'
 export const RESTAURANT_RECEIVED = '@knp-keskonmange/RestaurantWheel/RESTAURANT_RECEIVED'
+export const RESTAURANT_DETAILS_RECEIVED = '@knp-keskonmange/RestaurantWheel/RESTAURANT_DETAILS_RECEIVED'
 export const BACK_TO_SEARCH = '@knp-keskonmange/RestaurantWheel/BACK_TO_SEARCH'
 
 // handleAddress :: String -> Action
@@ -37,7 +38,13 @@ export const coordinatesReceived = (latitude, longitude) => ({
 // getRestaurant :: () -> Action
 export const getRestaurant = always({ type: GET_RESTAURANT })
 
-// @type Restaurant = {
+// restaurantReceived :: String -> Action
+export const restaurantReceived = id => ({
+  type: RESTAURANT_RECEIVED,
+  id,
+})
+
+// @type VenueDetails = {
 //  categories :: [Category],
 //  hasPerk :: Boolean,
 //  id :: String,
@@ -46,9 +53,9 @@ export const getRestaurant = always({ type: GET_RESTAURANT })
 //  referralId :: String,
 // }
 //
-// restaurantReceived :: Restaurant -> Action
-export const restaurantReceived = restaurant => ({
-  type: RESTAURANT_RECEIVED,
+// restaurantDetailsReceived :: VenueDetails -> Action
+export const restaurantDetailsReceived = restaurant => ({
+  type: RESTAURANT_DETAILS_RECEIVED,
   restaurant,
 })
 
@@ -78,7 +85,7 @@ export default createReducer(INITIAL_STATE, {
     loading: true,
   }),
 
-  [RESTAURANT_RECEIVED]: (state, { restaurant }) => ({
+  [RESTAURANT_DETAILS_RECEIVED]: (state, { restaurant }) => ({
     ...state,
     loading: false,
     restaurant,

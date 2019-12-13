@@ -25,7 +25,7 @@ export default ({
 
       {restaurant.contact &&
         <p className="phone">
-          {restaurant.contact.phone}
+          {restaurant.contact.formattedPhone}
         </p>
       }
       {restaurant.url &&

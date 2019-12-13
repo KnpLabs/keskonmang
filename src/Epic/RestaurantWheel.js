@@ -9,6 +9,7 @@ import {
   apply,
   join,
   defaultTo,
+  prop,
 } from 'ramda'
 import {
   filter,
@@ -20,10 +21,13 @@ import {
   COORDINATES_RECEIVED,
   GET_COORDINATES,
   GET_RESTAURANT,
+  RESTAURANT_RECEIVED,
   coordinatesReceived,
   getRestaurant,
+  restaurantDetailsReceived,
   restaurantReceived,
 } from './../Redux/State/RestaurantWheel'
+import RestaurantMock from './RestaurantMock'
 
 // getCoordinatesEpic :: Epic -> Observable Action GET_RESTAURANT
 export const getCoordinatesEpic = (action$, state$, { getHerePlatform }) =>
@@ -75,12 +79,32 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
     map(pipe(
       defaultTo([]),
       getRandomElementFromArray,
+      prop('id'),
       restaurantReceived,
     )),
     logObservableError(),
   )
-  export default combineEpics(
-    getCoordinatesEpic,
-    pipeCoordinatesToRestaurantEpic,
-    getRestaurantEpic,
+
+// getRestaurantDetails :: Epic -> Observable Action RESTAURANT_DETAILS_RECEIVED
+export const getRestaurantDetails = (action$, state$, { fetchApi }) =>
+  action$.pipe(
+    ofType(RESTAURANT_RECEIVED),
+    // mergeMap(action => fetchApi(
+    //   `/venues/${action.id}`,
+    //   {
+    //     method: 'GET',
+    //   }
+    // )),
+    //
+    // use this instead of the above to avoid torching your credits when in dev env
+    map(() => RestaurantMock),
+    map(restaurantDetailsReceived),
+    logObservableError(),
   )
+
+export default combineEpics(
+  getCoordinatesEpic,
+  pipeCoordinatesToRestaurantEpic,
+  getRestaurantEpic,
+  getRestaurantDetails,
+)
