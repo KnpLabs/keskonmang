@@ -1,4 +1,5 @@
 import React from 'react'
+import '../../Style/RestaurantWheel.css'
 
 // RestaurantWheel :: Props -> React.Component
 export default ({
@@ -6,17 +7,17 @@ export default ({
   handleChange,
   address,
 }) =>
-  <div>
-    <h1>Qu'est ce qu'on mange ce midi ?</h1>
-    <p>Trouve un resto' proche de toi !</p>
+  <div className="restaurant-wheel">
+    <h1 className="title">Trouve un resto' proche de toi !</h1>
     <form onSubmit={submitForm}>
       <label>Adresse</label>
       <input
         type="text"
         name="address"
+        className="address-input"
         onChange={handleChange}
         value={address}
       />
-      <button>Qu'est ce qu'on mange ?</button>
+      <button className="submit-address">Qu'est ce qu'on mange ?</button>
     </form>
   </div>

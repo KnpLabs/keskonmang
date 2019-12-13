@@ -2,6 +2,7 @@
   "name": "knp-keskonmange",
   "version": "0.1.0",
   "dependencies": {
+    "bulma": "^0.8.0",
     "ramda": "^0.26.1",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
