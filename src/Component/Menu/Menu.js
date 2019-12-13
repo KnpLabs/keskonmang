@@ -5,7 +5,7 @@ export default ({
   signOut,
   user,
 }) => 
-  <nav className="hidden">
+  <nav>
     <ul>
       <li>
         {(user && user.imageUrl && user.name) &&
