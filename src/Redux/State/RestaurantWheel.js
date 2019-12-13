@@ -74,11 +74,6 @@ export default createReducer(INITIAL_STATE, {
     address: address,
   }),
 
-  [GET_COORDINATES]: state => ({
-    ...state,
-    loading: true,
-  }),
-
   [COORDINATES_RECEIVED]: (state, { latitude, longitude }) => ({
     ...state,
     latitude,

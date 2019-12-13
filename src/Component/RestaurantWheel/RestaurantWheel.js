@@ -6,9 +6,10 @@ export default ({
   submitForm,
   handleChange,
   address,
+  loading,
 }) =>
   <div className="restaurant-wheel">
-    <h1 className="title">Trouve un resto' proche de toi !</h1>
+    <h1 className="title">Trouves un resto' proche de toi !</h1>
     <form onSubmit={submitForm}>
       <label>Adresse</label>
       <input
@@ -18,6 +19,10 @@ export default ({
         onChange={handleChange}
         value={address}
       />
-      <button className="submit-address">Qu'est ce qu'on mange ?</button>
+      <button
+        className={`submit-address ${address.length > 3 ? 'ready' : ''} button ${loading ? 'is-loading' : ''}`}
+      >
+        Qu'est ce qu'on mange ?
+      </button>
     </form>
   </div>

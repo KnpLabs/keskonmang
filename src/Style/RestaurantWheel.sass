@@ -32,8 +32,9 @@
             font-size: 20px
             font-family: $regularFont
             background: $lightPink
+            outline: none
 
-        .submit-address
+        button.button.submit-address
             position: absolute
             left: 0
             right: 0
@@ -45,5 +46,16 @@
             font-family: $boldFont
             border-radius: 50px
             border: none
-            background: $green
+            background: $black
             color: white
+            cursor: pointer
+            outline: none
+            line-height: 1
+            transition: background 0.5s
+            box-shadow: unset
+            &:hover
+                background: $black-hover
+            &.ready
+                background: $green
+                &:hover
+                    background: $green-hover
