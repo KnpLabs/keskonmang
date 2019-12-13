@@ -46,7 +46,7 @@ export const restaurantReceived = id => ({
   id,
 })
 
-// @type VenueDetails = {
+// @type RestaurantDetails = {
 //  categories :: [Category],
 //  hasPerk :: Boolean,
 //  id :: String,
@@ -55,7 +55,7 @@ export const restaurantReceived = id => ({
 //  referralId :: String,
 // }
 //
-// restaurantDetailsReceived :: VenueDetails -> Action
+// restaurantDetailsReceived :: RestaurantDetails -> Action
 export const restaurantDetailsReceived = restaurant => ({
   type: RESTAURANT_DETAILS_RECEIVED,
   restaurant,

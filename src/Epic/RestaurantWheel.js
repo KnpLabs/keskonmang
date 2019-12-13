@@ -56,8 +56,8 @@ export const getCoordinatesEpic = (action$, state$, { getHerePlatform }) =>
     logObservableError(),
   )
 
-// pipeCoordinatesToRestaurantEpic :: Epic -> Observable Action GET_RESTAURANT
-export const pipeCoordinatesToRestaurantEpic = action$ =>
+// coordinatesToRestaurantEpic :: Epic -> Observable Action GET_RESTAURANT
+export const coordinatesToRestaurantEpic = action$ =>
   action$.pipe(
     ofType(COORDINATES_RECEIVED),
     map(getRestaurant),
@@ -114,7 +114,7 @@ export const showRestaurantEpic = action$ =>
 
 export default combineEpics(
   getCoordinatesEpic,
-  pipeCoordinatesToRestaurantEpic,
+  coordinatesToRestaurantEpic,
   getRestaurantEpic,
   getRestaurantDetails,
   showRestaurantEpic,
