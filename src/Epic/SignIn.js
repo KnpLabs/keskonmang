@@ -35,10 +35,10 @@ export const signInEpic = (action$, state$, { getGoogleApi }) =>
       'gapi-signin', 
       {
         'scope': 'profile email',
-        'width': 240,
-        'height': 50,
-        'longtitle': true,
-        'theme': 'dark',
+        'width': 135,
+        'height': 35,
+        'longtitle': false,
+        'theme': 'light',
         'onsuccess': resolve,
         'onfailure': reject,
       }
