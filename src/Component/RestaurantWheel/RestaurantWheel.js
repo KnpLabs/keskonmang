@@ -5,7 +5,6 @@ export default ({
   submitForm,
   handleChange,
   address,
-  restaurant,
 }) =>
   <div>
     <h1>Qu'est ce qu'on mange ce midi ?</h1>
@@ -20,9 +19,4 @@ export default ({
       />
       <button>Qu'est ce qu'on mange ?</button>
     </form>
-
-    {/* @TODO display this in a fancy way :) */}
-    {restaurant !== null  &&
-      <div>{restaurant.name}</div>
-    }
   </div>
