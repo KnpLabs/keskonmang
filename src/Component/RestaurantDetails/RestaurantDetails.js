@@ -4,7 +4,7 @@ import React from 'react'
 export default ({
   restaurant,
   loading,
-  getCoordinates,
+  getRestaurant,
   backToSearch,
 }) =>
   <div className="restaurant-details">
@@ -48,7 +48,7 @@ export default ({
       }
       <button
         className={`button ${loading ? 'is-loading' : ''}`}
-        onClick={getCoordinates}
+        onClick={getRestaurant}
       >
         Chercher un autre restaurant
       </button>

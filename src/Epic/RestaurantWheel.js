@@ -17,8 +17,10 @@ import {
   withLatestFrom,
 } from 'rxjs/operators'
 import {
+  COORDINATES_RECEIVED,
   GET_COORDINATES,
   GET_RESTAURANT,
+  coordinatesReceived,
   getRestaurant,
   restaurantReceived,
 } from './../Redux/State/RestaurantWheel'
@@ -43,8 +45,16 @@ export const getCoordinatesEpic = (action$, state$, { getHerePlatform }) =>
     map(pipe(
       pathOr({}, ['Response', 'View', 0, 'Result', 0, 'Location', 'DisplayPosition']),
       values,
-      apply(getRestaurant),
+      apply(coordinatesReceived),
     )),
+    logObservableError(),
+  )
+
+// pipeCoordinatesToRestaurantEpic :: Epic -> Observable Action GET_RESTAURANT
+export const pipeCoordinatesToRestaurantEpic = action$ =>
+  action$.pipe(
+    ofType(COORDINATES_RECEIVED),
+    map(getRestaurant),
     logObservableError(),
   )
 
@@ -52,10 +62,11 @@ export const getCoordinatesEpic = (action$, state$, { getHerePlatform }) =>
 export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
   action$.pipe(
     ofType(GET_RESTAURANT),
-    mergeMap(action => fetchApi(join('', [
+    withLatestFrom(state$),
+    mergeMap(([ action, state ]) => fetchApi(join('', [
         '/venues/search',
-        `?latitude=${action.latitude}`,
-        `&longitude=${action.longitude}`,
+        `?latitude=${state.RestaurantWheel.latitude}`,
+        `&longitude=${state.RestaurantWheel.longitude}`,
       ]),
       {
         method: 'GET',
@@ -70,5 +81,6 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
   )
   export default combineEpics(
     getCoordinatesEpic,
+    pipeCoordinatesToRestaurantEpic,
     getRestaurantEpic,
   )

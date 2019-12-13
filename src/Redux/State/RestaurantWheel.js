@@ -3,13 +3,17 @@ import { always } from 'ramda'
 
 // initial stare
 export const INITIAL_STATE = {
+  loading: false,
   address: '',
+  latitude: 0,
+  longitude: 0,
   restaurant: null,
 }
 
 // action types
 export const HANDLE_ADDRESS = '@knp-keskonmange/RestaurantWheel/HANDLE_ADDRESS'
 export const GET_COORDINATES = '@knp-keskonmange/RestaurantWheel/GET_COORDINATES'
+export const COORDINATES_RECEIVED = '@knp-keskonmange/RestaurantWheel/COORDINATES_RECEIVED'
 export const GET_RESTAURANT = '@knp-keskonmange/RestaurantWheel/GET_RESTAURANT'
 export const RESTAURANT_RECEIVED = '@knp-keskonmange/RestaurantWheel/RESTAURANT_RECEIVED'
 export const BACK_TO_SEARCH = '@knp-keskonmange/RestaurantWheel/BACK_TO_SEARCH'
@@ -23,12 +27,15 @@ export const handleAddress = address => ({
 // getCoordinates :: () -> Action
 export const getCoordinates = always({ type: GET_COORDINATES })
 
-// getRestaurant :: (Double, Double) -> Action
-export const getRestaurant = (latitude, longitude) => ({
-  type: GET_RESTAURANT,
+// coordinatesReceived :: (Double, Double) -> Action
+export const coordinatesReceived = (latitude, longitude) => ({
+  type: COORDINATES_RECEIVED,
   latitude,
   longitude,
 })
+
+// getRestaurant :: () -> Action
+export const getRestaurant = always({ type: GET_RESTAURANT })
 
 // @type Restaurant = {
 //  categories :: [Category],
@@ -55,8 +62,25 @@ export default createReducer(INITIAL_STATE, {
     address: address,
   }),
 
+  [GET_COORDINATES]: state => ({
+    ...state,
+    loading: true,
+  }),
+
+  [COORDINATES_RECEIVED]: (state, { latitude, longitude }) => ({
+    ...state,
+    latitude,
+    longitude,
+  }),
+
+  [GET_RESTAURANT]: state => ({
+    ...state,
+    loading: true,
+  }),
+
   [RESTAURANT_RECEIVED]: (state, { restaurant }) => ({
     ...state,
+    loading: false,
     restaurant,
   })
 })
