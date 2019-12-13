@@ -1,10 +1,12 @@
-import { 
+import {
   always,
   identity,
   pipe,
   prop,
   propOr,
   tap,
+  length,
+  multiply,
 } from 'ramda'
 import { merge, catchError } from 'rxjs/operators'
 import { of } from 'rxjs'
@@ -32,3 +34,11 @@ export const logObservableErrorAndTriggerAction = action => catchError(
 
 // jsonStringify :: Object -> String
 export const jsonStringify = a => JSON.stringify(a)
+
+// getRandomElementFromArray :: [Any] -> Any
+export const getRandomElementFromArray = array => pipe(
+  length,
+  multiply(Math.random()),
+  Math.floor,
+  key => array[key],
+)(array)
