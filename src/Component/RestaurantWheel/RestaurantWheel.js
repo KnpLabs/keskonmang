@@ -7,9 +7,10 @@ export default ({
   handleChange,
   address,
   loading,
+  restaurantShown
 }) =>
-  <div className="restaurant-wheel">
-    <h1 className="title">Trouves un resto' proche de toi !</h1>
+  <div className={`restaurant-wheel ${restaurantShown ? 'hidden' : ''}`}>
+    <h1 className="title">Trouve un resto' proche de toi !</h1>
     <form onSubmit={submitForm}>
       <label>Adresse</label>
       <input

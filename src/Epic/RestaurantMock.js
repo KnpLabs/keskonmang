@@ -50,6 +50,34 @@ export default {
      "message":"Expensive",
      "currency":"u20ac"
   },
+  "hours":{ 
+    "status":"Open until Midnight",
+    "richStatus":{ 
+       "entities":[ 
+
+       ],
+       "text":"Open until Midnight"
+    },
+    "isOpen":true,
+    "isLocalHoliday":false,
+    "dayData":[ 
+
+    ],
+    "timeframes":[ 
+       { 
+          "days":"Mon\u2013Sun",
+          "includesToday":true,
+          "open":[ 
+             { 
+                "renderedTime":"8:00 AM\u2013Midnight"
+             }
+          ],
+          "segments":[ 
+
+          ]
+       }
+    ]
+  },
   "likes":{
      "count":24,
      "groups":[

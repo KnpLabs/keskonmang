@@ -1,5 +1,7 @@
 import React from 'react'
 import { getImageUrl } from './../../Util'
+import retryIcon from '../../Style/Images/retry.svg'
+import '../../Style/RestaurantDetails.css'
 
 // RestaurantDetails :: Props -> React.Component
 export default ({
@@ -10,10 +12,10 @@ export default ({
   restaurantShown,
 }) =>
   restaurantShown &&
-  <div className="restaurant-details">
-    <section className="venue-details">
+  <div>
+    <section className="restaurant-details">
       {restaurant.bestPhoto &&
-      <figure>
+      <figure className="restaurant-image">
         <img src={getImageUrl(restaurant.bestPhoto)} alt={restaurant.name} />
       </figure>
       }
@@ -37,12 +39,13 @@ export default ({
         </p>
       }
       {restaurant.hours &&
-        <p className="hours">
-          {restaurant.hours}
+        <p className={restaurant.hours.isOpen ? 'open' : 'close'}>
+          {restaurant.hours.isOpen ? 'Ouvert' : 'Fermé'}
         </p>
       }
       {restaurant.price &&
         <div className={`price price-${restaurant.price.tier}`}>
+          <p>Prix :</p>
           <span className="bullet"></span>
           <span className="bullet"></span>
           <span className="bullet"></span>
@@ -50,12 +53,13 @@ export default ({
         </div>
       }
       <button
-        className={`button ${loading ? 'is-loading' : ''}`}
+        className={`next-restaurant ${loading ? 'is-loading' : ''}`}
         onClick={getRestaurant}
       >
+        <img src={retryIcon} alt="Retry icon" />
         Chercher un autre restaurant
       </button>
     </section>
 
-    <button onClick={backToSearch}>Changer ma recherche</button>
+    <button className="back-button" onClick={backToSearch}>Changer ma recherche</button>
   </div>
