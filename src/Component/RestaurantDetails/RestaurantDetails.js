@@ -6,7 +6,9 @@ export default ({
   loading,
   getRestaurant,
   backToSearch,
+  restaurantShown,
 }) =>
+  restaurantShown &&
   <div className="restaurant-details">
     <section className="venue-details">
       {restaurant.bestPhoto &&

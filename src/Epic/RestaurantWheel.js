@@ -26,6 +26,8 @@ import {
   getRestaurant,
   restaurantDetailsReceived,
   restaurantReceived,
+  RESTAURANT_DETAILS_RECEIVED,
+  showRestaurant,
 } from './../Redux/State/RestaurantWheel'
 import RestaurantMock from './RestaurantMock'
 
@@ -102,9 +104,18 @@ export const getRestaurantDetails = (action$, state$, { fetchApi }) =>
     logObservableError(),
   )
 
+// showRestaurantEpic :: Epic -> Observable Action SHOW_RESTAURANT
+export const showRestaurantEpic = action$ =>
+  action$.pipe(
+    ofType(RESTAURANT_DETAILS_RECEIVED),
+    map(showRestaurant),
+    logObservableError(),
+  )
+
 export default combineEpics(
   getCoordinatesEpic,
   pipeCoordinatesToRestaurantEpic,
   getRestaurantEpic,
   getRestaurantDetails,
+  showRestaurantEpic,
 )

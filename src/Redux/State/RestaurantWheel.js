@@ -8,6 +8,7 @@ export const INITIAL_STATE = {
   latitude: 0,
   longitude: 0,
   restaurant: null,
+  restaurantShown: false,
 }
 
 // action types
@@ -17,6 +18,7 @@ export const COORDINATES_RECEIVED = '@knp-keskonmange/RestaurantWheel/COORDINATE
 export const GET_RESTAURANT = '@knp-keskonmange/RestaurantWheel/GET_RESTAURANT'
 export const RESTAURANT_RECEIVED = '@knp-keskonmange/RestaurantWheel/RESTAURANT_RECEIVED'
 export const RESTAURANT_DETAILS_RECEIVED = '@knp-keskonmange/RestaurantWheel/RESTAURANT_DETAILS_RECEIVED'
+export const SHOW_RESTAURANT = '@knp-keskonmange/RestaurantWheel/SHOW_RESTAURANT'
 export const BACK_TO_SEARCH = '@knp-keskonmange/RestaurantWheel/BACK_TO_SEARCH'
 
 // handleAddress :: String -> Action
@@ -59,6 +61,9 @@ export const restaurantDetailsReceived = restaurant => ({
   restaurant,
 })
 
+// showRestaurant :: () -> Action
+export const showRestaurant = always({ type: SHOW_RESTAURANT })
+
 // backToSearch :: () -> Action
 export const backToSearch = always({ type: BACK_TO_SEARCH })
 
@@ -89,5 +94,15 @@ export default createReducer(INITIAL_STATE, {
     ...state,
     loading: false,
     restaurant,
+  }),
+
+  [SHOW_RESTAURANT]: state => ({
+    ...state,
+    restaurantShown: true,
+  }),
+
+  [BACK_TO_SEARCH]: state => ({
+    ...state,
+    restaurantShown: false,
   })
 })
