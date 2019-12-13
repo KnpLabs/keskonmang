@@ -1,4 +1,5 @@
 import React from 'react'
+import RestaurantDetails from './../RestaurantDetails'
 
 // RestaurantWheel :: Props -> React.Component
 export default ({
@@ -22,7 +23,5 @@ export default ({
     </form>
 
     {/* @TODO display this in a fancy way :) */}
-    {restaurant !== null  &&
-      <div>{restaurant.name}</div>
-    }
+    {restaurant !== null  && <RestaurantDetails/>}
   </div>

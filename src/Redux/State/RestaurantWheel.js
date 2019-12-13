@@ -12,6 +12,7 @@ export const HANDLE_ADDRESS = '@knp-keskonmange/RestaurantWheel/HANDLE_ADDRESS'
 export const GET_COORDINATES = '@knp-keskonmange/RestaurantWheel/GET_COORDINATES'
 export const GET_RESTAURANT = '@knp-keskonmange/RestaurantWheel/GET_RESTAURANT'
 export const RESTAURANT_RECEIVED = '@knp-keskonmange/RestaurantWheel/RESTAURANT_RECEIVED'
+export const BACK_TO_SEARCH = '@knp-keskonmange/RestaurantWheel/BACK_TO_SEARCH'
 
 // handleAddress :: String -> Action
 export const handleAddress = address => ({
@@ -43,6 +44,9 @@ export const restaurantReceived = restaurant => ({
   type: RESTAURANT_RECEIVED,
   restaurant,
 })
+
+// backToSearch :: () -> Action
+export const backToSearch = always({ type: BACK_TO_SEARCH })
 
 // Session :: (State, Action *) -> State
 export default createReducer(INITIAL_STATE, {
