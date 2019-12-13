@@ -18,6 +18,10 @@ export default ({
         onChange={handleChange}
         value={address}
       />
-      <button className="submit-address">Qu'est ce qu'on mange ?</button>
+      <button
+        className={`submit-address ${address.length > 3 ? 'ready' : ''}`}
+      >
+        Qu'est ce qu'on mange ?
+      </button>
     </form>
   </div>

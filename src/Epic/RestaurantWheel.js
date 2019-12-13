@@ -39,6 +39,7 @@ export const getCoordinatesEpic = (action$, state$, { getHerePlatform }) =>
     filter(complement(isNil)),
     map(platform => platform.getGeocodingService()),
     withLatestFrom(state$),
+    filter(([ _, state ]) => state.RestaurantWheel.address.length > 3),
     mergeMap(([ geoCoder, state ]) => new Promise((resolve, reject) => geoCoder.geocode(
       {
         searchText: state.RestaurantWheel.address
