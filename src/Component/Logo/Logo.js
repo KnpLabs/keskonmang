@@ -3,7 +3,7 @@ import logo from '../../Style/Images/Logo-keskonmang.svg'
 import '../../Style/Logo.css'
 
 // Logo :: Props -> React.Component
-export default () => 
-  <figure className="logo"> 
+export default ({restaurantShown}) => 
+  <figure className={`logo ${restaurantShown ? 'small' : ''}`}> 
     <img src={logo} alt="logo" />  
   </figure>
