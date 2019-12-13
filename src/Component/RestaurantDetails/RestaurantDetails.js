@@ -53,7 +53,7 @@ export default ({
         </div>
       }
       <button
-        className={`next-restaurant ${loading ? 'is-loading' : ''}`}
+        className={`next-restaurant button ${loading ? 'is-loading' : ''}`}
         onClick={getRestaurant}
       >
         <img src={retryIcon} alt="Retry icon" />

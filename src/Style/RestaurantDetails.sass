@@ -74,7 +74,7 @@
         &.price-4 .bullet:nth-child(-n+5)
             background: $yellow
 
-    .next-restaurant
+    button.button.next-restaurant
         position: absolute
         left: 0
         right: 0
@@ -89,12 +89,22 @@
         background: $green
         color: white
         cursor: pointer
+        outline: none
+        box-shadow: unset
+        transition: background 0.5s
 
         img
             height: 30px
             width: 30px
             position: absolute
             left: 5%
+
+        &.is-loading
+            img
+                display: none
+
+        &:hover
+            background: $green-hover
 
 .back-button
     display: block
