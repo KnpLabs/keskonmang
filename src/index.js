@@ -10,10 +10,16 @@ import { createFetchApi } from './FetchApi'
 
 const getGoogleApi = () => window.gapi
 
+// getHerePlatform :: () -> Here.Platform
+const getHerePlatform = () => new window.H.service.Platform({
+  'apikey': process.env.REACT_APP_HERE_API_KEY,
+});
+
 const epicMiddleware = createEpicMiddleware({
   dependencies: {
-    getGoogleApi,
     fetchApi: createFetchApi(fetch, getGoogleApi),
+    getGoogleApi,
+    getHerePlatform,
   },
 })
 

@@ -2,6 +2,7 @@ import { tap, pipe } from 'ramda'
 import { combineReducers } from 'redux'
 import SignIn from './SignIn'
 import Session from './Session'
+import RestaurantWheel from './RestaurantWheel'
 
 // debug :: ((State, Action *) -> State) -> State -> Action * -> State
 export const debug = reducer => (state = reducer(), action = {}) => pipe(
@@ -21,4 +22,5 @@ export const debug = reducer => (state = reducer(), action = {}) => pipe(
 export default combineReducers({
   Session,
   SignIn,
+  RestaurantWheel,
 })
