@@ -1,4 +1,5 @@
 import React from 'react'
+import { getImageUrl } from './../../Util'
 
 // RestaurantDetails :: Props -> React.Component
 export default ({
@@ -13,7 +14,7 @@ export default ({
     <section className="venue-details">
       {restaurant.bestPhoto &&
       <figure>
-        <img src={restaurant.bestPhoto} alt={restaurant.name} />
+        <img src={getImageUrl(restaurant.bestPhoto)} alt={restaurant.name} />
       </figure>
       }
 

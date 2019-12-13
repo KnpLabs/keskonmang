@@ -1,12 +1,13 @@
 import {
   always,
   identity,
+  join,
+  length,
+  multiply,
   pipe,
   prop,
   propOr,
   tap,
-  length,
-  multiply,
 } from 'ramda'
 import { merge, catchError } from 'rxjs/operators'
 import { of } from 'rxjs'
@@ -42,3 +43,12 @@ export const getRandomElementFromArray = array => pipe(
   Math.floor,
   key => array[key],
 )(array)
+
+// @see https://developer.foursquare.com/docs/api/venues/photos
+//
+// getImageUrl :: Photo -> String
+export const getImageUrl = photo => join('', [
+  photo.prefix,
+  'original',
+  photo.suffix,
+])
