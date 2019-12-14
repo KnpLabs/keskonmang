@@ -1,22 +1,16 @@
 import React from 'react'
+import '../../Style/Menu.css';
 
 // Menu :: Props -> Reac.Component
 export default ({
   signOut,
   user,
 }) => 
-  <nav>
-    <ul>
-      <li>
-        {(user && user.imageUrl && user.name) &&
-          <figure>
-            <img src={user.imageUrl} alt={user.name}/>
-            <figcaption>Hi {user.name} ! Feeling hungry huh ?</figcaption>
-          </figure>          
-        }        
-      </li>
-      <li>
-        <button onClick={signOut}>Sign out</button>
-      </li>
-    </ul>    
-  </nav>
+  <button className="sign-out" onClick={signOut}>
+    {(user && user.imageUrl) &&
+      <figure>
+        <img src={user.imageUrl} alt={user.name ? user.name : 'Profile image'}/>
+      </figure>          
+    }
+    Déconnexion
+  </button>
