@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../Style/SignIn.css';
+import './SignIn.css';
 
 // SignIn :: Props -> Reac.Component
 export default () => <div id="gapi-signin"></div>

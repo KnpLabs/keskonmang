@@ -1,7 +1,7 @@
 import React from 'react'
 import { getImageUrl } from './../../Util'
 import retryIcon from '../../Style/Images/retry.svg'
-import '../../Style/RestaurantDetails.css'
+import './RestaurantDetails.css'
 
 // RestaurantDetails :: Props -> React.Component
 export default ({

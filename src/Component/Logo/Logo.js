@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from '../../Style/Images/Logo-keskonmang.svg'
-import '../../Style/Logo.css'
+import './Logo.css'
 
 // Logo :: Props -> React.Component
 export default ({restaurantShown}) => 
