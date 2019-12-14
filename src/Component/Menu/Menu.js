@@ -9,7 +9,7 @@ export default ({
   <button className="sign-out" onClick={signOut}>
     {(user && user.imageUrl) &&
       <figure>
-        <img src={user.imageUrl} alt={user.name ? user.name : 'Profile image'}/>
+        <img src={user.imageUrl} alt={user.name ? user.name : 'Image de profile'}/>
       </figure>          
     }
     Déconnexion
