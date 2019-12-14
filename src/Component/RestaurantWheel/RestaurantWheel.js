@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../Style/RestaurantWheel.css'
+import './RestaurantWheel.css'
 
 // RestaurantWheel :: Props -> React.Component
 export default ({

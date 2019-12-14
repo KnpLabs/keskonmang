@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../Style/Menu.css';
+import './Menu.css';
 
 // Menu :: Props -> Reac.Component
 export default ({
