@@ -1,13 +1,15 @@
 import {
-  default as reducer,
   INITIAL_STATE,
-  handleAddress,
-  getCoordinates,
+  backToSearch,
   coordinatesReceived,
+  default as reducer,
+  fetchError,
+  getCoordinates,
   getRestaurant,
+  handleAddress,
+  invalidAddress,
   restaurantDetailsReceived,
   showRestaurant,
-  backToSearch,
 } from './RestaurantWheel'
 
 describe('Redux :: State :: RestaurantWheel', () => {
@@ -16,20 +18,31 @@ describe('Redux :: State :: RestaurantWheel', () => {
   })
 
   it('reduces handleAddress action', () => {
-    expect(
-      reducer(INITIAL_STATE, handleAddress('11, rue Kervegan'))
-    ).toEqual({
+    const s1 = {
       ...INITIAL_STATE,
+      invalidAddress: true,
+    }
+
+    expect(
+      reducer(s1, handleAddress('11, rue Kervegan'))
+    ).toEqual({
+      ...s1,
       address: '11, rue Kervegan',
+      invalidAddress: false,
     })
   })
 
   it('reduces getCoordinates action', () => {
+    const s1 = {
+      ...INITIAL_STATE,
+      fetchError: true,
+    }
+
     expect(
       reducer(INITIAL_STATE, getCoordinates())
     ).toEqual({
       ...INITIAL_STATE,
-      loading: true,
+      fetchError: false,
     })
   })
 
@@ -44,11 +57,17 @@ describe('Redux :: State :: RestaurantWheel', () => {
   })
 
   it('reduces getRestaurant action', () => {
+    const s1 = {
+      ...INITIAL_STATE,
+      fetchError: true,
+    }
+
     expect(
       reducer(INITIAL_STATE, getRestaurant())
     ).toEqual({
       ...INITIAL_STATE,
       loading: true,
+      fetchError: false,
     })
   })
 
@@ -89,6 +108,30 @@ describe('Redux :: State :: RestaurantWheel', () => {
     ).toEqual({
       ...s1,
       restaurantShown: false,
+    })
+  })
+
+  it('reduces fetchError action', () => {
+    const s1 = {
+      ...INITIAL_STATE,
+      loading: true,
+    }
+
+    expect(
+      reducer(s1, fetchError())
+    ).toEqual({
+      ...s1,
+      fetchError: true,
+      loading: false,
+    })
+  })
+
+  it('reduces invalidAddress action', () => {
+    expect(
+      reducer(INITIAL_STATE, invalidAddress())
+    ).toEqual({
+      ...INITIAL_STATE,
+      invalidAddress: true,
     })
   })
 })

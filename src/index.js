@@ -19,6 +19,7 @@ const epicMiddleware = createEpicMiddleware({
     fetchApi: createFetchApi(fetch, getGoogleApi),
     getGoogleApi,
     getHerePlatform,
+    premiumEndpointsDisabled: Number(process.env.REACT_APP_FOURSQUARE_PREMIUM_ENDPOINTS_DISABLED)
   },
 })
 
