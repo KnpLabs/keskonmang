@@ -9,6 +9,8 @@ export const INITIAL_STATE = {
   longitude: 0,
   restaurant: null,
   restaurantShown: false,
+  fetchError: false,
+  invalidAddress: false,
 }
 
 // action types
@@ -20,6 +22,8 @@ export const RESTAURANT_RECEIVED = '@knp-keskonmange/RestaurantWheel/RESTAURANT_
 export const RESTAURANT_DETAILS_RECEIVED = '@knp-keskonmange/RestaurantWheel/RESTAURANT_DETAILS_RECEIVED'
 export const SHOW_RESTAURANT = '@knp-keskonmange/RestaurantWheel/SHOW_RESTAURANT'
 export const BACK_TO_SEARCH = '@knp-keskonmange/RestaurantWheel/BACK_TO_SEARCH'
+export const FETCH_ERROR = '@knp-keskonmange/RestaurantWheel/FETCH_ERROR'
+export const INVALID_ADDRESS = '@knp-keskonmange/RestaurantWheel/INVALID_ADDRESS'
 
 // handleAddress :: String -> Action
 export const handleAddress = address => ({
@@ -67,11 +71,23 @@ export const showRestaurant = always({ type: SHOW_RESTAURANT })
 // backToSearch :: () -> Action
 export const backToSearch = always({ type: BACK_TO_SEARCH })
 
+// fetchError :: () -> Action
+export const fetchError = always({ type: FETCH_ERROR })
+
+// invalidAddress :: () -> Action
+export const invalidAddress = always({ type: INVALID_ADDRESS })
+
 // Session :: (State, Action *) -> State
 export default createReducer(INITIAL_STATE, {
   [HANDLE_ADDRESS]: (state, { address }) => ({
     ...state,
     address: address,
+    invalidAddress: false,
+  }),
+
+  [GET_COORDINATES]: state => ({
+    ...state,
+    fetchError: false,
   }),
 
   [COORDINATES_RECEIVED]: (state, { latitude, longitude }) => ({
@@ -83,6 +99,7 @@ export default createReducer(INITIAL_STATE, {
   [GET_RESTAURANT]: state => ({
     ...state,
     loading: true,
+    fetchError: false,
   }),
 
   [RESTAURANT_DETAILS_RECEIVED]: (state, { restaurant }) => ({
@@ -99,5 +116,16 @@ export default createReducer(INITIAL_STATE, {
   [BACK_TO_SEARCH]: state => ({
     ...state,
     restaurantShown: false,
-  })
+  }),
+
+  [FETCH_ERROR]: state => ({
+    ...state,
+    fetchError: true,
+    loading: false,
+  }),
+
+  [INVALID_ADDRESS]: state => ({
+    ...state,
+    invalidAddress: true,
+  }),
 })

@@ -1,15 +1,24 @@
 import { ofType, combineEpics } from 'redux-observable'
-import { logObservableError, getRandomElementFromArray } from './../Util'
 import {
-  complement,
-  isNil,
-  pipe,
-  pathOr,
-  values,
+  getRandomElementFromArray,
+  logObservableError,
+  logObservableErrorAndTriggerAction,
+} from './../Util'
+import {
   apply,
-  join,
+  complement,
+  compose,
   defaultTo,
+  filter as rfilter,
+  ifElse,
+  isEmpty,
+  isNil,
+  join,
+  pathOr,
+  pick,
+  pipe,
   prop,
+  values,
 } from 'ramda'
 import {
   filter,
@@ -21,13 +30,15 @@ import {
   COORDINATES_RECEIVED,
   GET_COORDINATES,
   GET_RESTAURANT,
+  RESTAURANT_DETAILS_RECEIVED,
   RESTAURANT_RECEIVED,
   coordinatesReceived,
+  fetchError,
   getRestaurant,
   restaurantDetailsReceived,
   restaurantReceived,
-  RESTAURANT_DETAILS_RECEIVED,
   showRestaurant,
+  invalidAddress,
 } from './../Redux/State/RestaurantWheel'
 import RestaurantMock from './RestaurantMock'
 
@@ -54,14 +65,24 @@ export const getCoordinatesEpic = (action$, state$, { getHerePlatform }) =>
       values,
       apply(coordinatesReceived),
     )),
-    logObservableError(),
+    logObservableErrorAndTriggerAction(fetchError),
   )
+
+// containsUndefinedCoordinate :: Coordinates -> Boolean
+const hasValidCoordinates = compose(isEmpty, rfilter(isNil), values)
 
 // coordinatesToRestaurantEpic :: Epic -> Observable Action GET_RESTAURANT
 export const coordinatesToRestaurantEpic = action$ =>
   action$.pipe(
     ofType(COORDINATES_RECEIVED),
-    map(getRestaurant),
+    map(pipe(
+      pick(['latitude', 'longitude']),
+      ifElse(
+        hasValidCoordinates,
+        getRestaurant,
+        invalidAddress,
+      )
+    )),
     logObservableError(),
   )
 
@@ -85,7 +106,7 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
       prop('id'),
       restaurantReceived,
     )),
-    logObservableError(),
+    logObservableErrorAndTriggerAction(fetchError),
   )
 
 // getRestaurantDetails :: Epic -> Observable Action RESTAURANT_DETAILS_RECEIVED
