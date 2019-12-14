@@ -22,6 +22,10 @@
             font-family: $boldFont
             color: $pink
 
+            span.error
+                float: right
+                color: $black
+
         .address-input
             display: block
             width: 100%
@@ -33,6 +37,9 @@
             font-family: $regularFont
             background: $lightPink
             outline: none
+
+            &.error
+              border: 2px $red solid
 
         button.button.submit-address
             position: absolute
@@ -59,3 +66,9 @@
                 background: $green
                 &:hover
                     background: $green-hover
+
+        span.global-error
+            font-weight: bold
+            color: $pink
+            display: block
+            margin-top: 20px
