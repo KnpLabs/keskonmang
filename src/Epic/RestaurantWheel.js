@@ -109,19 +109,14 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
     logObservableErrorAndTriggerAction(fetchError),
   )
 
-// getRestaurantDetails :: Epic -> Observable Action RESTAURANT_DETAILS_RECEIVED
-export const getRestaurantDetails = (action$, state$, { fetchApi }) =>
+// getRestaurantDetailsEpic :: Epic -> Observable Action RESTAURANT_DETAILS_RECEIVED
+export const getRestaurantDetailsEpic = (action$, state$, { fetchApi, premiumEndpointsDisabled = true }) =>
   action$.pipe(
     ofType(RESTAURANT_RECEIVED),
-    // mergeMap(action => fetchApi(
-    //   `/venues/${action.id}`,
-    //   {
-    //     method: 'GET',
-    //   }
-    // )),
-    //
-    // use this instead of the above to avoid torching your credits when in dev env
-    map(() => RestaurantMock),
+    mergeMap(action => premiumEndpointsDisabled
+      ? Promise.resolve(RestaurantMock)
+      : fetchApi(`/venues/${action.id}`, { method: 'GET' })
+    ),
     map(restaurantDetailsReceived),
     logObservableError(),
   )
@@ -138,6 +133,6 @@ export default combineEpics(
   getCoordinatesEpic,
   coordinatesToRestaurantEpic,
   getRestaurantEpic,
-  getRestaurantDetails,
+  getRestaurantDetailsEpic,
   showRestaurantEpic,
 )
