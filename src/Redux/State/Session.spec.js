@@ -19,8 +19,4 @@ describe('Redux :: State :: SignIn', () => {
       },
     })
   })
-
-  it('reduces historyReceived action', () => {
-    fail('@todo')
-  })
 })

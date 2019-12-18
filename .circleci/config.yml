@@ -11,7 +11,7 @@ jobs:
   test:
     working_directory: ~/keskonmangue
     docker:
-      - image: circleci/node:9.11-browsers
+      - image: circleci/node:11.10.1-stretch
     environment:
       - NODE_ENV: "test"
     steps:
@@ -32,11 +32,8 @@ jobs:
 workflows:
   version: 2
 
-  lint_test:
+  test:
     jobs:
-      - lint:
-          filters:
-            branches: { ignore: master }
       - test:
           filters:
             branches: { ignore: master }
