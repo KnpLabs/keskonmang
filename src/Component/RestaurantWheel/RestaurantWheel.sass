@@ -1,74 +1,90 @@
 @import '../../Style/Variables.sass';
+@import '../../Style/Mixins.sass';
 
-.restaurant-wheel
-    position: relative
-    width: 60%
-    margin: 0 auto
-    padding: 30px
-    border-radius: 20px
+section[data-is="restaurant-wheel"]
+  .container
+    padding: $size-1
+    border-radius: $size-5
     text-align: center
     background: white
 
-    .title
-        font-family: $extraBoldFont
+    h1.title
+      font-family: $extraBoldFont
+      color: $black
 
     form
+      margin: 0 auto
+      padding-bottom: $size-1
+
+      label
+        font-family: $boldFont
+        color: $pink
+
+        span.error
+          float: right
+          color: $black
+
+      input.address
+        border-radius: $size-7
+        border: none
+        outline: none
+        box-shadow: unset
+        background: $lightPink
+        font-size: $size-5
+        font-family: $regularFont
+
+        &.error
+          border: 2px $red solid
+
+      button.submit-address
+        @include animate-default
+
+        position: absolute
+        left: 0
+        right: 0
+        bottom: -32px
+        margin-left: auto
+        margin-right: auto
+        font-size: $size-4
+        font-family: $boldFont
+        border-radius: $size-3
+        border: none
+        outline: none
+        box-shadow: unset
+        background: $black
+        color: white
+        cursor: pointer
+
+        &:hover
+          background: $black-hover
+
+        &.ready
+          background: $green
+
+          &:hover
+            background: $green-hover
+
+      span.global-error
+        font-family: $boldFont
+        margin-top: $size-5
+        color: $pink
+        display: block
+
+  @media(min-width: $size-640)
+    .container
+      margin-top: 300px
+
+      form
         width: 60%
-        margin: 0 auto
-        padding-bottom: 50px
-        text-align: left
 
-        label
-            font-family: $boldFont
-            color: $pink
+  @media(max-width: $size-640)
+    .container
+      margin-top: 150px
 
-            span.error
-                float: right
-                color: $black
+      h1.title
+        font-size: $size-4
 
-        .address-input
-            display: block
-            width: 100%
-            margin: 10px auto
-            padding: 15px
-            border-radius: 10px
-            border: none
-            font-size: 20px
-            font-family: $regularFont
-            background: $lightPink
-            outline: none
-
-            &.error
-              border: 2px $red solid
-
-        button.button.submit-address
-            position: absolute
-            left: 0
-            right: 0
-            bottom: -35px
-            margin-left: auto
-            margin-right: auto
-            padding: 20px 25px
-            font-size: 25px
-            font-family: $boldFont
-            border-radius: 50px
-            border: none
-            background: $black
-            color: white
-            cursor: pointer
-            outline: none
-            line-height: 1
-            transition: background 0.5s
-            box-shadow: unset
-            &:hover
-                background: $black-hover
-            &.ready
-                background: $green
-                &:hover
-                    background: $green-hover
-
-        span.global-error
-            font-family: $boldFont
-            color: $pink
-            display: block
-            margin-top: 20px
+      form
+        button.submit-address
+          font-size: $size-5
+          bottom: -25px
