@@ -10,3 +10,6 @@ indent_size = 2
 [Makefile]
 indent_style = tab
 indent_size = 4
+
+[*.sass]
+indent_size = 4

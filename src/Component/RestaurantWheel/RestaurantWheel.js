@@ -15,14 +15,14 @@ export default ({
     className={`hero is-fullheight ${restaurantShown ? 'is-hidden' : ''}`}
     data-is="restaurant-wheel"
   >
-    <div class="hero-body">
-      <div class="container">
-        <h1 class="title">
+    <div className="hero-body">
+      <div className="container">
+        <h1 className="title">
           Trouve un resto' proche de toi !
         </h1>
         <form onSubmit={submitForm}>
-          <div class="field">
-            <div class="control">
+          <div className="field">
+            <div className="control">
               <label className="label">
                 Adresse
                 {invalidAddress &&
