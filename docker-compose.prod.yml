@@ -1,17 +1,15 @@
 version: '3.4'
 
 services:
-  app:
+  nginx:
     build:
       context: ./
       dockerfile: .docker/Dockerfile
-      target: dev
-    command: 'yarn start'
-    tty: true
-    volumes:
-      - ./:/app
+      target: nginx
+      args:
+        ENV_FILE: .env.prod.dist
     ports:
-      - published: 3001
-        target: 3000
+      - published: 8081
+        target: 80
         protocol: tcp
         mode: host
