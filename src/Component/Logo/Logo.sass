@@ -1,8 +1,15 @@
-.logo
-    width: 25%
-    margin: 0 auto
-    padding: 30px
+@import '../../Style/Variables.sass';
 
-    &.small
-        width: 10%
+figure[data-is="brand-logo"]
+    position: absolute
+    left: 50%
+    transform: translateX(-50%)
+    padding: $size-5
+    margin-top: $size-5
+    width: 400px
 
+    &.is-small
+        width: 180px
+
+    @media(max-width: $size-640)
+        width: 200px

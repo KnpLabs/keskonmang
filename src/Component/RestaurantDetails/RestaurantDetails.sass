@@ -1,20 +1,23 @@
 @import '../../Style/Variables.sass';
+@import '../../Style/Mixins.sass';
 
-.restaurant-details
-    position: relative
-    width: 50%
-    margin: 0 auto 50px auto
-    padding: 30px
-    border-radius: 20px
+section[data-is="restaurant-details"] .container
+    max-width: $size-640
+    padding: $size-4
+    padding-bottom: $size-1
+    margin-top: 100px
+    border-radius: $size-5
     text-align: center
     background: white
 
-    .restaurant-image
+    figure.restaurant-image
+        overflow: hidden
         position: relative
         height: 260px
-        margin-bottom: 30px
+        margin-bottom: $size-3
 
         img
+            width: 100%
             position: absolute
             margin: auto
             top: 0
@@ -22,42 +25,50 @@
             right: 0
             bottom: 0
 
+    h1.title
+        font-family: $boldFont
+        font-size: $size-4
+        color: $black
+
     .separator
-        width: 30px
+        width: $size-3
         height: 3px
         background: #ff5a5e
-        margin: 0 auto 20px auto
+        margin: 0 auto $size-4 auto
         border-radius: 3px
 
     p
-        margin: 10px
+      margin: $size-7
 
-    .website a
+    p.address, p.phone
+        margin: 0
+        font-size: $size-5
+
+    p.website a
         color: $pink
 
-    .open,
-    .close
-        margin: 30px 0 0 0
+    p.open, p.close
+        margin: $size-4 0 $size-4 0
 
-    .open
+    p.open
         color: $green
 
-    .close
+    p.close
         color: $pink
 
-    .price
-        margin-bottom: 20px
+    div.price
+        margin: $size-4 0 $size-4 0
 
         p
             margin: 0
             display: inline-block
-            margin-right: 10px
+            margin-right: $size-7
 
         .bullet
             display: inline-block
-            height: 15px
-            width: 15px
-            margin: 10px 3px
+            height: $size-6
+            width: $size-6
+            margin-right: 5px
             border-radius: 8px
             vertical-align: middle
             background: $grey
@@ -74,42 +85,61 @@
         &.price-4 .bullet:nth-child(-n+5)
             background: $yellow
 
-    button.button.next-restaurant
+    button.next-restaurant
+        @include animate-default
+
         position: absolute
         left: 0
         right: 0
-        bottom: -35px
+        bottom: -30px
         margin-left: auto
         margin-right: auto
-        padding: 15px 30px 15px 70px
-        font-size: 25px
+        padding-left: 70px
+        font-size: $size-4
         font-family: $boldFont
-        border-radius: 50px
+        border-radius: $size-3
         border: none
+        outline: none
+        box-shadow: unset
         background: $green
         color: white
         cursor: pointer
-        outline: none
-        box-shadow: unset
-        transition: background 0.5s
 
         img
-            height: 30px
-            width: 30px
+            height: $size-3
+            width: $size-3
             position: absolute
-            left: 5%
-
-        &.is-loading
-            img
-                display: none
+            left: $size-6
 
         &:hover
             background: $green-hover
 
-.back-button
+    @media(max-width: $size-640)
+        padding: $size-6
+        margin-top: 140px
+
+        figure.restaurant-image
+            height: 80px
+            margin-bottom: $size-6
+
+        .separator
+            display: none
+
+        p.address, p.phone
+            font-size: $size-6
+
+        p.open, p.close
+            margin: $size-6 0 $size-6 0
+
+        button.next-restaurant
+            font-size: $size-5
+            bottom: -25px
+
+button.back-button
     display: block
-    margin: 0 auto 30px auto
-    font-size: 18px
+    margin: auto
+    padding-bottom: $size-7
+    font-size: $size-5
     text-decoration: underline
     border: none
     background: none

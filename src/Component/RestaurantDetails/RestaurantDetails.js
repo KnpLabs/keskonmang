@@ -12,54 +12,66 @@ export default ({
   restaurantShown,
 }) =>
   restaurantShown &&
-  <div>
-    <section className="restaurant-details">
-      {restaurant.bestPhoto &&
-      <figure className="restaurant-image">
-        <img src={getImageUrl(restaurant.bestPhoto)} alt={restaurant.name} />
-      </figure>
-      }
+  <React.Fragment>
+    <section className="hero is-fullheight" data-is="restaurant-details">
+      <div className="hero-body">
+        <div className="container">
+          {restaurant.bestPhoto &&
+            <figure className="restaurant-image">
+              <img src={getImageUrl(restaurant.bestPhoto)} alt={restaurant.name} />
+            </figure>
+          }
 
-      <h1>{restaurant.name}</h1>
-      <div className="separator"></div>
-      <p className="address">
-        {restaurant.location.address}&nbsp;
-        {restaurant.location.postalCode}&nbsp;
-        {restaurant.location.city}
-      </p>
+          <h1 className="title">{restaurant.name}</h1>
+          <div className="separator"></div>
+          <p className="address">
+            {restaurant.location.address}&nbsp;
+            {restaurant.location.postalCode}&nbsp;
+            {restaurant.location.city}
+          </p>
 
-      {restaurant.contact &&
-        <p className="phone">
-          {restaurant.contact.formattedPhone}
-        </p>
-      }
-      {restaurant.url &&
-        <p className="website">
-          <a href={restaurant.url}>Voir le site</a>
-        </p>
-      }
-      {restaurant.hours &&
-        <p className={restaurant.hours.isOpen ? 'open' : 'close'}>
-          {restaurant.hours.isOpen ? 'Ouvert' : 'Fermé'}
-        </p>
-      }
-      {restaurant.price &&
-        <div className={`price price-${restaurant.price.tier}`}>
-          <p>Prix :</p>
-          <span className="bullet"></span>
-          <span className="bullet"></span>
-          <span className="bullet"></span>
-          <span className="bullet"></span>
+          {restaurant.contact &&
+            <p className="phone">
+              {restaurant.contact.formattedPhone}
+            </p>
+          }
+          {restaurant.url &&
+            <p className="website">
+              <a
+                href={restaurant.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >Voir le site</a>
+            </p>
+          }
+          {restaurant.hours &&
+            <p className={restaurant.hours.isOpen ? 'open' : 'close'}>
+              {restaurant.hours.isOpen ? 'Ouvert' : 'Fermé'}
+            </p>
+          }
+          {restaurant.price &&
+            <div className={`price price-${restaurant.price.tier}`}>
+              <p>Prix :</p>
+              <span className="bullet"></span>
+              <span className="bullet"></span>
+              <span className="bullet"></span>
+              <span className="bullet"></span>
+            </div>
+          }
+          <button
+            className={`next-restaurant button ${loading ? 'is-loading' : ''}`}
+            onClick={getRestaurant}
+          >
+            <img
+              className={`${loading ? 'is-hidden': ''}`}
+              src={retryIcon}
+              alt="Retry icon"
+            />
+            Chercher à nouveau
+          </button>
         </div>
-      }
-      <button
-        className={`next-restaurant button ${loading ? 'is-loading' : ''}`}
-        onClick={getRestaurant}
-      >
-        <img src={retryIcon} alt="Retry icon" />
-        Chercher un autre restaurant
-      </button>
+      </div>
     </section>
 
     <button className="back-button" onClick={backToSearch}>Changer ma recherche</button>
-  </div>
+  </React.Fragment>
