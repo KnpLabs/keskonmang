@@ -8,8 +8,3 @@ services:
       target: nginx
       args:
         ENV_FILE: .env.prod.dist
-    ports:
-      - published: 8081
-        target: 80
-        protocol: tcp
-        mode: host
