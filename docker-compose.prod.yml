@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  nginx:
+    build:
+      context: ./
+      dockerfile: .docker/Dockerfile
+      target: nginx
+      args:
+        ENV_FILE: .env.prod.dist

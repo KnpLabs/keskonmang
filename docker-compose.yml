@@ -2,11 +2,16 @@ version: '3.4'
 
 services:
   app:
-    image: node:11.10.1-alpine
-    command: npm run start
+    build:
+      context: ./
+      dockerfile: .docker/Dockerfile
+      target: dev
+    command: 'yarn start'
+    tty: true
     volumes:
-      - './:/app'
-    working_dir: /app
-    user: node
+      - ./:/app
     ports:
-      - "3001:3000"
+      - published: 3001
+        target: 3000
+        protocol: tcp
+        mode: host
