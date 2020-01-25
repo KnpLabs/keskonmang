@@ -38,3 +38,7 @@ COPY --from=prod /app/build /app/build
 COPY .docker/nginx/nginx.conf.tmpl /etc/nginx/conf.d/default.conf
 
 CMD ["nginx", "-g", "daemon off;"]
+
+################################################################################
+
+FROM traefik:v2.0 as traefik

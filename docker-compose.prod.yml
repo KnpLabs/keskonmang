@@ -2,6 +2,7 @@ version: '3.4'
 
 services:
   nginx:
+    image: quay.io/knplabs/keskonmange:nginx-${IMAGE_TAG:-dev}
     build:
       context: ./
       dockerfile: .docker/Dockerfile
@@ -10,13 +11,18 @@ services:
         ENV_FILE: .env.prod.dist
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nginx.rule=Host(`traefik.test`)"
+      - "traefik.http.routers.nginx.rule=Host(`keskonmange.knpnet.net`)"
       - "traefik.http.routers.nginx.entrypoints=web"
+      - "traefik.docker.network=traefik"
     networks:
       - traefik
 
   reverse-proxy:
-    image: traefik:v2.0
+    image: quay.io/knplabs/keskonmange:reverse-proxy-${IMAGE_TAG:-dev}
+    build:
+      context: ./
+      dockerfile: .docker/Dockerfile
+      target: traefik
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"
