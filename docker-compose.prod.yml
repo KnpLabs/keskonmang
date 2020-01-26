@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   nginx:
-    image: quay.io/knplabs/keskonmange:nginx-${IMAGE_TAG:-dev}
+    image: quay.io/knplabs/keskonmange:nginx-${IMAGE_TAG}
     build:
       context: ./
       dockerfile: .docker/Dockerfile
@@ -18,7 +18,7 @@ services:
       - traefik
 
   reverse-proxy:
-    image: quay.io/knplabs/keskonmange:reverse-proxy-${IMAGE_TAG:-dev}
+    image: quay.io/knplabs/keskonmange:reverse-proxy-${IMAGE_TAG}
     build:
       context: ./
       dockerfile: .docker/Dockerfile
@@ -30,6 +30,7 @@ services:
       - "--entrypoints.web.address=:80"
     ports:
       - "80:80"
+      - "443:443"
       - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"

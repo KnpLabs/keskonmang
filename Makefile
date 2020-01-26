@@ -1,3 +1,5 @@
+REMOTE ?= deploy@keskonmange.knpnet.net
+REMOTE_PATH ?= ~/apps/keskonmange
 STAGE ?= dev
 
 .PHONY: .ensure-stage-exists
@@ -43,3 +45,13 @@ ifeq ($(STAGE),dev)
 	@exit 1
 endif
 	docker-compose -f ./docker-compose.$(STAGE).yml push
+
+.PHONY: remote-deploy
+remote-deploy: .ensure-stage-exists .validate-tag
+	scp ./docker-compose.$(STAGE).yml ${REMOTE}:${REMOTE_PATH}/docker-compose.$(STAGE).yml
+	ssh -t ${REMOTE} '\
+		cd ${REMOTE_PATH} && \
+		export IMAGE_TAG=$(IMAGE_TAG) && \
+		docker-compose -f ./docker-compose.${STAGE}.yml pull --include-deps && \
+		docker-compose -f ./docker-compose.$(STAGE).yml up -d --no-build --remove-orphans && \
+		docker-compose -f ./docker-compose.$(STAGE).yml ps'
