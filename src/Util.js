@@ -12,10 +12,18 @@ import {
 import { merge, catchError } from 'rxjs/operators'
 import { of } from 'rxjs'
 
+/**
+ * Redux utils
+ */
+
 // createReducer :: (State, Object) -> (State, Action) -> State
 export const createReducer = (initialState, handlers) =>
   (state = initialState, action = {}) =>
     propOr(identity, prop('type', action), handlers)(state, action)
+
+/**
+ * Observable utils
+ */
 
 // logObservableError :: Observable Error -> () -> Observable
 export const logObservableError = () => catchError((err, source) => pipe(
@@ -33,8 +41,16 @@ export const logObservableErrorAndTriggerAction = action => catchError(
   )(err)
 )
 
+/**
+ * String utils
+ */
+
 // jsonStringify :: Object -> String
 export const jsonStringify = a => JSON.stringify(a)
+
+/**
+ * Array utils
+ */
 
 // getRandomElementFromArray :: [Any] -> Any
 export const getRandomElementFromArray = array => pipe(
@@ -43,6 +59,10 @@ export const getRandomElementFromArray = array => pipe(
   Math.floor,
   key => array[key],
 )(array)
+
+/**
+ * Foursquare utils
+ */
 
 // @see https://developer.foursquare.com/docs/api/venues/photos
 //
