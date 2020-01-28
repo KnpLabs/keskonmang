@@ -1,12 +1,13 @@
 import { ofType, combineEpics } from 'redux-observable'
 import { mergeMap, map, filter } from 'rxjs/operators'
 import {
+  apply,
   complement,
   isNil,
   pipe,
   prop,
 } from 'ramda'
-import { 
+import {
   logObservableErrorAndTriggerAction,
   logObservableError,
 } from './../Util'
@@ -24,15 +25,15 @@ import {
 } from './../Redux/State/Session'
 
 // @see https://developers.google.com/identity/sign-in/web/build-button
-// 
+//
 // signInEpic :: Epic -> Observable Action SIGN_IN_SUCCESS SIGN_IN_FAILURE
-export const signInEpic = (action$, state$, { getGoogleApi }) => 
+export const signInEpic = (action$, state$, { getGoogleApi }) =>
   action$.pipe(
     ofType(SIGN_IN_BUTTON_MOUNTED),
     map(() => getGoogleApi()),
     filter(complement(isNil)),
     mergeMap(gapi => new Promise((resolve, reject) => gapi.signin2.render(
-      'gapi-signin', 
+      'gapi-signin',
       {
         'scope': 'profile email',
         'width': 135,
@@ -61,8 +62,9 @@ export const signOutEpic = (action$, state$, { getGoogleApi }) =>
     logObservableErrorAndTriggerAction(signOutFailure)
   )
 
-// formatProfile :: GoogleBasicProfile -> User
-const formatProfile = gprofile => ({
+// formatProfile :: (GoogleBasicProfile, GoogleAuthResponse) -> User
+const formatProfile = (gprofile, gresponse) => ({
+  token: gresponse.id_token,
   name: gprofile.getName(),
   giveName: gprofile.getGivenName(),
   familyName: gprofile.getFamilyName(),
@@ -73,14 +75,17 @@ const formatProfile = gprofile => ({
 // https://developers.google.com/identity/sign-in/web/people
 // https://developers.google.com/identity/sign-in/web/backend-auth
 //
-// getBasicProfileEpic :: Epic -> Observable Action 
+// getBasicProfileEpic :: Epic -> Observable Action
 export const getBasicProfileEpic = action$ =>
   action$.pipe(
     ofType(SIGN_IN_SUCCESS),
     map(pipe(
       prop('user'),
-      user => user.getBasicProfile(),
-      formatProfile,
+      user => [
+        user.getBasicProfile(),
+        user.getAuthResponse()
+      ],
+      apply(formatProfile),
       profileReceived,
     )),
     logObservableError(),
