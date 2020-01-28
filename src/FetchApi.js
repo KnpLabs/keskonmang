@@ -1,5 +1,5 @@
-// createFetchApi :: (Fetcher, GoogleApi) -> String -> Object -> Promise
-export const createFetchApi = (fetcher, googleApi) => (url, options) =>
+// createFetchApi :: Fetcher -> String -> Object -> Promise
+export const createFetchApi = fetcher => (url, options) =>
   fetcher(
     `${process.env.REACT_APP_API_BASE_URL}${url}`,
     {

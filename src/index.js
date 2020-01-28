@@ -7,18 +7,13 @@ import rootEpic from './Epic'
 import { default as mainReducer, debug } from './Redux/State'
 import { createFetchApi } from './FetchApi'
 
-const getGoogleApi = () => window.gapi
-
-// getHerePlatform :: () -> Here.Platform
-const getHerePlatform = () => new window.H.service.Platform({
-  'apikey': process.env.REACT_APP_HERE_API_KEY,
-});
-
 const epicMiddleware = createEpicMiddleware({
   dependencies: {
-    fetchApi: createFetchApi(fetch, getGoogleApi),
-    getGoogleApi,
-    getHerePlatform,
+    fetchApi: createFetchApi(fetch),
+    getGoogleApi: () => window.gapi,
+    getHerePlatform: () => new window.H.service.Platform({
+      'apikey': process.env.REACT_APP_HERE_API_KEY,
+    }),
     premiumEndpointsDisabled: Number(process.env.REACT_APP_FOURSQUARE_PREMIUM_ENDPOINTS_DISABLED)
   },
 })
