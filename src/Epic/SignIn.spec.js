@@ -64,6 +64,9 @@ describe('Epic :: SignIn :: getBasicProfileEpic', () => {
         getImageUrl: () => 'http://www.noop.org/img.jpg',
         getEmail: () => 'test@knpeer.com'
       }),
+      getAuthResponse: () => ({
+        id_token: 'a wonderfull cryptic token !',
+      }),
     }
     const action$ = ActionsObservable.of(reducer.signInSuccess(userMock))
 
@@ -72,6 +75,7 @@ describe('Epic :: SignIn :: getBasicProfileEpic', () => {
       .then(action => {
         expect(action.type).toEqual(session.PROFILE_RECEIVED)
         expect(action.profile).toEqual({
+          token: 'a wonderfull cryptic token !',
           name: 'KNP Labs',
           giveName: 'KNP',
           familyName: 'Labs',
