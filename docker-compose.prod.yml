@@ -2,9 +2,50 @@ version: '3.4'
 
 services:
   nginx:
+    image: quay.io/knplabs/keskonmange:nginx-${IMAGE_TAG}
     build:
       context: ./
       dockerfile: .docker/Dockerfile
       target: nginx
       args:
         ENV_FILE: .env.prod.dist
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx.rule=Host(`keskonmange.knpnet.net`)"
+      - "traefik.http.routers.nginx.entrypoints=web"
+      - "traefik.http.routers.nginx.entrypoints=websecure"
+      - "traefik.http.routers.nginx.tls.certresolver=keskonmange"
+      - "traefik.docker.network=traefik"
+    networks:
+      - traefik
+
+  reverse-proxy:
+    image: quay.io/knplabs/keskonmange:reverse-proxy-${IMAGE_TAG}
+    build:
+      context: ./
+      dockerfile: .docker/Dockerfile
+      target: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.keskonmange.acme.httpchallenge=true"
+      - "--certificatesresolvers.keskonmange.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.keskonmange.acme.email=joris.langlois@knplabs.com"
+      - "--certificatesresolvers.keskonmange.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./letsencrypt:/letsencrypt"
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external:
+      name: traefik
