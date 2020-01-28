@@ -12,7 +12,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nginx.rule=Host(`keskonmange.knpnet.net`)"
-      - "traefik.http.routers.nginx.entrypoints=web"
       - "traefik.http.routers.nginx.entrypoints=websecure"
       - "traefik.http.routers.nginx.tls.certresolver=keskonmange"
       - "traefik.docker.network=traefik"
@@ -35,6 +34,12 @@ services:
       - "--certificatesresolvers.keskonmange.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.keskonmange.acme.email=joris.langlois@knplabs.com"
       - "--certificatesresolvers.keskonmange.acme.storage=/letsencrypt/acme.json"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:[a-z-.]+}`)"
+      - "traefik.http.routers.http-catchall.entrypoints=web"
+      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
     ports:
       - "80:80"
       - "443:443"
