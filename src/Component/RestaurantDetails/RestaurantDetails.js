@@ -1,6 +1,5 @@
 import React from 'react'
 import { getImageUrl } from './../../Util'
-import retryIcon from '../../Style/Images/retry.svg'
 import './RestaurantDetails.css'
 
 // RestaurantDetails :: Props -> React.Component
@@ -64,7 +63,7 @@ export default ({
           >
             <img
               className={`${loading ? 'is-hidden': ''}`}
-              src={retryIcon}
+              src="/images/retry.svg"
               alt="Retry icon"
             />
             Chercher à nouveau
