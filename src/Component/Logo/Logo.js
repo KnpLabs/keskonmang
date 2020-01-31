@@ -19,9 +19,10 @@ const HorizontalLogo = ({ className = '' }) =>
 
 // Logo :: Props -> React.Component
 export default ({
+  backToSearch,
   restaurantShown,
 }) =>
-  <figure data-is="brand-logo">
+  <figure data-is="brand-logo" onClick={backToSearch}>
     <HorizontalLogo className="is-hidden-desktop"/>
 
     {restaurantShown
