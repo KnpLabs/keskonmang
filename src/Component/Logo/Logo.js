@@ -25,7 +25,7 @@ export default ({
     <HorizontalLogo className="is-hidden-desktop"/>
 
     {restaurantShown
-      ? <HorizontalLogo className="is-hidden-desktop"/>
+      ? <HorizontalLogo className="is-hidden-touch"/>
       : <FullWidthLogo/>
     }
   </figure>

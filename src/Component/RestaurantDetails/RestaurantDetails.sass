@@ -1,19 +1,26 @@
 @import '../../Style/Variables.sass';
 @import '../../Style/Mixins.sass';
 
-section[data-is="restaurant-details"] .container
-    max-width: $size-640
+.details-container
+    position: relative
+
+    @media(max-width: $size-tablet)
+        width: 100%
+
+section[data-is="restaurant-details"]
+    width: 600px
     padding: $size-4
     padding-bottom: $size-1
-    margin-top: 100px
+    margin-top: 20px
     border-radius: $size-5
     text-align: center
     background: white
+    position: relative
 
     figure.restaurant-image
         overflow: hidden
         position: relative
-        height: 260px
+        height: 240px
         margin-bottom: $size-3
 
         img
@@ -29,6 +36,7 @@ section[data-is="restaurant-details"] .container
         font-family: $boldFont
         font-size: $size-4
         color: $black
+        margin-bottom: calc(#{$size-6} / 2)
 
     .separator
         width: $size-3
@@ -42,7 +50,7 @@ section[data-is="restaurant-details"] .container
 
     p.address, p.phone
         margin: 0
-        font-size: $size-5
+        font-size: $size-6
 
     p.website a
         color: $pink
@@ -114,9 +122,14 @@ section[data-is="restaurant-details"] .container
         &:hover
             background: $green-hover
 
-    @media(max-width: $size-640)
+    @media(max-width: $size-tablet)
         padding: $size-6
-        margin-top: 140px
+        margin-top: 0
+        width: 100%
+
+        h1.title
+            font-size: $size-5
+            margin-bottom: $size-5
 
         figure.restaurant-image
             height: 80px
@@ -132,13 +145,20 @@ section[data-is="restaurant-details"] .container
             margin: $size-6 0 $size-6 0
 
         button.next-restaurant
-            font-size: $size-5
+            font-size: $size-6
             bottom: -25px
 
+            img
+                height: 25px
+                width: 25px
+                left: 10px
+
 button.back-button
-    display: block
+    position: absolute
+    left: 0
+    right: 0
+    bottom: -80px
     margin: auto
-    padding-bottom: $size-7
     font-size: $size-5
     text-decoration: underline
     border: none
