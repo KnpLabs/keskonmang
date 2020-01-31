@@ -14,7 +14,21 @@
     src: url('Fonts/Raleway-ExtraBold.ttf') format('trueType')
 
 // App
+html
+    height: 100%
 body
     background: linear-gradient(180deg, rgba(255,90,94,1) 0%, rgba(252,126,96,1) 100%)
     background-attachment: fixed
     font-family: $regularFont
+    height: 100%
+
+    .main-container
+        display: flex
+        flex: 1
+        flex-direction: column
+        align-items: center
+        height: 100%
+
+@media(max-width: $size-desktop)
+    .container
+        padding: 0 $size-6 0 $size-6

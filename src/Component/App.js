@@ -11,10 +11,12 @@ export default ({
   store,
 }) =>
   <Provider store={store}>
-    <Logo/>
-    <Firewall>
-      <Menu/>
-    </Firewall>
-    <RestaurantWheel/>
-    <RestaurantDetails/>
+    <div className="container main-container">
+      <Logo/>
+      <Firewall>
+        <Menu/>
+      </Firewall>
+      <RestaurantWheel/>
+      <RestaurantDetails/>
+    </div>
   </Provider>
