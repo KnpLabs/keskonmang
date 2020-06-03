@@ -1,15 +1,11 @@
 @import '../../Style/Variables.sass';
 
 figure[data-is="brand-logo"]
-    position: absolute
-    left: 50%
-    transform: translateX(-50%)
     padding: $size-5
     margin-top: $size-5
-    width: 400px
+    width: 350px
+    cursor: pointer
 
-    &.is-small
-        width: 180px
-
-    @media(max-width: $size-640)
-        width: 200px
+    @media(max-width: $size-tablet)
+        margin: 0
+        width: 250px

@@ -12,41 +12,37 @@ export default ({
   submitForm,
 }) =>
   <section
-    className={`hero is-fullheight ${restaurantShown ? 'is-hidden' : ''}`}
+    className={`${restaurantShown ? 'is-hidden' : ''}`}
     data-is="restaurant-wheel"
   >
-    <div className="hero-body">
-      <div className="container">
-        <h1 className="title">
-          Trouve un resto' proche de toi !
-        </h1>
-        <form onSubmit={submitForm}>
-          <div className="field">
-            <div className="control">
-              <label className="label">
-                Adresse
-                {invalidAddress &&
-                  <span className="error">Cette adresse est introuvable :(</span>
-                }
-              </label>
-              <input
-                type="text"
-                name="address"
-                className={`input address ${invalidAddress ? 'error' : ''}`}
-                onChange={handleChange}
-                value={address}
-              />
-            </div>
-          </div>
-
-          {fetchError && <span className="global-error">Une erreur est survenue :(</span>}
-
-          <button
-            className={`submit-address ${address.length > 3 ? 'ready' : ''} button ${loading ? 'is-loading' : ''}`}
-          >
-            Qu'est ce qu'on mange ?
-          </button>
-        </form>
+    <h1 className="title">
+      Trouve un resto' proche de toi !
+    </h1>
+    <form onSubmit={submitForm}>
+      <div className="field">
+        <div className="control">
+          <label className="label">
+            Adresse
+            {invalidAddress &&
+              <span className="error">Cette adresse est introuvable :(</span>
+            }
+          </label>
+          <input
+            type="text"
+            name="address"
+            className={`input address ${invalidAddress ? 'error' : ''}`}
+            onChange={handleChange}
+            value={address}
+          />
+        </div>
       </div>
-    </div>
+
+      {fetchError && <span className="global-error">Une erreur est survenue :(</span>}
+
+      <button
+        className={`submit-address ${address.length > 3 ? 'ready' : ''} button ${loading ? 'is-loading' : ''}`}
+      >
+        Qu'est ce qu'on mange ?
+      </button>
+    </form>
   </section>

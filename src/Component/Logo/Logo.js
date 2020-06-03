@@ -1,12 +1,32 @@
 import React from 'react'
-import logo from '../../Style/Images/Logo-keskonmang.svg'
 import './Logo.css'
 
+// FullWidthLogo :: Props -> React.Component
+const FullWidthLogo = () =>
+  <img
+    src="/images/logo-keskonmang.svg"
+    alt="logo"
+    className="is-hidden-touch"
+  />
+
+// HorizontalLogo :: Props -> React.Component
+const HorizontalLogo = ({ className = '' }) =>
+  <img
+    src="/images/keskonmang-horizontal-01.svg"
+    alt="logo"
+    className={className}
+  />
+
 // Logo :: Props -> React.Component
-export default ({restaurantShown}) =>
-  <figure
-    data-is="brand-logo"
-    className={`${restaurantShown ? 'is-small' : ''}`}
-  >
-    <img src={logo} alt="logo" />
+export default ({
+  backToSearch,
+  restaurantShown,
+}) =>
+  <figure data-is="brand-logo" onClick={backToSearch}>
+    <HorizontalLogo className="is-hidden-desktop"/>
+
+    {restaurantShown
+      ? <HorizontalLogo className="is-hidden-touch"/>
+      : <FullWidthLogo/>
+    }
   </figure>
