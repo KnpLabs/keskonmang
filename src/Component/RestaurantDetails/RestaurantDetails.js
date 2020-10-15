@@ -1,5 +1,4 @@
 import React from 'react'
-import { getImageUrl } from './../../Util'
 import './RestaurantDetails.css'
 
 // RestaurantDetails :: Props -> React.Component
@@ -13,23 +12,23 @@ export default ({
   restaurantShown &&
   <div className="details-container">
     <section data-is="restaurant-details">
-      {restaurant.bestPhoto &&
+      {restaurant.image_url &&
         <figure className="restaurant-image">
-          <img src={getImageUrl(restaurant.bestPhoto)} alt={restaurant.name} />
+          <img src={restaurant.image_url} alt={restaurant.name} />
         </figure>
       }
 
       <h1 className="title">{restaurant.name}</h1>
-      <div className="separator"></div>
-      <p className="address">
-        {restaurant.location.address}&nbsp;
-        {restaurant.location.postalCode}&nbsp;
-        {restaurant.location.city}
-      </p>
+      <div className="separator"> </div>
+      {restaurant.location &&
+        <p className="address">
+          {restaurant.location.display_address.map(line => <span>{line}<br/></span>)}
+        </p>
+      }
 
-      {restaurant.contact &&
+      {restaurant.display_phone &&
         <p className="phone">
-          {restaurant.contact.formattedPhone}
+          {restaurant.display_phone}
         </p>
       }
       {restaurant.url &&
@@ -38,21 +37,21 @@ export default ({
             href={restaurant.url}
             target="_blank"
             rel="noopener noreferrer"
-          >Voir le site</a>
+          >Voir la fiche sur Yelp</a>
         </p>
       }
       {restaurant.hours &&
-        <p className={restaurant.hours.isOpen ? 'open' : 'close'}>
-          {restaurant.hours.isOpen ? 'Ouvert' : 'Fermé'}
+        <p className={restaurant.hours.is_open_now ? 'open' : 'close'}>
+          {restaurant.hours.is_open_now ? 'Ouvert' : 'Fermé'}
         </p>
       }
       {restaurant.price &&
-        <div className={`price price-${restaurant.price.tier}`}>
+        <div className={`price price-${restaurant.price.length}`}>
           <p>Prix :</p>
-          <span className="bullet"></span>
-          <span className="bullet"></span>
-          <span className="bullet"></span>
-          <span className="bullet"></span>
+          <span className="bullet"> </span>
+          <span className="bullet"> </span>
+          <span className="bullet"> </span>
+          <span className="bullet"> </span>
         </div>
       }
       <button

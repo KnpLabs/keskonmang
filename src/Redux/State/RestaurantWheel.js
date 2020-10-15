@@ -5,8 +5,6 @@ import { always } from 'ramda'
 export const INITIAL_STATE = {
   loading: false,
   address: '',
-  latitude: 0,
-  longitude: 0,
   restaurant: null,
   restaurantShown: false,
   fetchError: false,
@@ -15,8 +13,6 @@ export const INITIAL_STATE = {
 
 // action types
 export const HANDLE_ADDRESS = '@knp-keskonmange/RestaurantWheel/HANDLE_ADDRESS'
-export const GET_COORDINATES = '@knp-keskonmange/RestaurantWheel/GET_COORDINATES'
-export const COORDINATES_RECEIVED = '@knp-keskonmange/RestaurantWheel/COORDINATES_RECEIVED'
 export const GET_RESTAURANT = '@knp-keskonmange/RestaurantWheel/GET_RESTAURANT'
 export const RESTAURANT_RECEIVED = '@knp-keskonmange/RestaurantWheel/RESTAURANT_RECEIVED'
 export const RESTAURANT_DETAILS_RECEIVED = '@knp-keskonmange/RestaurantWheel/RESTAURANT_DETAILS_RECEIVED'
@@ -29,16 +25,6 @@ export const INVALID_ADDRESS = '@knp-keskonmange/RestaurantWheel/INVALID_ADDRESS
 export const handleAddress = address => ({
   type: HANDLE_ADDRESS,
   address,
-})
-
-// getCoordinates :: () -> Action
-export const getCoordinates = always({ type: GET_COORDINATES })
-
-// coordinatesReceived :: (Double, Double) -> Action
-export const coordinatesReceived = (latitude, longitude) => ({
-  type: COORDINATES_RECEIVED,
-  latitude,
-  longitude,
 })
 
 // getRestaurant :: () -> Action
@@ -83,17 +69,6 @@ export default createReducer(INITIAL_STATE, {
     ...state,
     address: address,
     invalidAddress: false,
-  }),
-
-  [GET_COORDINATES]: state => ({
-    ...state,
-    fetchError: false,
-  }),
-
-  [COORDINATES_RECEIVED]: (state, { latitude, longitude }) => ({
-    ...state,
-    latitude,
-    longitude,
   }),
 
   [GET_RESTAURANT]: state => ({

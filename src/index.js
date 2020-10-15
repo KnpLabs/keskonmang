@@ -10,11 +10,7 @@ import { createFetchApi } from './FetchApi'
 const epicMiddleware = createEpicMiddleware({
   dependencies: {
     fetchApi: createFetchApi(fetch),
-    getGoogleApi: () => window.gapi,
-    getHerePlatform: () => new window.H.service.Platform({
-      'apikey': process.env.REACT_APP_HERE_API_KEY,
-    }),
-    premiumEndpointsDisabled: Number(process.env.REACT_APP_FOURSQUARE_PREMIUM_ENDPOINTS_DISABLED)
+    getGoogleApi: () => window.gapi
   },
 })
 

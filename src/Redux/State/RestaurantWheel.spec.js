@@ -1,10 +1,8 @@
 import {
   INITIAL_STATE,
   backToSearch,
-  coordinatesReceived,
   default as reducer,
   fetchError,
-  getCoordinates,
   getRestaurant,
   handleAddress,
   invalidAddress,
@@ -29,30 +27,6 @@ describe('Redux :: State :: RestaurantWheel', () => {
       ...s1,
       address: '11, rue Kervegan',
       invalidAddress: false,
-    })
-  })
-
-  it('reduces getCoordinates action', () => {
-    const s1 = {
-      ...INITIAL_STATE,
-      fetchError: true,
-    }
-
-    expect(
-      reducer(INITIAL_STATE, getCoordinates())
-    ).toEqual({
-      ...INITIAL_STATE,
-      fetchError: false,
-    })
-  })
-
-  it('reduces coordinatesReceived action', () => {
-    expect(
-      reducer(INITIAL_STATE, coordinatesReceived(12.5, -12.3))
-    ).toEqual({
-      ...INITIAL_STATE,
-      latitude: 12.5,
-      longitude: -12.3,
     })
   })
 
