@@ -1,7 +1,6 @@
 import {
   always,
   identity,
-  join,
   length,
   multiply,
   pipe,
@@ -59,16 +58,3 @@ export const getRandomElementFromArray = array => pipe(
   Math.floor,
   key => array[key],
 )(array)
-
-/**
- * Foursquare utils
- */
-
-// @see https://developer.foursquare.com/docs/api/venues/photos
-//
-// getImageUrl :: Photo -> String
-export const getImageUrl = photo => join('', [
-  photo.prefix,
-  'original',
-  photo.suffix,
-])
