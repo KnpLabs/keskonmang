@@ -22,6 +22,20 @@ export default ({
   <div className="details-container">
     <section data-is="restaurant-details">
       <figure className="restaurant-image">
+        {restaurant.url &&
+          <a
+            href={restaurant.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="website"
+          >
+            <img
+              src="/images/circle_right.svg"
+              alt="Voir la fiche sur Yelp"
+              title="Voir la fiche sur Yelp"
+            />
+          </a>
+        }
         {restaurant.image_url
           ? <img src={restaurant.image_url} alt={restaurant.name} />
           : <img className="placeholder" src={placeholderImages[Math.floor(Math.random() * 6)]} alt="Keskonmang'" />
@@ -30,31 +44,29 @@ export default ({
 
       <h1 className="title">{restaurant.name}</h1>
       <div className="separator"> </div>
-      {restaurant.location &&
-        <p className="address">
-          {restaurant.location.display_address.map(line => <span>{line}<br/></span>)}
-        </p>
-      }
+
+      <p className="address">
+        {restaurant.location.address1} {restaurant.location.address2 && !restaurant.location.address3 && 
+          <span>({restaurant.location.address2})</span>
+        } {restaurant.location.address2 && restaurant.location.address3 && 
+          <span>({restaurant.location.address2} - {restaurant.location.address13})</span>
+        }
+        <br />
+        {restaurant.location.zip_code} {restaurant.location.city}, {restaurant.location.country}
+      </p>
 
       {restaurant.display_phone &&
         <p className="phone">
-          {restaurant.display_phone}
+          <a href="tel:{restaurant.display_phone}">{restaurant.display_phone}</a>
         </p>
       }
-      {restaurant.url &&
-        <p className="website">
-          <a
-            href={restaurant.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >Voir la fiche sur Yelp</a>
-        </p>
-      }
+
       {restaurant.hours &&
         <p className={restaurant.hours.is_open_now ? 'open' : 'close'}>
           {restaurant.hours.is_open_now ? 'Ouvert' : 'Fermé'}
         </p>
       }
+
       {restaurant.price &&
         <div className={`price price-${restaurant.price.length}`}>
           <p>Prix :</p>
