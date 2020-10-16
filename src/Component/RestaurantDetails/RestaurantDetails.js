@@ -1,6 +1,15 @@
 import React from 'react'
 import './RestaurantDetails.css'
 
+const placeholderImages = [
+  '/images/cooker.svg',
+  '/images/hungry.svg',
+  '/images/in-love.svg',
+  '/images/noodles.svg',
+  '/images/party.svg',
+  '/images/tongue-out.svg',
+];
+
 // RestaurantDetails :: Props -> React.Component
 export default ({
   restaurant,
@@ -12,11 +21,12 @@ export default ({
   restaurantShown &&
   <div className="details-container">
     <section data-is="restaurant-details">
-      {restaurant.image_url &&
-        <figure className="restaurant-image">
-          <img src={restaurant.image_url} alt={restaurant.name} />
-        </figure>
-      }
+      <figure className="restaurant-image">
+        {restaurant.image_url
+          ? <img src={restaurant.image_url} alt={restaurant.name} />
+          : <img className="placeholder" src={placeholderImages[Math.floor(Math.random() * 6)]} alt="Keskonmang'" />
+        }
+      </figure>
 
       <h1 className="title">{restaurant.name}</h1>
       <div className="separator"> </div>
