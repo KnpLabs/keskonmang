@@ -1,11 +1,12 @@
 import React from 'react'
 import './RestaurantWheel.css'
+import RestaurantFilters from '../RestaurantFilters'
 
 // RestaurantWheel :: Props -> React.Component
 export default ({
   address,
   fetchError,
-  handleChange,
+  handleAddressChange,
   invalidAddress,
   loading,
   restaurantShown,
@@ -31,11 +32,12 @@ export default ({
             type="text"
             name="address"
             className={`input address ${invalidAddress ? 'error' : ''}`}
-            onChange={handleChange}
+            onChange={handleAddressChange}
             value={address}
           />
         </div>
       </div>
+      <RestaurantFilters/>
 
       {fetchError && <span className="global-error">Une erreur est survenue :(</span>}
 

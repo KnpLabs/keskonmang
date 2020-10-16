@@ -6,7 +6,7 @@ section[data-is="restaurant-wheel"]
     border-radius: $size-5
     text-align: center
     background: white
-    margin-top: 120px
+    margin: 80px 0 30px 0
     position: relative
 
     h1.title
@@ -15,7 +15,6 @@ section[data-is="restaurant-wheel"]
 
     form
         margin: 0 calc(3 * #{$size-1}) auto calc(3 * #{$size-1})
-        padding-bottom: $size-1
         width: 600px
 
         label
@@ -90,3 +89,7 @@ section[data-is="restaurant-wheel"]
             button.submit-address
                 font-size: $size-5
                 bottom: -25px
+
+            .filter,
+            .filter:nth-child(4)
+                width: 100%

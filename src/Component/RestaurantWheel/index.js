@@ -1,21 +1,33 @@
 import RestaurantWheel from './RestaurantWheel'
 import { connect } from 'react-redux'
-import { handleAddress, getRestaurant } from '../../Redux/State/RestaurantWheel'
+import { 
+  handleAddress,
+  getRestaurant,
+} from '../../Redux/State/RestaurantWheel'
+import { getCuisineTypes } from '../../Redux/State/RestaurantFilters'
 import { compose, path, pipe, tap } from 'ramda'
+import { componentDidMount } from 'react-functional-lifecycle'
 
 // mapStateToProps :: State -> Props
 const mapStateToProps = state => ({
   address: state.RestaurantWheel.address,
+  cuisineTypes: state.RestaurantFilters.cuisineTypes,
+  diets: state.RestaurantFilters.diets,
+  prices: state.RestaurantFilters.prices,
   fetchError: state.RestaurantWheel.fetchError,
   invalidAddress: state.RestaurantWheel.invalidAddress,
   loading: state.RestaurantWheel.loading,
-  restaurant: state.RestaurantWheel.restaurant,
   restaurantShown: state.RestaurantWheel.restaurantShown,
+  cuisineTypeFilters: state.RestaurantFilters.cuisineTypeFilters,
+  isFiltersLoaded: state.RestaurantFilters.cuisineTypeFiltersLoaded
+    // && state.RestaurantWheel.dietFiltersLoaded
+    // && state.RestaurantWheel.priceFiltersLoaded
 })
 
 // mapDispatchToProps :: (Action * -> State) -> Props
 const mapDispatchToProps = dispatch => ({
-  handleChange: compose(dispatch, handleAddress, path(['target', 'value'])),
+  getCuisineTypes: compose(dispatch, getCuisineTypes),
+  handleAddressChange: compose(dispatch, handleAddress, path(['target', 'value'])),
   submitForm: pipe(
     tap(e => e.preventDefault()),
     getRestaurant,
@@ -23,8 +35,12 @@ const mapDispatchToProps = dispatch => ({
   ),
 })
 
+const lifecycles = compose(
+  componentDidMount(({ getCuisineTypes }) => getCuisineTypes()),
+)(RestaurantWheel)
+
 // RestaurantWheel :: Props -> React.Component
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(RestaurantWheel)
+)(lifecycles)

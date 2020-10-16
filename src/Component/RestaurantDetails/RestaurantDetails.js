@@ -21,6 +21,7 @@ export default ({
   restaurantShown &&
   <div className="details-container">
     <section data-is="restaurant-details">
+  {console.warn(restaurant)}
       <figure className="restaurant-image">
         {restaurant.url &&
           <a
@@ -62,8 +63,8 @@ export default ({
       }
 
       {restaurant.hours &&
-        <p className={restaurant.hours.is_open_now ? 'open' : 'close'}>
-          {restaurant.hours.is_open_now ? 'Ouvert' : 'Fermé'}
+        <p className={restaurant.hours[0].is_open_now ? 'open' : 'close'}>
+          {restaurant.hours[0].is_open_now ? 'Ouvert' : 'Fermé'}
         </p>
       }
 
