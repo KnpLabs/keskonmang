@@ -1,4 +1,4 @@
-# KNP Keskonmange
+# KNP Keskonmang
 
 This cool application helps you deciding where you should eat this morning with
 your team mates :)
@@ -12,8 +12,8 @@ Requires the latest version of :
 Just clone this repository and install its dependencies:
 
 ```bash
-$ git clone git@github.com:KnpLabs/keskonmange.git keskonmange
-$ cd keskonmange
+$ git clone git@github.com:KnpLabs/keskonmang.git keskonmang
+$ cd keskonmang
 $ make .env install-deps
 ```
 

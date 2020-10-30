@@ -6,7 +6,7 @@ export const INITIAL_STATE = {
 }
 
 // action types
-export const PROFILE_RECEIVED = '@knp-keskonmange/Session/PROFILE_RECEIVED'
+export const PROFILE_RECEIVED = '@knp-keskonmang/Session/PROFILE_RECEIVED'
 
 // @type Profile = {
 //   name :: String,

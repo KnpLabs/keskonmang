@@ -1,5 +1,5 @@
 REMOTE ?= deploy@keskonmang.knpnet.net
-REMOTE_PATH ?= ~/apps/keskonmange
+REMOTE_PATH=/home/deploy/front
 STAGE ?= dev
 
 .PHONY: .ensure-stage-exists

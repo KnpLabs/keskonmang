@@ -11,9 +11,9 @@ services:
         ENV_FILE: .env.prod.dist
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nginx.rule=Host(`keskonmange.knpnet.net`)"
+      - "traefik.http.routers.nginx.rule=Host(`keskonmang.knpnet.net`)"
       - "traefik.http.routers.nginx.entrypoints=websecure"
-      - "traefik.http.routers.nginx.tls.certresolver=keskonmange"
+      - "traefik.http.routers.nginx.tls.certresolver=keskonmang"
       - "traefik.docker.network=traefik"
     networks:
       - traefik
@@ -30,10 +30,10 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.keskonmange.acme.httpchallenge=true"
-      - "--certificatesresolvers.keskonmange.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.keskonmange.acme.email=joris.langlois@knplabs.com"
-      - "--certificatesresolvers.keskonmange.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.keskonmang.acme.httpchallenge=true"
+      - "--certificatesresolvers.keskonmang.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.keskonmang.acme.email=joris.langlois@knplabs.com"
+      - "--certificatesresolvers.keskonmang.acme.storage=/letsencrypt/acme.json"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:[a-z-.]+}`)"
