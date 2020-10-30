@@ -12,14 +12,14 @@ export const INITIAL_STATE = {
 }
 
 // action types
-export const HANDLE_ADDRESS = '@knp-keskonmange/RestaurantWheel/HANDLE_ADDRESS'
-export const GET_RESTAURANT = '@knp-keskonmange/RestaurantWheel/GET_RESTAURANT'
-export const RESTAURANT_RECEIVED = '@knp-keskonmange/RestaurantWheel/RESTAURANT_RECEIVED'
-export const RESTAURANT_DETAILS_RECEIVED = '@knp-keskonmange/RestaurantWheel/RESTAURANT_DETAILS_RECEIVED'
-export const SHOW_RESTAURANT = '@knp-keskonmange/RestaurantWheel/SHOW_RESTAURANT'
-export const BACK_TO_SEARCH = '@knp-keskonmange/RestaurantWheel/BACK_TO_SEARCH'
-export const FETCH_ERROR = '@knp-keskonmange/RestaurantWheel/FETCH_ERROR'
-export const INVALID_ADDRESS = '@knp-keskonmange/RestaurantWheel/INVALID_ADDRESS'
+export const HANDLE_ADDRESS = '@knp-keskonmang/RestaurantWheel/HANDLE_ADDRESS'
+export const GET_RESTAURANT = '@knp-keskonmang/RestaurantWheel/GET_RESTAURANT'
+export const RESTAURANT_RECEIVED = '@knp-keskonmang/RestaurantWheel/RESTAURANT_RECEIVED'
+export const RESTAURANT_DETAILS_RECEIVED = '@knp-keskonmang/RestaurantWheel/RESTAURANT_DETAILS_RECEIVED'
+export const SHOW_RESTAURANT = '@knp-keskonmang/RestaurantWheel/SHOW_RESTAURANT'
+export const BACK_TO_SEARCH = '@knp-keskonmang/RestaurantWheel/BACK_TO_SEARCH'
+export const FETCH_ERROR = '@knp-keskonmang/RestaurantWheel/FETCH_ERROR'
+export const INVALID_ADDRESS = '@knp-keskonmang/RestaurantWheel/INVALID_ADDRESS'
 
 // handleAddress :: String -> Action
 export const handleAddress = address => ({
