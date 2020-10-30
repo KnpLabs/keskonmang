@@ -6,8 +6,11 @@ const colorSelectTheme = theme => ({
   ...theme,
   colors: {
     ...theme.colors,
-    primary25: '#feddde',
     primary: '#feddde',
+    primary50: '#feddde',
+    primary25: '#feddde',
+    neutral20: '#feddde',
+    neutral30: '#feddde',
   },
 })
 
