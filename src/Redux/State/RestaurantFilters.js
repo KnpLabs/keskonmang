@@ -74,17 +74,17 @@ export const priceFiltersReceived = priceFilters => ({
 export default createReducer(INITIAL_STATE, {
   [HANDLE_CUISINE_TYPE]: (state, { cuisineTypes }) => ({
     ...state,
-    cuisineTypes: cuisineTypes,
+    cuisineTypes,
   }),
 
   [HANDLE_DIET]: (state, { diets }) => ({
     ...state,
-    diets: diets,
+    diets,
   }),
 
   [HANDLE_PRICE]: (state, { prices }) => ({
     ...state,
-    prices: prices,
+    prices,
   }),
 
   [CUISINE_TYPE_FILTERS_RECEIVED]: (state, { cuisineTypeFilters }) => ({
