@@ -14,12 +14,7 @@ Just clone this repository and install its dependencies:
 ```bash
 $ git clone git@github.com:KnpLabs/keskonmang.git keskonmang
 $ cd keskonmang
-$ make .env install-deps
-```
-
-Then, run it with
-```bash
-$ make start
+$ make dev
 ```
 
 and browse [http://localhost:3001/](http://localhost:3001/).

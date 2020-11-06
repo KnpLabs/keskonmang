@@ -3,13 +3,13 @@ version: '3.4'
 services:
   app:
     build:
-      context: ./
-      dockerfile: .docker/Dockerfile
+      context: ..
+      dockerfile: docker/app/Dockerfile
       target: dev
     command: 'yarn start'
     tty: true
     volumes:
-      - ./:/app
+      - ../:/app
     ports:
       - published: 3001
         target: 3000

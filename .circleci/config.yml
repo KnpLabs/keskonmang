@@ -2,14 +2,14 @@ version: 2
 
 reference:
   vm_machine: &vm_machine
-    working_directory: ~/keskonmangue
+    working_directory: ~/keskonmang
     machine:
       image: ubuntu-1604:201903-01
       docker_layer_caching: true
 
 jobs:
   test:
-    working_directory: ~/keskonmangue
+    working_directory: ~/keskonmang
     docker:
       - image: circleci/node:11.10.1-stretch
     environment:

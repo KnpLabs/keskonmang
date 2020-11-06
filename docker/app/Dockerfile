@@ -35,7 +35,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 WORKDIR /app
 
 COPY --from=prod /app/build /app/build
-COPY .docker/nginx/nginx.conf.tmpl /etc/nginx/conf.d/default.conf
+COPY docker/nginx/nginx.conf.tmpl /etc/nginx/conf.d/default.conf
 
 CMD ["nginx", "-g", "daemon off;"]
 

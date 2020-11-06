@@ -4,8 +4,8 @@ services:
   nginx:
     image: quay.io/knplabs/keskonmang:nginx-${IMAGE_TAG}
     build:
-      context: ./
-      dockerfile: .docker/Dockerfile
+      context: ..
+      dockerfile: docker/app/Dockerfile
       target: nginx
       args:
         ENV_FILE: .env.prod.dist
@@ -21,8 +21,8 @@ services:
   reverse-proxy:
     image: quay.io/knplabs/keskonmang:reverse-proxy-${IMAGE_TAG}
     build:
-      context: ./
-      dockerfile: .docker/Dockerfile
+      context: ..
+      dockerfile: docker/app/Dockerfile
       target: traefik
     command:
       - "--api.insecure=true"
