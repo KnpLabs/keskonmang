@@ -8,7 +8,7 @@ import {
   getDiets,
   getPrices,
 } from '../../Redux/State/RestaurantFilters'
-import { compose, map, path, repeat } from 'ramda'
+import { compose, map, repeat } from 'ramda'
 import { componentDidMount } from 'react-functional-lifecycle'
 
 const formatFilters = cuisineTypeFilters => map(cuisineTypeFilter => ({

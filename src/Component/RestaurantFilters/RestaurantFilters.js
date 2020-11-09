@@ -14,7 +14,7 @@ const colorSelectTheme = theme => ({
   },
 })
 
-// RestaurantWheel :: Props -> React.Component
+// RestaurantFilters :: Props -> React.Component
 export default ({
   cuisineTypes,
   diets,

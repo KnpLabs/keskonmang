@@ -1,7 +1,7 @@
 import { createReducer } from './../../Util'
 import { always, map, prop } from 'ramda'
 
-// initial stare
+// initial state
 export const INITIAL_STATE = {
   cuisineTypes: [],
   diets: [],
@@ -46,7 +46,7 @@ export const handlePrice = prices => ({
 // getCuisineTypes :: () -> Action
 export const getCuisineTypes = always({ type: GET_CUISINE_TYPE_FILTERS })
 
-// cuisineTypeFiltersReceived :: RestaurantDetails -> Action
+// cuisineTypeFiltersReceived :: Array -> Action
 export const cuisineTypeFiltersReceived = cuisineTypeFilters => ({
   type: CUISINE_TYPE_FILTERS_RECEIVED,
   cuisineTypeFilters,
@@ -55,7 +55,7 @@ export const cuisineTypeFiltersReceived = cuisineTypeFilters => ({
 // getDiets :: () -> Action
 export const getDiets = always({ type: GET_DIET_FILTERS })
 
-// dietFiltersReceived :: RestaurantDetails -> Action
+// dietFiltersReceived :: Array -> Action
 export const dietFiltersReceived = dietFilters => ({
   type: DIET_FILTERS_RECEIVED,
   dietFilters,
@@ -64,7 +64,7 @@ export const dietFiltersReceived = dietFilters => ({
 // getPrices :: () -> Action
 export const getPrices = always({ type: GET_PRICE_FILTERS })
 
-// priceFiltersReceived :: RestaurantDetails -> Action
+// priceFiltersReceived :: Array -> Action
 export const priceFiltersReceived = priceFilters => ({
   type: PRICE_FILTERS_RECEIVED,
   priceFilters,
