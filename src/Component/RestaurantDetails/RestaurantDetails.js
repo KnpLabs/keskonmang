@@ -61,9 +61,9 @@ export default ({
         </p>
       }
 
-      {restaurant.hours &&
-        <p className={restaurant.hours.is_open_now ? 'open' : 'close'}>
-          {restaurant.hours.is_open_now ? 'Ouvert' : 'Fermé'}
+      {restaurant.hours.length > 0 &&
+        <p className={restaurant.hours[0].is_open_now ? 'open' : 'close'}>
+          {restaurant.hours[0].is_open_now ? 'Ouvert' : 'Fermé'}
         </p>
       }
 

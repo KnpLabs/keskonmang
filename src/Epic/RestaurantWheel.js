@@ -7,8 +7,8 @@ import {
 import {
   defaultTo,
   join,
-  pipe,
   prop,
+  pipe,
 } from 'ramda'
 import {
   map,
@@ -32,7 +32,10 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
     withLatestFrom(state$),
     mergeMap(([ action, state ]) => fetchApi(join('', [
         '/restaurants/search',
-        `?location=${state.RestaurantWheel.address}`
+        `?location=${state.RestaurantWheel.address}`,
+        join('', state.RestaurantFilters.cuisineTypes.map(value => `&categories[]=${value}`)),
+        join('', state.RestaurantFilters.diets.map(value => `&categories[]=${value}`)),
+        join('', state.RestaurantFilters.prices.map(value => `&prices[]=${value}`)),
       ]),
       {
         method: 'GET',

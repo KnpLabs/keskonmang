@@ -36,15 +36,6 @@ export const restaurantReceived = id => ({
   id,
 })
 
-// @type RestaurantDetails = {
-//  categories :: [Category],
-//  hasPerk :: Boolean,
-//  id :: String,
-//  location :: Location,
-//  name :: String,
-//  referralId :: String,
-// }
-//
 // restaurantDetailsReceived :: RestaurantDetails -> Action
 export const restaurantDetailsReceived = restaurant => ({
   type: RESTAURANT_DETAILS_RECEIVED,
