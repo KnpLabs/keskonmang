@@ -7,10 +7,10 @@ export default ({
   address,
   fetchError,
   handleAddressChange,
-  invalidAddress,
   loading,
   restaurantShown,
   submitForm,
+  noRestaurants,
 }) =>
   <section
     className={`${restaurantShown ? 'is-hidden' : ''}`}
@@ -24,14 +24,11 @@ export default ({
         <div className="control">
           <label className="label">
             Adresse
-            {invalidAddress &&
-              <span className="error">Cette adresse est introuvable :(</span>
-            }
           </label>
           <input
             type="text"
             name="address"
-            className={`input address ${invalidAddress ? 'error' : ''}`}
+            className="input address"
             onChange={handleAddressChange}
             value={address}
           />
@@ -40,6 +37,7 @@ export default ({
       <RestaurantFilters/>
 
       {fetchError && <span className="global-error">Une erreur est survenue :(</span>}
+      {noRestaurants && <span className="global-error">Aucun restaurants à proposer :(</span>}
 
       <button
         className={`submit-address ${address.length > 3 ? 'ready' : ''} button ${loading ? 'is-loading' : ''}`}
