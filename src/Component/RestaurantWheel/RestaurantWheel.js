@@ -17,7 +17,7 @@ export default ({
     data-is="restaurant-wheel"
   >
     <h1 className="title">
-      Trouve un resto' proche de toi !
+      Trouve un resto' ouvert proche de toi !
     </h1>
     <form onSubmit={submitForm}>
       <div className="field">

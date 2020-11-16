@@ -61,12 +61,6 @@ export default ({
         </p>
       }
 
-      {restaurant.hours.length > 0 &&
-        <p className={restaurant.hours[0].is_open_now ? 'open' : 'close'}>
-          {restaurant.hours[0].is_open_now ? 'Ouvert' : 'Fermé'}
-        </p>
-      }
-
       {restaurant.price &&
         <div className={`price price-${restaurant.price.length}`}>
           <p>Prix :</p>
