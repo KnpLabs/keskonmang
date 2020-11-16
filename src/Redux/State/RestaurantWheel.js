@@ -8,7 +8,7 @@ export const INITIAL_STATE = {
   restaurant: null,
   restaurantShown: false,
   fetchError: false,
-  invalidAddress: false,
+  noRestaurants: false,
 }
 
 // action types
@@ -19,7 +19,7 @@ export const RESTAURANT_DETAILS_RECEIVED = '@knp-keskonmang/RestaurantWheel/REST
 export const SHOW_RESTAURANT = '@knp-keskonmang/RestaurantWheel/SHOW_RESTAURANT'
 export const BACK_TO_SEARCH = '@knp-keskonmang/RestaurantWheel/BACK_TO_SEARCH'
 export const FETCH_ERROR = '@knp-keskonmang/RestaurantWheel/FETCH_ERROR'
-export const INVALID_ADDRESS = '@knp-keskonmang/RestaurantWheel/INVALID_ADDRESS'
+export const NO_RESTAURANTS = '@knp-keskonmang/RestaurantWheel/NO_RESTAURANTS'
 
 // handleAddress :: String -> Action
 export const handleAddress = address => ({
@@ -51,21 +51,21 @@ export const backToSearch = always({ type: BACK_TO_SEARCH })
 // fetchError :: () -> Action
 export const fetchError = always({ type: FETCH_ERROR })
 
-// invalidAddress :: () -> Action
-export const invalidAddress = always({ type: INVALID_ADDRESS })
+// noRestaurants :: () -> Action
+export const noRestaurants = always({ type: NO_RESTAURANTS })
 
 // Session :: (State, Action *) -> State
 export default createReducer(INITIAL_STATE, {
   [HANDLE_ADDRESS]: (state, { address }) => ({
     ...state,
     address: address,
-    invalidAddress: false,
   }),
 
   [GET_RESTAURANT]: state => ({
     ...state,
     loading: true,
     fetchError: false,
+    noRestaurants: false,
   }),
 
   [RESTAURANT_DETAILS_RECEIVED]: (state, { restaurant }) => ({
@@ -90,8 +90,9 @@ export default createReducer(INITIAL_STATE, {
     loading: false,
   }),
 
-  [INVALID_ADDRESS]: state => ({
+  [NO_RESTAURANTS]: state => ({
     ...state,
-    invalidAddress: true,
+    loading: false,
+    noRestaurants: true,
   }),
 })

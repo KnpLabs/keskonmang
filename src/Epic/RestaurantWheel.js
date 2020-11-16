@@ -6,6 +6,8 @@ import {
 } from './../Util'
 import {
   defaultTo,
+  ifElse,
+  isEmpty,
   join,
   prop,
   pipe,
@@ -20,6 +22,7 @@ import {
   RESTAURANT_DETAILS_RECEIVED,
   RESTAURANT_RECEIVED,
   fetchError,
+  noRestaurants,
   restaurantDetailsReceived,
   restaurantReceived,
   showRestaurant,
@@ -43,9 +46,15 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
     )),
     map(pipe(
       defaultTo([]),
-      getRandomElementFromArray,
-      prop('id'),
-      restaurantReceived,
+      ifElse(
+        isEmpty, 
+        noRestaurants,
+        pipe(
+          getRandomElementFromArray,
+          prop('id'),
+          restaurantReceived,
+        ), 
+      )
     )),
     logObservableErrorAndTriggerAction(fetchError),
   )

@@ -46,6 +46,32 @@ describe('Epic :: RestaurantWheel :: getRestaurantEpic', () => {
       })
       .catch(error => {fail(error); done()})
   }, 1000)
+
+  it('dispatches NO_RESTAURANTS action', done => {
+    const action$ = ActionsObservable.of(reducer.getRestaurant())
+    const state$ = createStateObservable({
+      RestaurantWheel: {
+        address: 'Nowhere'
+      },
+      RestaurantFilters: {
+        cuisineTypes: [],
+        diets: [],
+        prices: [],
+      }
+    })
+    const fetchApiUrl = []
+    const deps = {
+      fetchApi: createFetchApiMock([], fetchApiUrl)
+    }
+
+    epic.getRestaurantEpic(action$, state$, deps)
+      .toPromise(Promise)
+      .then(action => {
+        expect(action.type).toEqual(reducer.NO_RESTAURANTS)
+        done()
+      })
+      .catch(error => {fail(error); done()})
+  }, 1000)
 })
 
 describe('Epic :: RestaurantWheel :: getRestaurantDetailsEpic', () => {

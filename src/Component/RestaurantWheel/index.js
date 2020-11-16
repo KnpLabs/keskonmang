@@ -10,9 +10,9 @@ import { compose, path, pipe, tap } from 'ramda'
 const mapStateToProps = state => ({
   address: state.RestaurantWheel.address,
   fetchError: state.RestaurantWheel.fetchError,
-  invalidAddress: state.RestaurantWheel.invalidAddress,
   loading: state.RestaurantWheel.loading,
   restaurantShown: state.RestaurantWheel.restaurantShown,
+  noRestaurants: state.RestaurantWheel.noRestaurants,
 })
 
 // mapDispatchToProps :: (Action * -> State) -> Props

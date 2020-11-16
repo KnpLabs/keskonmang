@@ -5,7 +5,7 @@ import {
   fetchError,
   getRestaurant,
   handleAddress,
-  invalidAddress,
+  noRestaurants,
   restaurantDetailsReceived,
   showRestaurant,
 } from './RestaurantWheel'
@@ -16,17 +16,11 @@ describe('Redux :: State :: RestaurantWheel', () => {
   })
 
   it('reduces handleAddress action', () => {
-    const s1 = {
-      ...INITIAL_STATE,
-      invalidAddress: true,
-    }
-
     expect(
-      reducer(s1, handleAddress('11, rue Kervegan'))
+      reducer(INITIAL_STATE, handleAddress('11, rue Kervegan'))
     ).toEqual({
-      ...s1,
+      ...INITIAL_STATE,
       address: '11, rue Kervegan',
-      invalidAddress: false,
     })
   })
 
@@ -100,12 +94,12 @@ describe('Redux :: State :: RestaurantWheel', () => {
     })
   })
 
-  it('reduces invalidAddress action', () => {
+  it('reduces noRestaurants action', () => {
     expect(
-      reducer(INITIAL_STATE, invalidAddress())
+      reducer(INITIAL_STATE, noRestaurants())
     ).toEqual({
       ...INITIAL_STATE,
-      invalidAddress: true,
+      noRestaurants: true,
     })
   })
 })
