@@ -6,7 +6,7 @@ const FullWidthLogo = () =>
   <img
     src="/images/logo-keskonmang.svg"
     alt="logo"
-    className="is-hidden-touch"
+    className="full is-hidden-touch"
   />
 
 // HorizontalLogo :: Props -> React.Component
@@ -14,7 +14,7 @@ const HorizontalLogo = ({ className = '' }) =>
   <img
     src="/images/keskonmang-horizontal-01.svg"
     alt="logo"
-    className={className}
+    className={ `horizontal ${className}` }
   />
 
 // Logo :: Props -> React.Component

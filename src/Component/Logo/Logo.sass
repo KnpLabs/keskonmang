@@ -3,9 +3,16 @@
 figure[data-is="brand-logo"]
     padding: $size-5
     margin-top: $size-5
-    width: 350px
+    width: 70%
+    max-height: 350px
+    text-align: center
     cursor: pointer
 
+    img.full
+        max-height: calc(350px - 40px)
+
+    img.horizontal
+        max-width: 600px
+
     @media(max-width: $size-tablet)
-        margin: 0
-        width: 250px
+        width: 90%
