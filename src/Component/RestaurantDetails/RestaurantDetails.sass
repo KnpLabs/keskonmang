@@ -1,17 +1,11 @@
 @import '../../Style/Variables.sass';
 @import '../../Style/Mixins.sass';
 
-.details-container
-    position: relative
-
-    @media(max-width: $size-tablet)
-        width: 100%
-
 section[data-is="restaurant-details"]
     width: 600px
     padding: $size-4
-    padding-bottom: $size-1
-    margin-top: 20px
+    padding-bottom: $size-3
+    margin-bottom: 90px
     border-radius: $size-5
     text-align: center
     background: white
@@ -21,7 +15,7 @@ section[data-is="restaurant-details"]
         overflow: hidden
         position: relative
         height: 240px
-        margin-bottom: $size-3
+        margin-bottom: $size-6
 
         img
             width: 100%
@@ -55,14 +49,13 @@ section[data-is="restaurant-details"]
         width: $size-3
         height: 3px
         background: #ff5a5e
-        margin: 0 auto $size-4 auto
+        margin: 0 auto $size-6 auto
         border-radius: 3px
 
     p
       margin: $size-7
 
     p.address, p.phone
-        margin: 0
         font-size: $size-6
 
     div.price
@@ -123,6 +116,19 @@ section[data-is="restaurant-details"]
         &:hover
             background: $green-hover
 
+    button.back-button
+        position: absolute
+        left: 0
+        right: 0
+        bottom: -80px
+        margin: auto
+        font-size: $size-5
+        text-decoration: underline
+        border: none
+        background: none
+        color: white
+        cursor: pointer
+
     @media(max-width: $size-tablet)
         padding: $size-6
         margin-top: 0
@@ -133,7 +139,7 @@ section[data-is="restaurant-details"]
             margin-bottom: $size-5
 
         figure.restaurant-image
-            height: 80px
+            height: 150px
             margin-bottom: $size-6
 
         .separator
@@ -153,16 +159,3 @@ section[data-is="restaurant-details"]
                 height: 25px
                 width: 25px
                 left: 10px
-
-button.back-button
-    position: absolute
-    left: 0
-    right: 0
-    bottom: -80px
-    margin: auto
-    font-size: $size-5
-    text-decoration: underline
-    border: none
-    background: none
-    color: white
-    cursor: pointer

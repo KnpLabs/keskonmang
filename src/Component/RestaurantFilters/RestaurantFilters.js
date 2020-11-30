@@ -29,7 +29,7 @@ export default ({
   dietFiltersLoaded,
   priceFiltersLoaded,
 }) => 
-  <div>
+  <div className="filters">
     <div className="field filter">
       <div className="control">
         <label className="label">Type de cuisine</label>
