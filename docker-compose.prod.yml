@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   nginx:
-    image: quay.io/knplabs/keskonmang:nginx-${IMAGE_TAG}
+    image: knplabs/keskonmang:nginx-${IMAGE_TAG}
     build:
       context: ./
       dockerfile: .docker/Dockerfile
@@ -19,7 +19,7 @@ services:
       - traefik
 
   reverse-proxy:
-    image: quay.io/knplabs/keskonmang:reverse-proxy-${IMAGE_TAG}
+    image: knplabs/keskonmang:reverse-proxy-${IMAGE_TAG}
     build:
       context: ./
       dockerfile: .docker/Dockerfile
