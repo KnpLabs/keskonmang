@@ -17,6 +17,8 @@ export default ({
   getRestaurant,
   backToSearch,
   restaurantShown,
+  addHistory,
+  isLogged,
 }) => restaurantShown &&
   <section data-is="restaurant-details">
     <figure className="restaurant-image">
@@ -68,17 +70,28 @@ export default ({
         <span className="bullet"> </span>
       </div>
     }
-    <button
-      className={`next-restaurant button ${loading ? 'is-loading' : ''}`}
-      onClick={getRestaurant}
-    >
-      <img
-        className={`${loading ? 'is-hidden': ''}`}
-        src="/images/retry.svg"
-        alt="Retry icon"
-      />
-      Chercher à nouveau
-    </button>
+    <div className={`buttons-container ${isLogged ? 'double-buttons' : ''}`}>
+      {isLogged &&
+        <button
+          className="go-restaurant button"
+          title="Ajouter à l'historique"
+          onClick={addHistory}
+        >
+          J'y vais!
+        </button>
+      }
+      <button
+        className={`next-restaurant button ${loading ? 'is-loading' : ''}`}
+        onClick={getRestaurant}
+      >
+        <img
+          className={`${loading ? 'is-hidden': ''}`}
+          src="/images/retry.svg"
+          alt="Retry icon"
+        />
+        Chercher à nouveau
+      </button>
+    </div>
 
     <button className="back-button" onClick={backToSearch}>Changer ma recherche</button>
   </section>
