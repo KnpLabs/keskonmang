@@ -5,6 +5,7 @@ import Menu from './Menu'
 import RestaurantWheel from './RestaurantWheel'
 import RestaurantDetails from './RestaurantDetails'
 import Logo from './Logo'
+import Toast from './Toast'
 import '../Style/App.css';
 
 export default ({
@@ -18,5 +19,6 @@ export default ({
       </Firewall>
       <RestaurantWheel/>
       <RestaurantDetails/>
+      <Toast/>
     </div>
   </Provider>
