@@ -1,3 +1,4 @@
+import { isNil } from 'ramda'
 import { combineEpics, ofType } from 'redux-observable'
 import { logObservableError } from './../Util'
 import {
@@ -14,8 +15,8 @@ export const addHistoryEpic = (action$, state$, { fetchApi }) =>
   action$.pipe(
     ofType(ADD_HISTORY),
     withLatestFrom(state$),
-    filter(([ action, state ]) => state.Session.user !== null),
-    filter(([ action, state ]) => state.RestaurantWheel.restaurant !== null),
+    filter(([ _, state ]) => !isNil(state.Session.user)),
+    filter(([ _, state ]) => !isNil(state.RestaurantWheel.restaurant)),
     mergeMap(([ action, state ]) => fetchApi(
       `/history/create`, 
       {

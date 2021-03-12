@@ -11,13 +11,6 @@ export const INITIAL_STATE = {
 export const ADD_TOAST = '@knp-keskonmang/Toast/ADD_TOAST'
 export const REMOVE_TOAST = '@knp-keskonmang/Toast/REMOVE_TOAST'
 
-// @type Toast = {
-//   id :: Int,
-//   duration :: Int,
-//   level :: String,
-//   message :: String,
-// }
-//
 // addToast :: Toast -> Action
 export const addToast = toast => ({
   type: ADD_TOAST,

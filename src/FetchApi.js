@@ -1,7 +1,7 @@
 import { ifElse, isNil } from 'ramda'
 
-// createFetchApi :: Fetcher -> (String, Array, String) -> Object -> Promise
-export const createFetchApi = fetcher => (url, options, token = null) =>
+// createFetchApi :: Fetcher -> (String, Object, String) -> Object -> Promise
+export const createFetchApi = fetcher => (url, options = {}, token = null) =>
   fetcher(
     `${process.env.REACT_APP_API_BASE_URL}${url}`,
     generateOptions(options, token),

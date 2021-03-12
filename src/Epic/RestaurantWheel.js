@@ -41,7 +41,6 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
         join('', state.RestaurantFilters.diets.map(value => `&categories[]=${value}`)),
         join('', state.RestaurantFilters.prices.map(value => `&prices[]=${value}`)),
       ]),
-      { method: 'GET' },
     )),
     map(pipe(
       defaultTo([]),
@@ -62,10 +61,7 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
 export const getRestaurantDetailsEpic = (action$, state$, { fetchApi }) =>
   action$.pipe(
     ofType(RESTAURANT_RECEIVED),
-    mergeMap((action => fetchApi(
-      `/restaurants/${action.id}`, 
-      { method: 'GET' }
-    ))),
+    mergeMap((action => fetchApi(`/restaurants/${action.id}`))),
     map(restaurantDetailsReceived),
     logObservableError(),
   )
