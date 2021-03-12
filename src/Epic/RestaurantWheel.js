@@ -1,7 +1,6 @@
 import { ofType, combineEpics } from 'redux-observable'
 import {
   getRandomElementFromArray,
-  logObservableError,
   logObservableErrorAndTriggerAction,
 } from './../Util'
 import {
@@ -19,13 +18,9 @@ import {
 } from 'rxjs/operators'
 import {
   GET_RESTAURANT,
-  RESTAURANT_DETAILS_RECEIVED,
-  RESTAURANT_RECEIVED,
   fetchError,
   noRestaurants,
-  restaurantDetailsReceived,
   restaurantReceived,
-  showRestaurant,
 } from './../Redux/State/RestaurantWheel'
 
 // getRestaurantEpic :: Epic -> Observable Action RESTAURANT_RECEIVED
@@ -43,6 +38,7 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
       ]),
     )),
     map(pipe(
+      response => response.body,
       defaultTo([]),
       ifElse(
         isEmpty, 
@@ -57,25 +53,6 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
     logObservableErrorAndTriggerAction(fetchError),
   )
 
-// getRestaurantDetailsEpic :: Epic -> Observable Action RESTAURANT_DETAILS_RECEIVED
-export const getRestaurantDetailsEpic = (action$, state$, { fetchApi }) =>
-  action$.pipe(
-    ofType(RESTAURANT_RECEIVED),
-    mergeMap((action => fetchApi(`/restaurants/${action.id}`))),
-    map(restaurantDetailsReceived),
-    logObservableError(),
-  )
-
-// showRestaurantEpic :: Epic -> Observable Action SHOW_RESTAURANT
-export const showRestaurantEpic = action$ =>
-  action$.pipe(
-    ofType(RESTAURANT_DETAILS_RECEIVED),
-    map(showRestaurant),
-    logObservableError(),
-  )
-
 export default combineEpics(
   getRestaurantEpic,
-  getRestaurantDetailsEpic,
-  showRestaurantEpic,
 )

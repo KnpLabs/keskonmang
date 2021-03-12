@@ -6,7 +6,7 @@ export const createFetchApi = fetcher => (url, options = {}, token = null) =>
     `${process.env.REACT_APP_API_BASE_URL}${url}`,
     generateOptions(options, token),
   ).then(response => response.status < 400
-    ? response.json()
+    ? Promise.all([response.json(), response.headers]).then(([json, headers]) => ({'body': json, 'headers': headers}))
     : Promise.reject('An error occured')
   )
 

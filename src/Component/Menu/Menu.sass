@@ -1,25 +1,47 @@
-@import '../../Style/Variables.sass';
+@import '../../Style/Variables.sass'
 
-.sign-out
+.user-menu
     position: absolute
     top: 30px
     right: 30px
-    height: 35px
-    width: 135px
-    padding: 3px 10px 3px 5px
-    border: none
-    background: white
-    border-radius: 20px
-    font-family: $boldFont
-    font-size: 13px
-    color: $black
-    cursor: pointer
-    outline: none
 
-    figure
-        height: 25px
-        width: 25px
-        margin-right: 7px
-        border-radius: 15px
-        display: inline-block
-        vertical-align: middle
+    .sign-out
+        border: none
+        background: white
+        font-family: $regularFont
+        color: $black
+        cursor: pointer
+        outline: none
+
+        figure
+            height: 25px
+            width: 25px
+            margin-right: 7px
+
+    .navbar-item
+        .menu-icon
+            height: 25px
+            width: 25px
+            padding: 5px
+            margin-left: 5px
+            border-radius: 20px
+            background: white
+            vertical-align: middle
+            cursor: pointer
+
+        &:hover
+            .menu-icon
+                border-bottom-right-radius: 0
+                border-bottom-left-radius: 0
+
+    // Overwrite Bulma
+    .navbar-dropdown
+        top: 85%
+        border-top-left-radius: 6px
+        border-top: none
+
+        .navbar-item:hover
+            background-color: $lightPink
+
+        .navbar-divider
+            background-color: $lightPink
