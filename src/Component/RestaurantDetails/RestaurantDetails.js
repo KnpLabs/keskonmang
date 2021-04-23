@@ -36,8 +36,8 @@ export default ({
           />
         </a>
       }
-      {restaurant.image_url
-        ? <img src={restaurant.image_url} alt={restaurant.name} />
+      {restaurant.image
+        ? <img src={restaurant.image} alt={restaurant.name} />
         : <img className="placeholder" src={placeholderImages[Math.floor(Math.random() * 6)]} alt="Keskonmang'" />
       }
     </figure>
@@ -46,23 +46,19 @@ export default ({
     <div className="separator"> </div>
 
     <p className="address">
-      {restaurant.location.address1} {restaurant.location.address2 && !restaurant.location.address3 && 
-        <span>({restaurant.location.address2})</span>
-      } {restaurant.location.address2 && restaurant.location.address3 && 
-        <span>({restaurant.location.address2} - {restaurant.location.address13})</span>
-      }
+      {restaurant.address} 
       <br />
-      {restaurant.location.zip_code} {restaurant.location.city}, {restaurant.location.country}
+      {restaurant.zipCode} {restaurant.city}, {restaurant.country}
     </p>
 
-    {restaurant.display_phone &&
+    {restaurant.phone &&
       <p className="phone">
-        <a href="tel:{restaurant.display_phone}">{restaurant.display_phone}</a>
+        <a href={ 'tel:' + restaurant.phone }>{restaurant.phone}</a>
       </p>
     }
 
     {restaurant.price &&
-      <div className={`price price-${restaurant.price.length}`}>
+      <div className={`price price-${restaurant.price}`}>
         <p>Prix :</p>
         <span className="bullet"> </span>
         <span className="bullet"> </span>
