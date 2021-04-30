@@ -21,7 +21,10 @@ export const addHistoryEpic = (action$, state$, { fetchApi }) =>
       `/history/create`, 
       {
         method: 'POST',
-        body: JSON.stringify({ restaurantId: state.RestaurantWheel.restaurant.id }),
+        body: JSON.stringify({ 
+          restaurantId: state.RestaurantWheel.restaurant.id,
+          restaurantName: state.RestaurantWheel.restaurant.name
+        }),
       },
       state.Session.user.token
     )),
