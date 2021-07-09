@@ -17,7 +17,7 @@ export const HISTORIES_RECEIVED = '@knp-keskonmang/History/HISTORIES_RECEIVED'
 // addHistory :: () -> Action
 export const addHistory = always({ type: ADD_HISTORY })
 
-// getHistories :: () -> Action
+// getHistories :: Number -> Action
 export const getHistories = (page = 1) => ({ 
   type: GET_HISTORIES,
   page

@@ -22,9 +22,7 @@ const mapDispatchToProps = dispatch => ({
 
 const willUnmount = ({ removeRestaurant }) => removeRestaurant()
 
-const lifecycles = compose(
-  componentWillUnmount(willUnmount)
-)(RestaurantDetails)
+const lifecycles = componentWillUnmount(willUnmount)(RestaurantDetails)
 
 // RestaurantDetails :: Props -> React.Component
 export default connect(

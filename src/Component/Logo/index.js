@@ -1,9 +1,10 @@
 import { connect } from 'react-redux'
 import Logo from './Logo'
+import { isNil } from 'ramda'
 
 // mapStateToProps :: State -> Props
 const mapStateToProps = state => ({
-  restaurantShown: state.RestaurantDetails.restaurant !== null,
+  restaurantShown: !isNil(state.RestaurantDetails.restaurant),
 })
 
 // Logo :: Props -> React.Component

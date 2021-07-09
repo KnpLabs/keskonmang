@@ -1,13 +1,10 @@
 import {
   INITIAL_STATE,
-  backToSearch,
   default as reducer,
   fetchError,
   getRestaurant,
   handleAddress,
   noRestaurants,
-  restaurantDetailsReceived,
-  showRestaurant,
 } from './RestaurantWheel'
 
 describe('Redux :: State :: RestaurantWheel', () => {
@@ -36,46 +33,6 @@ describe('Redux :: State :: RestaurantWheel', () => {
       ...INITIAL_STATE,
       loading: true,
       fetchError: false,
-    })
-  })
-
-  it('reduces restaurantDetailsReceived action', () => {
-    const s1 = {
-      ...INITIAL_STATE,
-      loading: true,
-    }
-
-    expect(
-      reducer(INITIAL_STATE, restaurantDetailsReceived({ id: 12345 }))
-    ).toEqual({
-      ...s1,
-      loading: false,
-      restaurant: {
-        id: 12345,
-      },
-    })
-  })
-
-  it('reduces showRestaurant action', () => {
-    expect(
-      reducer(INITIAL_STATE, showRestaurant())
-    ).toEqual({
-      ...INITIAL_STATE,
-      restaurantShown: true,
-    })
-  })
-
-  it('reduces backToSearch action', () => {
-    const s1 = {
-      ...INITIAL_STATE,
-      restaurantShown: true,
-    }
-
-    expect(
-      reducer(s1, backToSearch())
-    ).toEqual({
-      ...s1,
-      restaurantShown: false,
     })
   })
 

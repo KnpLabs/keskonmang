@@ -1,16 +1,15 @@
 import { createReducer } from './../../Util'
 import { always } from 'ramda'
 
-// initial stare
+// initial state
 export const INITIAL_STATE = {
-  loading: false,
+  loading: true,
   restaurant: null,
 }
 
 // action types
 export const GET_RESTAURANT_DETAILS = '@knp-keskonmang/RestaurantWheel/GET_RESTAURANT_DETAILS'
 export const RESTAURANT_DETAILS_RECEIVED = '@knp-keskonmang/RestaurantWheel/RESTAURANT_DETAILS_RECEIVED'
-export const SHOW_RESTAURANT = '@knp-keskonmang/RestaurantWheel/SHOW_RESTAURANT'
 export const REMOVE_RESTAURANT = '@knp-keskonmang/RestaurantWheel/REMOVE_RESTAURANT'
 
 // restaurantDetailsReceived :: RestaurantDetails -> Action
@@ -18,9 +17,6 @@ export const restaurantDetailsReceived = restaurant => ({
   type: RESTAURANT_DETAILS_RECEIVED,
   restaurant,
 })
-
-// showRestaurant :: () -> Action
-export const showRestaurant = always({ type: SHOW_RESTAURANT })
 
 // removeRestaurant :: () -> Action
 export const removeRestaurant = always({ type: REMOVE_RESTAURANT })

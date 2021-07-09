@@ -11,5 +11,5 @@ export const createStateObservable = state => new StateObservable(
 export const createFetchApiMock = (body, fetchApiUrl) =>
   (url, options) => {
     fetchApiUrl.push(url)
-    return Promise.resolve(body)
+    return Promise.resolve({body: body, headers: { get: () => 1}})
   }

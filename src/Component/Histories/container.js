@@ -19,9 +19,7 @@ const mapDispatchToProps = dispatch => ({
 
 const didMount = ({ getHistories }) => getHistories()
 
-const lifecycles = compose(
-  componentDidMount(didMount)
-)(Histories)
+const lifecycles = componentDidMount(didMount)(Histories)
 
 // Histories :: Props -> React.Component
 export default connect(

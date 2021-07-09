@@ -1,7 +1,7 @@
 import React from 'react'
 import './RestaurantWheel.css'
 import RestaurantFilters from '../RestaurantFilters'
-import { Redirect, useLocation } from "react-router-dom"
+import { Redirect, useLocation } from 'react-router-dom'
 
 // RestaurantWheel :: Props -> React.Component
 export default ({

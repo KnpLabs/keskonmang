@@ -4,7 +4,7 @@ import {
   BrowserRouter,
   Switch,
   Route,
-} from "react-router-dom";
+} from 'react-router-dom'
 import Firewall from './Firewall'
 import Histories from './Histories'
 import Logo from './Logo'
@@ -12,7 +12,7 @@ import Menu from './Menu'
 import RestaurantWheel from './RestaurantWheel'
 import RestaurantDetails from './RestaurantDetails'
 import Toast from './Toast'
-import '../Style/App.css';
+import '../Style/App.css'
 
 export default ({
   store,
