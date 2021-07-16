@@ -1,4 +1,4 @@
-import { isNil } from 'ramda'
+import { ifElse, isNil } from 'ramda'
 import { combineEpics, ofType } from 'redux-observable'
 import { logObservableError } from './../Util'
 import { addToast } from './../Redux/State/Toast'
@@ -11,7 +11,9 @@ import {
 import {
   ADD_HISTORY,
   GET_HISTORIES,
+  GET_NEXT_HISTORIES,
   historiesReceived,
+  nextHistoriesReceived,
 } from './../Redux/State/History'
 
 // addHistoryEpic :: Epic -> Observable Action ADD_TOAST
@@ -39,15 +41,22 @@ export const addHistoryEpic = (action$, state$, { fetchApi }) =>
 // getHistoriesEpic :: Epic -> Observable Action HISTORIES_RECEIVED
 export const getHistoriesEpic = (action$, state$, { fetchApi }) =>
   action$.pipe(
-    ofType(GET_HISTORIES),
+    ofType(GET_HISTORIES, GET_NEXT_HISTORIES),
     withLatestFrom(state$),
     filter(([ action, state ]) => state.Session.user !== null),
-    mergeMap(([ action, state ]) => fetchApi(
-      `/history/list?page=${state.History.page}`, 
-      { method: 'GET' },
-      state.Session.user.token
+    mergeMap(([ action, state ]) => Promise.all([
+      fetchApi(
+        `/history/list?page=${state.History.page}`, 
+        { method: 'GET' },
+        state.Session.user.token
+      ),
+      action.type
+    ])),
+    map(ifElse(
+      ([_, type]) => type === GET_NEXT_HISTORIES,
+      ([response, _]) => nextHistoriesReceived(response.body, Number(response.headers.get('Total-Pages'))),
+      ([response, _]) => historiesReceived(response.body, Number(response.headers.get('Total-Pages'))),
     )),
-    map(response => historiesReceived(response.body, parseInt(response.headers.get('Total-Pages')))),
     logObservableError(),
   )
 

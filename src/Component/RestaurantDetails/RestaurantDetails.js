@@ -1,6 +1,7 @@
 import React from 'react'
 import './RestaurantDetails.css'
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 
 const placeholderImages = [
   '/images/cooker.svg',
@@ -16,7 +17,7 @@ export default ({
   restaurant,
   loading,
   getRestaurant,
-  removeRestaurant,
+  clear,
   addHistory,
   isLogged,
 }) => restaurant 
@@ -89,6 +90,6 @@ export default ({
       </button>
     </div>
 
-    <Link className="back-button" to="/" onClick={removeRestaurant}>Changer ma recherche</Link>
+    <Link className="back-button" to="/" onClick={clear}>Changer ma recherche</Link>
   </section>
-  : <button className="button is-loading loader"></button>
+  : <Loader />

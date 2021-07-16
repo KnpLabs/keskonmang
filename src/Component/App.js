@@ -5,7 +5,6 @@ import {
   Switch,
   Route,
 } from 'react-router-dom'
-import Firewall from './Firewall'
 import Histories from './Histories'
 import Logo from './Logo'
 import Menu from './Menu'
@@ -22,9 +21,7 @@ export default ({
       <div className="container main-container">
         <Logo/>
         <Toast/>
-        <Firewall>
-          <Menu/>
-        </Firewall>
+        <Menu/>
 
         <Switch>
           <Route exact path="/restaurant/:id">

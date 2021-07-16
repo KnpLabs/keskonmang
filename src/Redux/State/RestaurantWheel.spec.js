@@ -57,6 +57,7 @@ describe('Redux :: State :: RestaurantWheel', () => {
     ).toEqual({
       ...INITIAL_STATE,
       noRestaurants: true,
+      loading: false,
     })
   })
 })

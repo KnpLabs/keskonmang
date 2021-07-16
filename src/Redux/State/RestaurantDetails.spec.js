@@ -1,7 +1,7 @@
 import {
   INITIAL_STATE,
   default as reducer,
-  removeRestaurant,
+  clear,
   restaurantDetailsReceived,
 } from './RestaurantDetails'
 
@@ -27,12 +27,12 @@ describe('Redux :: State :: RestaurantWheel', () => {
     })
   })
 
-  it('reduces removeRestaurant action', () => {
+  it('reduces clear action', () => {
     const state = {
       ...INITIAL_STATE,
       restaurant: {title: 'Restaurant'},
     }
 
-    expect(reducer(state, removeRestaurant())).toEqual(INITIAL_STATE)
+    expect(reducer(state, clear())).toEqual(INITIAL_STATE)
   })
 })

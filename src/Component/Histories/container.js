@@ -1,7 +1,7 @@
 import Histories from './Histories'
 import { connect } from 'react-redux'
 import { componentDidMount } from 'react-functional-lifecycle'
-import { getHistories } from './../../Redux/State/History'
+import { getHistories, getNextHistories } from './../../Redux/State/History'
 import { compose } from 'ramda'
 
 // mapStateToProps :: State -> Props
@@ -15,6 +15,7 @@ const mapStateToProps = state => ({
 // mapDispatchToProps :: (Action * -> State) -> Props
 const mapDispatchToProps = dispatch => ({
   getHistories: compose(dispatch, getHistories),
+  getNextHistories: compose(dispatch, getNextHistories),
 })
 
 const didMount = ({ getHistories }) => getHistories()

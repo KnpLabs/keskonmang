@@ -3,14 +3,20 @@ import { always } from 'ramda'
 
 // initial state
 export const INITIAL_STATE = {
-  loading: true,
+  loading: null,
   restaurant: null,
 }
 
 // action types
 export const GET_RESTAURANT_DETAILS = '@knp-keskonmang/RestaurantWheel/GET_RESTAURANT_DETAILS'
 export const RESTAURANT_DETAILS_RECEIVED = '@knp-keskonmang/RestaurantWheel/RESTAURANT_DETAILS_RECEIVED'
-export const REMOVE_RESTAURANT = '@knp-keskonmang/RestaurantWheel/REMOVE_RESTAURANT'
+export const CLEAR = '@knp-keskonmang/RestaurantWheel/CLEAR'
+
+// getRestaurantDetails :: String -> Action
+export const getRestaurantDetails = restaurantId => ({
+  type: GET_RESTAURANT_DETAILS,
+  restaurantId,
+})
 
 // restaurantDetailsReceived :: RestaurantDetails -> Action
 export const restaurantDetailsReceived = restaurant => ({
@@ -18,8 +24,8 @@ export const restaurantDetailsReceived = restaurant => ({
   restaurant,
 })
 
-// removeRestaurant :: () -> Action
-export const removeRestaurant = always({ type: REMOVE_RESTAURANT })
+// clear :: () -> Action
+export const clear = always({ type: CLEAR })
 
 // Session :: (State, Action *) -> State
 export default createReducer(INITIAL_STATE, {
@@ -34,5 +40,5 @@ export default createReducer(INITIAL_STATE, {
     restaurant,
   }),
 
-  [REMOVE_RESTAURANT]: state => INITIAL_STATE,
+  [CLEAR]: state => INITIAL_STATE,
 })

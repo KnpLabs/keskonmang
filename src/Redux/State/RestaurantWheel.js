@@ -3,7 +3,7 @@ import { always } from 'ramda'
 
 // initial stare
 export const INITIAL_STATE = {
-  loading: false,
+  loading: null,
   address: '',
   fetchError: false,
   noRestaurants: false,

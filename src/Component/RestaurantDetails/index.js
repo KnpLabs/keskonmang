@@ -1,6 +1,6 @@
 import RestaurantDetails from './RestaurantDetails'
 import { connect } from 'react-redux'
-import { removeRestaurant } from './../../Redux/State/RestaurantDetails'
+import { clear } from './../../Redux/State/RestaurantDetails'
 import { getRestaurant } from './../../Redux/State/RestaurantWheel'
 import { addHistory } from './../../Redux/State/History'
 import { compose } from 'ramda'
@@ -17,10 +17,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getRestaurant: compose(dispatch, getRestaurant),
   addHistory: compose(dispatch, addHistory),
-  removeRestaurant: compose(dispatch, removeRestaurant),
+  clear: compose(dispatch, clear),
 })
 
-const willUnmount = ({ removeRestaurant }) => removeRestaurant()
+const willUnmount = ({ clear }) => clear()
 
 const lifecycles = componentWillUnmount(willUnmount)(RestaurantDetails)
 
