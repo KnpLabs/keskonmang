@@ -3,7 +3,7 @@ import './Histories.css'
 import { map } from 'ramda'
 import { getExternalRestaurantUrl } from '../../Util'
 
-// RestaurantDetails :: Props -> React.Component
+// Histories :: Props -> React.Component
 export default ({
   histories,
   page,

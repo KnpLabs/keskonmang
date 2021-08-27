@@ -1,7 +1,7 @@
 import React from 'react'
 import './RestaurantDetails.css'
-import { Link } from 'react-router-dom';
-import Loader from '../Loader/Loader';
+import { Link } from 'react-router-dom'
+import Loader from '../Loader/Loader'
 
 const placeholderImages = [
   '/images/cooker.svg',
