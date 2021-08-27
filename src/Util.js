@@ -11,6 +11,8 @@ import {
 import { merge, catchError } from 'rxjs/operators'
 import { of } from 'rxjs'
 
+export const getExternalRestaurantUrl = restaurantId => `https://www.yelp.ca/biz/${restaurantId}`
+
 /**
  * Redux utils
  */

@@ -1,5 +1,7 @@
 import React from 'react'
 import './RestaurantDetails.css'
+import { Link } from 'react-router-dom'
+import Loader from '../Loader/Loader'
 
 const placeholderImages = [
   '/images/cooker.svg',
@@ -15,12 +17,11 @@ export default ({
   restaurant,
   loading,
   getRestaurant,
-  backToSearch,
-  restaurantShown,
+  clear,
   addHistory,
   isLogged,
-}) => restaurantShown &&
-  <section data-is="restaurant-details">
+}) => restaurant 
+  ? <section data-is="restaurant-details">
     <figure className="restaurant-image">
       {restaurant.url &&
         <a
@@ -89,5 +90,6 @@ export default ({
       </button>
     </div>
 
-    <button className="back-button" onClick={backToSearch}>Changer ma recherche</button>
+    <Link className="back-button" to="/" onClick={clear}>Changer ma recherche</Link>
   </section>
+  : <Loader />

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router-dom"
 import './Logo.css'
 
 // FullWidthLogo :: Props -> React.Component
@@ -19,14 +20,15 @@ const HorizontalLogo = ({ className = '' }) =>
 
 // Logo :: Props -> React.Component
 export default ({
-  backToSearch,
   restaurantShown,
 }) =>
-  <figure data-is="brand-logo" onClick={backToSearch}>
-    <HorizontalLogo className="is-hidden-desktop"/>
+  <figure data-is="brand-logo">
+    <Link to="/">
+      <HorizontalLogo className="is-hidden-desktop"/>
 
-    {restaurantShown
-      ? <HorizontalLogo className="is-hidden-touch"/>
-      : <FullWidthLogo/>
-    }
+      {restaurantShown
+        ? <HorizontalLogo className="is-hidden-touch"/>
+        : <FullWidthLogo/>
+      }
+    </Link>
   </figure>

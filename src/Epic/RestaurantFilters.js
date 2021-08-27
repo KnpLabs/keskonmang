@@ -23,7 +23,7 @@ export const getCuisineTypeFiltersEpic = (action$, state$, { fetchApi }) =>
       '/restaurants/filters/cuisine-types',
       { method: 'GET' },
     )),
-    map(cuisineTypeFiltersReceived),
+    map(response => cuisineTypeFiltersReceived(response.body)),
     logObservableError(),
   )
 
@@ -35,7 +35,7 @@ export const getDietFiltersEpic = (action$, state$, { fetchApi }) =>
       '/restaurants/filters/diets',
       { method: 'GET' },
     )),
-    map(dietFiltersReceived),
+    map(response => dietFiltersReceived(response.body)),
     logObservableError(),
   )
 
@@ -47,7 +47,7 @@ export const getPriceFiltersEpic = (action$, state$, { fetchApi }) =>
       '/restaurants/filters/prices',
       { method: 'GET' },
     )),
-    map(priceFiltersReceived),
+    map(response => priceFiltersReceived(response.body)),
     logObservableError(),
   )
 

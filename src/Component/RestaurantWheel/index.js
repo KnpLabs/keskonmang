@@ -11,8 +11,8 @@ const mapStateToProps = state => ({
   address: state.RestaurantWheel.address,
   fetchError: state.RestaurantWheel.fetchError,
   loading: state.RestaurantWheel.loading,
-  restaurantShown: state.RestaurantWheel.restaurantShown,
   noRestaurants: state.RestaurantWheel.noRestaurants,
+  restaurant: state.RestaurantDetails.restaurant,
 })
 
 // mapDispatchToProps :: (Action * -> State) -> Props
