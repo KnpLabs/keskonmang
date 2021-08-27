@@ -5,6 +5,7 @@ import {
   Switch,
   Route,
 } from 'react-router-dom'
+import { propOr } from 'ramda'
 import Histories from './Histories'
 import Logo from './Logo'
 import Menu from './Menu'
@@ -24,9 +25,16 @@ export default ({
         <Menu/>
 
         <Switch>
-          <Route exact path="/restaurant/:id">
-            <RestaurantDetails/>
-          </Route>
+          <Route exact path="/restaurant/:id" render={({match}) => (
+            <RestaurantDetails 
+              restaurantId={match.params.id}
+              isAlreadyLoaded={propOr(
+                null,
+                'id',
+                store.getState().RestaurantDetails.restaurant
+              ) === match.params.id}
+            />
+          )} />
           <Route path="/history">
             <Histories />
           </Route>

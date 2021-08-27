@@ -20,6 +20,7 @@ export default ({
   clear,
   addHistory,
   isLogged,
+  searchAddress,
 }) => restaurant 
   ? <section data-is="restaurant-details">
     <figure className="restaurant-image">
@@ -77,19 +78,24 @@ export default ({
           J'y vais!
         </button>
       }
-      <button
-        className={`next-restaurant button ${loading ? 'is-loading' : ''}`}
-        onClick={getRestaurant}
-      >
-        <img
-          className={`${loading ? 'is-hidden': ''}`}
-          src="/images/retry.svg"
-          alt="Retry icon"
-        />
-        Chercher à nouveau
-      </button>
+      {searchAddress &&
+        <button
+          className={`next-restaurant button ${loading ? 'is-loading' : ''}`}
+          onClick={getRestaurant}
+        >
+          <img
+            className={`${loading ? 'is-hidden': ''}`}
+            src="/images/retry.svg"
+            alt="Retry icon"
+          />
+          Chercher à nouveau
+        </button>
+      }
     </div>
 
-    <Link className="back-button" to="/" onClick={clear}>Changer ma recherche</Link>
+    <Link className="back-button" to="/" onClick={clear}>{ searchAddress
+      ? 'Changer ma recherche'
+      : 'Rechercher un autre restaurant'
+    }</Link>
   </section>
   : <Loader />
