@@ -2,17 +2,22 @@ import { ActionsObservable } from 'redux-observable'
 import * as epic from './RestaurantDetails'
 import * as reducer from './../Redux/State/RestaurantDetails'
 import { restaurantReceived } from './../Redux/State/RestaurantWheel'
-import { createFetchApiMock } from './../TestUtil'
+import { createStateObservable, createFetchApiMock } from './../TestUtil'
+
+const createMockRestaurant = id => ({
+  id,
+  name: 'Restaurant name'
+})
 
 describe('Epic :: RestaurantDetails :: getRestaurantEpic', () => {
   it('dispatches GET_RESTAURANT_DETAILS action', done => {
-    const action$ = ActionsObservable.of(restaurantReceived('b2trgkc2drvWDHDpakDLjQ'))
+    const action$ = ActionsObservable.of(restaurantReceived('restaurant-id'))
 
     epic.getRestaurantEpic(action$, null, null)
       .toPromise(Promise)
       .then(action => {
         expect(action.type).toEqual(reducer.GET_RESTAURANT_DETAILS)
-        expect(action.restaurantId).toEqual('b2trgkc2drvWDHDpakDLjQ')
+        expect(action.restaurantId).toEqual('restaurant-id')
         done()
       })
       .catch(error => {fail(error); done()})
@@ -20,23 +25,68 @@ describe('Epic :: RestaurantDetails :: getRestaurantEpic', () => {
 })
 
 describe('Epic :: RestaurantDetails :: getRestaurantDetailsEpic', () => {
-  it('dispatches RESTAURANT_DETAILS_RECEIVED action', done => {
-    const action$ = ActionsObservable.of(reducer.getRestaurantDetails('b2trgkc2drvWDHDpakDLjQ'))
-    const restaurantMock = {
-      id: 1,
-      name: 'The Shelter'
-    }
+  it('dispatches RESTAURANT_DETAILS_RECEIVED action when no previous fetched restaurant', done => {
+    const action$ = ActionsObservable.of(reducer.getRestaurantDetails('restaurant-id'))
+    const state$ = createStateObservable({
+      RestaurantDetails: {
+        restaurant: null,
+      }
+    })
     const fetchApiUrl = []
     const deps = {
-      fetchApi: createFetchApiMock(restaurantMock, fetchApiUrl)
+      fetchApi: createFetchApiMock(createMockRestaurant('restaurant-id'), fetchApiUrl)
     }
 
-    epic.getRestaurantDetailsEpic(action$, null, deps)
+    epic.getRestaurantDetailsEpic(action$, state$, deps)
       .toPromise(Promise)
       .then(action => {
         expect(action.type).toEqual(reducer.RESTAURANT_DETAILS_RECEIVED)
-        expect(action.restaurant).toEqual(restaurantMock)
-        expect(fetchApiUrl[0]).toBe('/restaurants/b2trgkc2drvWDHDpakDLjQ')
+        expect(action.restaurant).toEqual(createMockRestaurant('restaurant-id'))
+        expect(fetchApiUrl[0]).toBe('/restaurants/restaurant-id')
+        done()
+      })
+      .catch(error => {fail(error); done()})
+  }, 1000)
+
+  it('dispatches RESTAURANT_DETAILS_RECEIVED action when different restaurant fetched', done => {
+    const action$ = ActionsObservable.of(reducer.getRestaurantDetails('restaurant-id'))
+    const state$ = createStateObservable({
+      RestaurantDetails: {
+        restaurant: createMockRestaurant('anotherId'),
+      }
+    })
+    const fetchApiUrl = []
+    const deps = {
+      fetchApi: createFetchApiMock(createMockRestaurant('restaurant-id'), fetchApiUrl)
+    }
+
+    epic.getRestaurantDetailsEpic(action$, state$, deps)
+      .toPromise(Promise)
+      .then(action => {
+        expect(action.type).toEqual(reducer.RESTAURANT_DETAILS_RECEIVED)
+        expect(action.restaurant).toEqual(createMockRestaurant('restaurant-id'))
+        expect(fetchApiUrl[0]).toBe('/restaurants/restaurant-id')
+        done()
+      })
+      .catch(error => {fail(error); done()})
+  }, 1000)
+
+  it('dispatches RESTAURANT_DETAILS_RECEIVED action when already fetched restaurant', done => {
+    const action$ = ActionsObservable.of(reducer.getRestaurantDetails('restaurant-id'))
+    const state$ = createStateObservable({
+      RestaurantDetails: {
+        restaurant: createMockRestaurant('restaurant-id'),
+      }
+    })
+    const deps = {
+      fetchApi: () => ({}),
+    }
+
+    epic.getRestaurantDetailsEpic(action$, state$, deps)
+      .toPromise(Promise)
+      .then(action => {
+        expect(action.type).toEqual(reducer.RESTAURANT_DETAILS_RECEIVED)
+        expect(action.restaurant).toEqual(createMockRestaurant('restaurant-id'))
         done()
       })
       .catch(error => {fail(error); done()})

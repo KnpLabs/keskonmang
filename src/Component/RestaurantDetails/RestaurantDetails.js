@@ -21,7 +21,7 @@ export default ({
   addHistory,
   isLogged,
   searchAddress,
-}) => restaurant 
+}) => restaurant
   ? <section data-is="restaurant-details">
     <figure className="restaurant-image">
       {restaurant.url &&
@@ -81,7 +81,7 @@ export default ({
       {searchAddress &&
         <button
           className={`next-restaurant button ${loading ? 'is-loading' : ''}`}
-          onClick={getRestaurant}
+          onClick={ getRestaurant }
         >
           <img
             className={`${loading ? 'is-hidden': ''}`}
