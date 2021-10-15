@@ -25,7 +25,7 @@ export default ({
 
         <Switch>
           <Route exact path="/restaurant/:id">
-            <RestaurantDetails/>
+            <RestaurantDetails />
           </Route>
           <Route path="/history">
             <Histories />

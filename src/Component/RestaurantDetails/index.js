@@ -1,31 +1,9 @@
-import RestaurantDetails from './RestaurantDetails'
-import { connect } from 'react-redux'
-import { clear } from './../../Redux/State/RestaurantDetails'
-import { getRestaurant } from './../../Redux/State/RestaurantWheel'
-import { addHistory } from './../../Redux/State/History'
-import { compose } from 'ramda'
-import { componentWillUnmount } from 'react-functional-lifecycle'
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import Container from './container'
 
-// mapStateToProps :: State -> Props
-const mapStateToProps = state => ({
-  restaurant: state.RestaurantDetails.restaurant,
-  loading: state.RestaurantDetails.loading,
-  isLogged: state.Session.user !== null
-})
+export default () => {
+  let { id } = useParams();
 
-// mapDispatchToProps :: (Action * -> State) -> Props
-const mapDispatchToProps = dispatch => ({
-  getRestaurant: compose(dispatch, getRestaurant),
-  addHistory: compose(dispatch, addHistory),
-  clear: compose(dispatch, clear),
-})
-
-const willUnmount = ({ clear }) => clear()
-
-const lifecycles = componentWillUnmount(willUnmount)(RestaurantDetails)
-
-// RestaurantDetails :: Props -> React.Component
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(lifecycles)
+  return (<Container currentRestaurantId={id} />);
+}

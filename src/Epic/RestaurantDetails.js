@@ -3,7 +3,9 @@ import { logObservableError } from './../Util'
 import {
   map,
   mergeMap,
+  withLatestFrom
 } from 'rxjs/operators'
+import { ifElse, prop } from 'ramda'
 import { RESTAURANT_RECEIVED } from './../Redux/State/RestaurantWheel'
 import {
   GET_RESTAURANT_DETAILS,
@@ -23,8 +25,13 @@ export const getRestaurantEpic = (action$, state$) =>
 export const getRestaurantDetailsEpic = (action$, state$, { fetchApi }) =>
   action$.pipe(
     ofType(GET_RESTAURANT_DETAILS),
-    mergeMap(({ restaurantId }) => fetchApi(`/restaurants/${restaurantId}`)),
-    map(response => restaurantDetailsReceived(response.body)),
+    withLatestFrom(state$),
+    mergeMap(([{ restaurantId }, state]) => ifElse(
+      stateRestaurant => !stateRestaurant || restaurantId !== stateRestaurant.id,
+      () => fetchApi(`/restaurants/${restaurantId}`).then(prop('body')),
+      stateRestaurant => Promise.resolve(stateRestaurant),
+    )(state.RestaurantDetails.restaurant)),
+    map(restaurantDetailsReceived),
     logObservableError(),
   )
 
