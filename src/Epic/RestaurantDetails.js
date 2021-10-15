@@ -5,7 +5,7 @@ import {
   mergeMap,
   withLatestFrom
 } from 'rxjs/operators'
-import { ifElse } from 'ramda'
+import { ifElse, prop } from 'ramda'
 import { RESTAURANT_RECEIVED } from './../Redux/State/RestaurantWheel'
 import {
   GET_RESTAURANT_DETAILS,
@@ -28,10 +28,10 @@ export const getRestaurantDetailsEpic = (action$, state$, { fetchApi }) =>
     withLatestFrom(state$),
     mergeMap(([{ restaurantId }, state]) => ifElse(
       stateRestaurant => !stateRestaurant || restaurantId !== stateRestaurant.id,
-      () => fetchApi(`/restaurants/${restaurantId}`),
-      stateRestaurant => Promise.resolve({body: stateRestaurant}),
+      () => fetchApi(`/restaurants/${restaurantId}`).then(prop('body')),
+      stateRestaurant => Promise.resolve(stateRestaurant),
     )(state.RestaurantDetails.restaurant)),
-    map(result => restaurantDetailsReceived(result.body)),
+    map(restaurantDetailsReceived),
     logObservableError(),
   )
 
