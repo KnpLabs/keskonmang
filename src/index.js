@@ -10,7 +10,8 @@ import { createFetchApi } from './FetchApi'
 const epicMiddleware = createEpicMiddleware({
   dependencies: {
     fetchApi: createFetchApi(fetch),
-    getGoogleApi: () => window.gapi
+    getGoogleApi: () => window.gapi,
+    location: window.location,
   },
 })
 
