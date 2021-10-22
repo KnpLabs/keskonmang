@@ -1,6 +1,7 @@
 import { ActionsObservable } from 'redux-observable'
 import * as epic from './RestaurantWheel'
 import * as reducer from './../Redux/State/RestaurantWheel'
+import { restaurantReceived } from './../Redux/State/RestaurantWheel'
 import { createStateObservable, createFetchApiMock } from './../TestUtil'
 import { includes } from 'ramda'
 
@@ -68,6 +69,29 @@ describe('Epic :: RestaurantWheel :: getRestaurantEpic', () => {
       .toPromise(Promise)
       .then(action => {
         expect(action.type).toEqual(reducer.NO_RESTAURANTS)
+        done()
+      })
+      .catch(error => {fail(error); done()})
+  }, 1000)
+})
+
+describe('Epic :: RestaurantWheel :: getRestaurantEpic', () => {
+  it('dispatches GET_RESTAURANT_DETAILS action', done => {
+    const action$ = ActionsObservable.of(restaurantReceived('restaurant-id'))
+    let newLocation = null
+    const deps = {
+      location: {
+        replace: location => {
+          newLocation = location
+        }
+      }
+    }
+
+    epic.redirectToRestaurantDetailsEpic(action$, null, deps)
+      .toPromise(Promise)
+      .then(action => {
+        expect(action).toEqual(undefined)
+        expect(newLocation).toEqual('/restaurant/restaurant-id')
         done()
       })
       .catch(error => {fail(error); done()})
