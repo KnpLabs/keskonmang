@@ -12,7 +12,7 @@ import {
   logObservableError,
 } from './../Util'
 import {
-  SIGN_IN_BUTTON_MOUNTED,
+  SIGN_IN,
   SIGN_IN_SUCCESS,
   SIGN_OUT,
   signInFailure,
@@ -29,21 +29,10 @@ import {
 // signInEpic :: Epic -> Observable Action SIGN_IN_SUCCESS SIGN_IN_FAILURE
 export const signInEpic = (action$, state$, { getGoogleApi }) =>
   action$.pipe(
-    ofType(SIGN_IN_BUTTON_MOUNTED),
+    ofType(SIGN_IN),
     map(() => getGoogleApi()),
     filter(complement(isNil)),
-    mergeMap(gapi => new Promise((resolve, reject) => gapi.signin2.render(
-      'gapi-signin',
-      {
-        'scope': 'profile email',
-        'width': 135,
-        'height': 35,
-        'longtitle': false,
-        'theme': 'light',
-        'onsuccess': resolve,
-        'onfailure': reject,
-      }
-    ))),
+    mergeMap(gapi => new Promise((resolve, reject) => null)),
     map(signInSuccess),
     logObservableErrorAndTriggerAction(signInFailure),
   )
@@ -93,6 +82,6 @@ export const getBasicProfileEpic = action$ =>
 
 export default combineEpics(
   getBasicProfileEpic,
-  signInEpic,
+  //signInEpic,
   signOutEpic,
 )
