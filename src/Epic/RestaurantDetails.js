@@ -13,14 +13,6 @@ import {
   getRestaurantDetails
 } from './../Redux/State/RestaurantDetails'
 
-// getRestaurantEpic :: Epic -> Observable Action GET_RESTAURANT_DETAILS
-export const getRestaurantEpic = (action$, state$) =>
-  action$.pipe(
-    ofType(RESTAURANT_RECEIVED),
-    map(restaurant => getRestaurantDetails(restaurant.id)),
-    logObservableError(),
-  )
-
 // getRestaurantDetailsEpic :: Epic -> Observable Action RESTAURANT_DETAILS_RECEIVED
 export const getRestaurantDetailsEpic = (action$, state$, { fetchApi }) =>
   action$.pipe(
@@ -36,6 +28,5 @@ export const getRestaurantDetailsEpic = (action$, state$, { fetchApi }) =>
   )
 
 export default combineEpics(
-  getRestaurantEpic,
   getRestaurantDetailsEpic,
 )

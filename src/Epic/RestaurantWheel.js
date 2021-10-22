@@ -1,6 +1,7 @@
 import { ofType, combineEpics } from 'redux-observable'
 import {
   getRandomElementFromArray,
+  logObservableError,
   logObservableErrorAndTriggerAction,
 } from './../Util'
 import {
@@ -12,12 +13,14 @@ import {
   pipe,
 } from 'ramda'
 import {
+  ignoreElements,
   map,
   mergeMap,
   withLatestFrom,
 } from 'rxjs/operators'
 import {
   GET_RESTAURANT,
+  RESTAURANT_RECEIVED,
   fetchError,
   noRestaurants,
   restaurantReceived,
@@ -53,6 +56,16 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
     logObservableErrorAndTriggerAction(fetchError),
   )
 
+// redirectToRestaurantDetailsEpic :: Epic -> Observable Action _
+export const redirectToRestaurantDetailsEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(RESTAURANT_RECEIVED),
+    map(restaurant => window.location.replace('/restaurant/'+ restaurant.id)),
+    ignoreElements(),
+    logObservableError(),
+  )
+
 export default combineEpics(
   getRestaurantEpic,
+  redirectToRestaurantDetailsEpic,
 )
