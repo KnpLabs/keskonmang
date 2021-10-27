@@ -8,9 +8,9 @@ export const INITIAL_STATE = {
 }
 
 // action types
-export const GET_RESTAURANT_DETAILS = '@knp-keskonmang/RestaurantWheel/GET_RESTAURANT_DETAILS'
-export const RESTAURANT_DETAILS_RECEIVED = '@knp-keskonmang/RestaurantWheel/RESTAURANT_DETAILS_RECEIVED'
-export const CLEAR = '@knp-keskonmang/RestaurantWheel/CLEAR'
+export const GET_RESTAURANT_DETAILS = '@knp-keskonmang/RestaurantDetails/GET_RESTAURANT_DETAILS'
+export const RESTAURANT_DETAILS_RECEIVED = '@knp-keskonmang/RestaurantDetails/RESTAURANT_DETAILS_RECEIVED'
+export const CLEAR = '@knp-keskonmang/RestaurantDetails/CLEAR'
 
 // getRestaurantDetails :: String -> Action
 export const getRestaurantDetails = restaurantId => ({

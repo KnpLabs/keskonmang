@@ -5,7 +5,7 @@ import {
   restaurantDetailsReceived,
 } from './RestaurantDetails'
 
-describe('Redux :: State :: RestaurantWheel', () => {
+describe('Redux :: State :: RestaurantDetails', () => {
   it('reduces to initial state by default', () => {
     expect(reducer()).toEqual(INITIAL_STATE)
   })
