@@ -80,9 +80,11 @@ describe('Epic :: RestaurantWheel :: getRestaurantEpic', () => {
     const action$ = ActionsObservable.of(restaurantReceived('restaurant-id'))
     let newLocation = null
     const deps = {
-      location: {
-        replace: location => {
-          newLocation = location
+      window: {
+        location: {
+          replace: location => {
+            newLocation = location
+          }
         }
       }
     }

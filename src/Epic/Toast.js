@@ -16,11 +16,11 @@ import {
 } from '../Redux/State/Toast'
 
 // autoRemoveToastEpic :: Epic -> Action REMOVE_TOAST
-export const autoRemoveToastEpic = (action$, state$, { logger }) =>
+export const autoRemoveToastEpic = (action$, state$, { logger, window }) =>
   action$.pipe(
     ofType(ADD_TOAST),
     delayWhen(({ toast }) => timer(Number(toast.duration))),
-    filter(({ toast }) => !isNil(document.querySelector(`.toasts #toast-${toast.id}`))),
+    filter(({ toast }) => !isNil(window.document.querySelector(`.toasts #toast-${toast.id}`))),
     filter(({ toast }) => !equals('danger')(toast.level)),
     map(({ toast }) => removeToast(toast.id)),
     logObservableError('Toast :: autoRemoveToastEpic', logger),

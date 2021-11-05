@@ -10,14 +10,6 @@ export const INITIAL_STATE = {
 export const PROFILE_RECEIVED = '@knp-keskonmang/Session/PROFILE_RECEIVED'
 export const REMOVE_PROFILE = '@knp-keskonmang/Session/REMOVE_PROFILE'
 
-// @type Profile = {
-//   name :: String,
-//   giveName :: String,
-//   familyName :: String,
-//   imageUrl :: String,
-//   email :: String,
-// }
-//
 // profileReceived :: Profile -> Action
 export const profileReceived = profile => ({
   type: PROFILE_RECEIVED,

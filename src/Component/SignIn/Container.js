@@ -1,9 +1,8 @@
-import SignIn from './Container'
-import React from 'react'
+import SignIn from './SignIn'
 import { connect } from 'react-redux'
 import { componentDidMount } from 'react-functional-lifecycle'
 import { compose } from 'ramda'
-import { initialize } from './../../Redux/State/SignIn'
+import { signInButtonMounted } from './../../Redux/State/SignIn'
 
 // mapStateToProps :: State -> Props
 const mapStateToProps = state => ({
@@ -12,16 +11,14 @@ const mapStateToProps = state => ({
 
 // mapDispatchToProps :: (Action * -> State) -> Props
 const mapDispatchToProps = dispatch => ({
-  initialize: compose(dispatch, initialize),
+  signInButtonMounted: compose(dispatch, signInButtonMounted),
 })
 
-const didMount = ({ initialize }) => initialize()
-
-const View = ({ isInitialized }) => isInitialized  ? <SignIn /> : null
+const didMount = ({ signInButtonMounted }) => signInButtonMounted()
 
 const lifecycles = compose(
   componentDidMount(didMount)
-)(View)
+)(SignIn)
 
 // SignIn :: Props -> React.Component
 export default connect(
