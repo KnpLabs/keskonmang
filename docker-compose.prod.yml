@@ -9,6 +9,7 @@ services:
       target: nginx
       args:
         ENV_FILE: .env.prod.dist
+    restart: on-failure
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nginx.rule=Host(`keskonmang.knpnet.net`)"
@@ -34,6 +35,7 @@ services:
       - "--certificatesresolvers.keskonmang.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.keskonmang.acme.email=joris.langlois@knplabs.com"
       - "--certificatesresolvers.keskonmang.acme.storage=/letsencrypt/acme.json"
+    restart: on-failure
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:[a-z-.]+}`)"
