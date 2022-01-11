@@ -16,9 +16,7 @@ const mapDispatchToProps = dispatch => ({
 
 const didMount = ({ signInButtonMounted }) => signInButtonMounted()
 
-const lifecycles = compose(
-  componentDidMount(didMount)
-)(SignIn)
+const lifecycles = componentDidMount(didMount)(SignIn)
 
 // SignIn :: Props -> React.Component
 export default connect(

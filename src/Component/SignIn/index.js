@@ -19,9 +19,7 @@ const didMount = ({ initialize }) => initialize()
 
 const View = ({ isInitialized }) => isInitialized  ? <SignIn /> : null
 
-const lifecycles = compose(
-  componentDidMount(didMount)
-)(View)
+const lifecycles = componentDidMount(didMount)(View)
 
 // SignIn :: Props -> React.Component
 export default connect(
