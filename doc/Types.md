@@ -5,4 +5,13 @@
   level :: String,
   message :: String,
 }
+
+@type Profile = {
+  token :: String,
+  name :: String,
+  giveName :: String,
+  familyName :: String,
+  imageUrl :: String,
+  email :: String,
+}
 ```

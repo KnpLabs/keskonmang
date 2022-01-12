@@ -57,10 +57,10 @@ export const getRestaurantEpic = (action$, state$, { fetchApi }) =>
   )
 
 // redirectToRestaurantDetailsEpic :: Epic -> Observable Action _
-export const redirectToRestaurantDetailsEpic = (action$, state$, { location }) =>
+export const redirectToRestaurantDetailsEpic = (action$, state$, { window }) =>
   action$.pipe(
     ofType(RESTAURANT_RECEIVED),
-    map(restaurant => location.replace(`/restaurant/${restaurant.id}`)),
+    map(restaurant => window.location.replace(`/restaurant/${restaurant.id}`)),
     ignoreElements(),
     logObservableError(),
   )

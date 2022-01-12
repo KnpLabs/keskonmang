@@ -1,98 +1,110 @@
+import { Subject } from 'rxjs'
 import { ofType, combineEpics } from 'redux-observable'
-import { mergeMap, map, filter } from 'rxjs/operators'
-import {
-  apply,
-  complement,
-  isNil,
-  pipe,
-  prop,
-} from 'ramda'
+import { 
+  mergeMap,
+  map,
+  take,
+  tap,
+  ignoreElements,
+ } from 'rxjs/operators'
 import {
   logObservableErrorAndTriggerAction,
   logObservableError,
 } from './../Util'
 import {
+  INITIALIZE,
   SIGN_IN_BUTTON_MOUNTED,
   SIGN_IN_SUCCESS,
   SIGN_OUT,
+  initialized,
   signInFailure,
   signInSuccess,
   signOutFailure,
   signOutSuccess,
 } from './../Redux/State/SignIn'
-import {
-  profileReceived
-} from './../Redux/State/Session'
+import { profileReceived } from './../Redux/State/Session'
+import jwt_decode from 'jwt-decode'
 
-// @see https://developers.google.com/identity/sign-in/web/build-button
-//
-// signInEpic :: Epic -> Observable Action SIGN_IN_SUCCESS SIGN_IN_FAILURE
-export const signInEpic = (action$, state$, { getGoogleApi }) =>
+const signIn$ = new Subject('SignIn')
+
+// formatProfile :: (Object, String) -> Profile
+const formatProfile = (user, token) => ({
+  token,
+  name: user.name,
+  giveName: user.given_name,
+  familyName: user.family_name,
+  imageUrl: user.picture,
+  email: user.email,
+})
+
+// loadScriptEpic :: Epic -> Observable Action INITIALIZED
+export const loadScriptEpic = (action$, state$, { window }) =>
+  action$.pipe(
+    ofType(INITIALIZE),
+    take(1),
+    mergeMap(() => new Promise(resolve => {
+      const script = window.document.createElement('script')
+      script.async = true
+      script.defer = true
+      script.src = 'https://accounts.google.com/gsi/client'
+      script.onload = () => resolve()
+
+      window.document.querySelector('body').appendChild(script)
+    })),
+    tap(() => window.google.accounts.id.initialize({
+      client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+      callback: credentialResponse => signIn$.next(credentialResponse.credential),
+    })),
+    map(initialized),
+    logObservableError(),
+  )
+
+// renderSignInButtonEpic :: Epic -> Observable Action _
+export const renderSignInButtonEpic = (action$, state$, { window }) =>
   action$.pipe(
     ofType(SIGN_IN_BUTTON_MOUNTED),
-    map(() => getGoogleApi()),
-    filter(complement(isNil)),
-    mergeMap(gapi => new Promise((resolve, reject) => gapi.signin2.render(
-      'gapi-signin',
+    tap(() => window.google.accounts.id.renderButton(
+      window.document.getElementById('sign-in-button'),
       {
-        'scope': 'profile email',
-        'width': 135,
-        'height': 35,
-        'longtitle': false,
-        'theme': 'light',
-        'onsuccess': resolve,
-        'onfailure': reject,
-      }
-    ))),
+        type: 'standard',
+        size: 'medium',
+        text: 'signin_with',
+        shape: 'circle',
+      },
+    )),
+    ignoreElements(),
+  )
+
+// signInEpic :: Epic -> Observable Action SIGN_IN_SUCCESS SIGN_IN_FAILURE
+export const signInEpic = (action$, state$) =>
+  signIn$.pipe(
     map(signInSuccess),
     logObservableErrorAndTriggerAction(signInFailure),
   )
 
 // signOutEpic :: Epic -> Observable Action SIGN_OUT_SUCCESS SIGN_OUT_FAILURE
-export const signOutEpic = (action$, state$, { getGoogleApi }) =>
+export const signOutEpic = (action$, state$, { window }) =>
   action$.pipe(
     ofType(SIGN_OUT),
-    map(() => getGoogleApi()),
-    filter(complement(isNil)),
-    mergeMap(pipe(
-      gapi => gapi.auth2.getAuthInstance(),
-      auth2 => auth2.signOut(),
-    )),
+    tap(() => window.google.accounts.id.disableAutoSelect()),
     map(signOutSuccess),
     logObservableErrorAndTriggerAction(signOutFailure)
   )
 
-// formatProfile :: (GoogleBasicProfile, GoogleAuthResponse) -> User
-const formatProfile = (gprofile, gresponse) => ({
-  token: gresponse.id_token,
-  name: gprofile.getName(),
-  giveName: gprofile.getGivenName(),
-  familyName: gprofile.getFamilyName(),
-  imageUrl: gprofile.getImageUrl(),
-  email: gprofile.getEmail(),
-})
-
-// https://developers.google.com/identity/sign-in/web/people
-// https://developers.google.com/identity/sign-in/web/backend-auth
-//
-// getBasicProfileEpic :: Epic -> Observable Action
-export const getBasicProfileEpic = action$ =>
+// getProfileEpic :: Epic -> Observable Action
+export const getProfileEpic = (action$, state$) =>
   action$.pipe(
     ofType(SIGN_IN_SUCCESS),
-    map(pipe(
-      prop('user'),
-      user => [
-        user.getBasicProfile(),
-        user.getAuthResponse()
-      ],
-      apply(formatProfile),
-      profileReceived,
+    map(({ token }) => profileReceived(
+      formatProfile(jwt_decode(token), token)
     )),
     logObservableError(),
   )
 
 export default combineEpics(
-  getBasicProfileEpic,
+  loadScriptEpic,
+  getProfileEpic,
+  renderSignInButtonEpic,
   signInEpic,
   signOutEpic,
 )

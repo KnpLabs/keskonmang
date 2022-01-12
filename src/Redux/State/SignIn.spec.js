@@ -39,9 +39,9 @@ describe('Redux :: State :: SignIn', () => {
   it('reduces signOutSuccess action', () => {
     const s1 = {
       ...INITIAL_STATE,
-      user: {
-        name: 'knpeer',
-      }
+      isSignedIn: true,
+      signInError: true,
+      signOutError: true,
     }
 
     expect(
