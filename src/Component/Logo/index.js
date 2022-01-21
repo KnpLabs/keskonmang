@@ -1,14 +1,9 @@
-import { connect } from 'react-redux'
-import Logo from './Logo'
-import { isNil } from 'ramda'
+import React from 'react'
+import { useLocation } from 'react-router-dom'
+import Logo from './container'
 
-// mapStateToProps :: State -> Props
-const mapStateToProps = state => ({
-  restaurantShown: !isNil(state.RestaurantDetails.restaurant),
-})
+export default () => {
+  let { pathname } = useLocation();
 
-// Logo :: Props -> React.Component
-export default connect(
-  mapStateToProps,
-  null,
-)(Logo)
+  return (<Logo currentPath={ pathname } />);
+}

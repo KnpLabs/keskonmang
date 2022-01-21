@@ -1,10 +1,12 @@
 import {
   INITIAL_STATE,
+  clear,
   default as reducer,
   getHistories,
   getNextHistories,
   nextHistoriesReceived,
   historiesReceived,
+  historyRestaurantReceived,
 } from './History'
 
 describe('Redux :: State :: History', () => {
@@ -75,5 +77,37 @@ describe('Redux :: State :: History', () => {
       totalPages: 4,
       loading: false,
     })
+  })
+
+  it('reduces historyRestaurantReceived action', () => {
+    const state = {
+      ...INITIAL_STATE,
+      histories: [{
+        id: 1,
+      }],
+    }
+
+    expect(
+      reducer(state, historyRestaurantReceived(1, { name:'restaurant' }))
+    ).toEqual({
+      ...INITIAL_STATE,
+      histories: [{
+        id: 1,
+        restaurant: { name: 'restaurant' },
+      }],
+    })
+  })
+
+  it('reduces clear action', () => {
+    const state = {
+      ...INITIAL_STATE,
+      histories: [{
+        id: 1,
+      }],
+    }
+
+    expect(
+      reducer(state, clear())
+    ).toEqual(INITIAL_STATE)
   })
 })

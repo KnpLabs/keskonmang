@@ -60,3 +60,48 @@ describe('Epic :: History :: getHistoriesEpic', () => {
       .catch(error => {fail(error); done()})
   }, 1000)
 })
+
+describe('Epic :: History :: getHistoryRestaurantEpic', () => {
+  it('dispatches HISTORIES_RECEIVED action', done => {
+    const action$ = ActionsObservable.of(reducer.getHistoryRestaurant(1, 2))
+    const state$ = createStateObservable({
+      History: {
+        histories: [],
+      }
+    })
+
+    const fetchApiUrl = []
+    const restaurantMock = { name: 'restaurant' }
+    const deps = {
+      fetchApi: createFetchApiMock(restaurantMock, fetchApiUrl)
+    }
+
+    epic.getHistoryRestaurantEpic(action$, state$, deps)
+      .toPromise(Promise)
+      .then(action => {
+        expect(action.type).toEqual(reducer.HISTORY_RESTAURANT_RECEIVED)
+        expect(action.restaurant).toEqual(restaurantMock)
+        expect(action.historyId).toEqual(1)
+        expect(fetchApiUrl[0]).toBe('/restaurants/2')
+        done()
+      })
+      .catch(error => {fail(error); done()})
+  }, 1000)
+
+  it('does not nothing if the restaurant is already fetched for an history', done => {
+    const action$ = ActionsObservable.of(reducer.getHistoryRestaurant(1, 2))
+    const state$ = createStateObservable({
+      History: {
+        histories: [{ id: 1, restaurant: {} }],
+      }
+    })
+
+    epic.getHistoryRestaurantEpic(action$, state$, {})
+      .toPromise(Promise)
+      .then(action => {
+        expect(action).toEqual(undefined)
+        done()
+      })
+      .catch(error => {fail(error); done()})
+  }, 1000)
+})

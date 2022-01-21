@@ -1,6 +1,6 @@
 import { ifElse, isNil } from 'ramda'
 import { combineEpics, ofType } from 'redux-observable'
-import { logObservableError } from './../Util'
+import { findPropertyById, logObservableError } from './../Util'
 import { addToast } from './../Redux/State/Toast'
 import {
   filter,
@@ -11,8 +11,10 @@ import {
 import {
   ADD_HISTORY,
   GET_HISTORIES,
+  GET_HISTORY_RESTAURANT,
   GET_NEXT_HISTORIES,
   historiesReceived,
+  historyRestaurantReceived,
   nextHistoriesReceived,
 } from './../Redux/State/History'
 
@@ -60,7 +62,24 @@ export const getHistoriesEpic = (action$, state$, { fetchApi }) =>
     logObservableError(),
   )
 
+// getHistoryRestaurantEpic :: Epic -> Observable Action HISTORY_RESTAURANT_RECEIVED
+export const getHistoryRestaurantEpic = (action$, state$, { fetchApi }) =>
+  action$.pipe(
+    ofType(GET_HISTORY_RESTAURANT),
+    withLatestFrom(state$),
+    filter(([ { historyId, _ }, state ]) =>
+      isNil(findPropertyById('restaurant', historyId, state.History.histories))
+    ),
+    mergeMap(([{ historyId, restaurantId }]) => Promise.all([
+      fetchApi(`/restaurants/${restaurantId}`),
+      historyId
+    ])),
+    map(([response, historyId]) => historyRestaurantReceived(historyId, response.body)),
+    logObservableError(),
+  )
+
 export default combineEpics(
   addHistoryEpic,
   getHistoriesEpic,
+  getHistoryRestaurantEpic,
 )

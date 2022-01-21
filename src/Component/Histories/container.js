@@ -1,12 +1,18 @@
 import Histories from './Histories'
 import { connect } from 'react-redux'
-import { componentDidMount } from 'react-functional-lifecycle'
-import { getHistories, getNextHistories } from './../../Redux/State/History'
-import { compose } from 'ramda'
+import { componentDidMount, componentWillUnmount } from 'react-functional-lifecycle'
+import { clear, getHistories, getNextHistories } from './../../Redux/State/History'
+import { compose, groupBy } from 'ramda'
+
+// pageName :: String
+const pageName = 'history-page'
+
+// formatByDate :: Array -> Object
+const formatByDate = groupBy(history => new Date(history.createdAt).toLocaleDateString())
 
 // mapStateToProps :: State -> Props
 const mapStateToProps = state => ({
-  histories: state.History.histories,
+  histories: formatByDate(state.History.histories),
   page: state.History.page,
   totalPages: state.History.totalPages,
   loading: state.History.loading,
@@ -16,11 +22,15 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getHistories: compose(dispatch, getHistories),
   getNextHistories: compose(dispatch, getNextHistories),
+  clear: compose(dispatch, clear),
 })
 
-const didMount = ({ getHistories }) => getHistories()
-
-const lifecycles = componentDidMount(didMount)(Histories)
+const lifecycles = compose(
+  componentDidMount(() => window.document.querySelector('body').classList.add(pageName)),
+  componentDidMount(({ getHistories }) => getHistories()),
+  componentWillUnmount(() => window.document.querySelector('body').classList.remove(pageName)),
+  componentWillUnmount(({ clear }) => clear()),
+)(Histories)
 
 // Histories :: Props -> React.Component
 export default connect(

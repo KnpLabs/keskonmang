@@ -1,5 +1,5 @@
 import { createReducer } from './../../Util'
-import { always } from 'ramda'
+import { always, find, findIndex, propEq, update } from 'ramda'
 
 // initial state
 export const INITIAL_STATE = {
@@ -15,6 +15,9 @@ export const GET_HISTORIES = '@knp-keskonmang/History/GET_HISTORIES'
 export const GET_NEXT_HISTORIES = '@knp-keskonmang/History/GET_NEXT_HISTORIES'
 export const HISTORIES_RECEIVED = '@knp-keskonmang/History/HISTORIES_RECEIVED'
 export const NEXT_HISTORIES_RECEIVED = '@knp-keskonmang/History/NEXT_HISTORIES_RECEIVED'
+export const GET_HISTORY_RESTAURANT = '@knp-keskonmang/History/GET_HISTORY_RESTAURANT'
+export const HISTORY_RESTAURANT_RECEIVED = '@knp-keskonmang/History/HISTORY_RESTAURANT_RECEIVED'
+export const CLEAR = '@knp-keskonmang/History/CLEAR'
 
 // addHistory :: () -> Action
 export const addHistory = always({ type: ADD_HISTORY })
@@ -22,7 +25,7 @@ export const addHistory = always({ type: ADD_HISTORY })
 // getHistories :: Number -> Action
 export const getHistories = always({ type: GET_HISTORIES })
 
-// addHistory :: () -> Action
+// getNextHistories :: () -> Action
 export const getNextHistories = always({ type: GET_NEXT_HISTORIES })
 
 // historiesReceived :: (Array, Number) -> Action
@@ -38,6 +41,23 @@ export const nextHistoriesReceived = (nextHistories, totalPages) => ({
     nextHistories,
     totalPages,
 })
+
+// getHistoryRestaurant :: (Number, Number) -> Action
+export const getHistoryRestaurant = (historyId, restaurantId) => ({
+  type: GET_HISTORY_RESTAURANT,
+  historyId,
+  restaurantId,
+})
+
+// historyRestaurantReceived :: (Number, Object) -> Action
+export const historyRestaurantReceived = (historyId, restaurant) => ({
+  type: HISTORY_RESTAURANT_RECEIVED,
+  historyId,
+  restaurant,
+})
+
+// clear :: () -> Action
+export const clear = always({ type: CLEAR })
 
 // Session :: (State, Action *) -> State
 export default createReducer(INITIAL_STATE, {
@@ -68,4 +88,18 @@ export default createReducer(INITIAL_STATE, {
     ],
     totalPages,
   }),
+
+  [HISTORY_RESTAURANT_RECEIVED]: (state, { historyId, restaurant }) => ({
+    ...state,
+    histories: update(
+      findIndex(propEq('id', historyId), state.histories), 
+      {
+        ...find(propEq('id', historyId), state.histories),
+        restaurant,
+      },
+      state.histories,
+    ),
+  }),
+
+  [CLEAR]: state => INITIAL_STATE,
 })

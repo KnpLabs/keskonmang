@@ -3,11 +3,11 @@ import { Link } from "react-router-dom"
 import './Logo.css'
 
 // FullWidthLogo :: Props -> React.Component
-const FullWidthLogo = () =>
+const FullWidthLogo = ({ className = '' }) =>
   <img
     src="/images/logo-keskonmang.svg"
     alt="logo"
-    className="full is-hidden-touch"
+    className={ `full ${className}` }
   />
 
 // HorizontalLogo :: Props -> React.Component
@@ -21,14 +21,21 @@ const HorizontalLogo = ({ className = '' }) =>
 // Logo :: Props -> React.Component
 export default ({
   restaurantShown,
+  historiesShown,
 }) =>
   <figure data-is="brand-logo">
     <Link to="/">
-      <HorizontalLogo className="is-hidden-desktop"/>
+      {restaurantShown || historiesShown
+        ? <HorizontalLogo />
+        : null
+      }
 
-      {restaurantShown
-        ? <HorizontalLogo className="is-hidden-touch"/>
-        : <FullWidthLogo/>
+      {!historiesShown && !restaurantShown 
+        ? <>
+          <FullWidthLogo className="is-hidden-touch"/>
+          <HorizontalLogo className="is-hidden-desktop"/>
+        </>
+        : null
       }
     </Link>
   </figure>
