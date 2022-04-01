@@ -2,7 +2,10 @@ import React from 'react'
 import Restaurant from './Restaurant'
 import './Histories.css'
 import Loader from '../Loader/Loader'
-import { isEmpty, map, mapObjIndexed, values } from 'ramda'
+import { groupBy, isEmpty, map, mapObjIndexed, values } from 'ramda'
+
+// formatByDate :: Array -> Object
+const formatByDate = groupBy(history => new Date(history.createdAt).toLocaleDateString())
 
 // Histories :: Props -> React.Component
 export default ({
@@ -25,7 +28,7 @@ export default ({
           <Restaurant key={ `history-${history.id}` } history={ history } />
         )(historiesByDate) }
       </div>,
-    )(histories)) }
+    )(formatByDate(histories))) }
 
     { page < totalPages &&
       <button className={`button show-more ${ loading ? 'is-loading' : '' }`} onClick={ getNextHistories }>

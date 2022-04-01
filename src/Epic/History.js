@@ -4,12 +4,14 @@ import { findPropertyById, logObservableError } from './../Util'
 import { addToast } from './../Redux/State/Toast'
 import {
   filter,
+  ignoreElements,
   map,
   mergeMap,
   withLatestFrom,
 } from 'rxjs/operators'
 import {
   ADD_HISTORY,
+  CLEAR,
   GET_HISTORIES,
   GET_HISTORY_RESTAURANT,
   GET_NEXT_HISTORIES,
@@ -17,6 +19,9 @@ import {
   historyRestaurantReceived,
   nextHistoriesReceived,
 } from './../Redux/State/History'
+
+// pageName :: String
+const pageName = 'history-page'
 
 // addHistoryEpic :: Epic -> Observable Action ADD_TOAST
 export const addHistoryEpic = (action$, state$, { fetchApi }) =>
@@ -67,7 +72,7 @@ export const getHistoryRestaurantEpic = (action$, state$, { fetchApi }) =>
   action$.pipe(
     ofType(GET_HISTORY_RESTAURANT),
     withLatestFrom(state$),
-    filter(([ { historyId, _ }, state ]) =>
+    filter(([ { historyId }, state ]) =>
       isNil(findPropertyById('restaurant', historyId, state.History.histories))
     ),
     mergeMap(([{ historyId, restaurantId }]) => Promise.all([
@@ -78,8 +83,30 @@ export const getHistoryRestaurantEpic = (action$, state$, { fetchApi }) =>
     logObservableError(),
   )
 
+// applyHistoryPageBodyClass :: Epic -> Observable _
+export const applyHistoryPageBodyClass =  (action$, state$, { window }) =>
+  action$.pipe(
+    ofType(GET_HISTORIES),
+    filter(() => !window.document.querySelector('body').classList.contains(pageName)),
+    map(() => window.document.querySelector('body').classList.add(pageName)),
+    ignoreElements(),
+    logObservableError(),
+  )
+
+// removeHistoryPageBodyClass :: Epic -> Observable _
+export const removeHistoryPageBodyClass =  (action$, state$, { window }) =>
+  action$.pipe(
+    ofType(CLEAR),
+    filter(() => window.document.querySelector('body').classList.contains(pageName)),
+    map(() => window.document.querySelector('body').classList.remove(pageName)),
+    ignoreElements(),
+    logObservableError(),
+  )
+
 export default combineEpics(
   addHistoryEpic,
+  applyHistoryPageBodyClass,
   getHistoriesEpic,
   getHistoryRestaurantEpic,
+  removeHistoryPageBodyClass,
 )

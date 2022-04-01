@@ -1,5 +1,5 @@
 import { createReducer } from './../../Util'
-import { always, find, findIndex, propEq, update } from 'ramda'
+import { always, find, findIndex, gte, propEq, update, when } from 'ramda'
 
 // initial state
 export const INITIAL_STATE = {
@@ -91,14 +91,16 @@ export default createReducer(INITIAL_STATE, {
 
   [HISTORY_RESTAURANT_RECEIVED]: (state, { historyId, restaurant }) => ({
     ...state,
-    histories: update(
-      findIndex(propEq('id', historyId), state.histories), 
-      {
-        ...find(propEq('id', historyId), state.histories),
-        restaurant,
-      },
-      state.histories,
-    ),
+    histories: when(
+      () => gte(findIndex(propEq('id', historyId), state.histories), 0),
+      update(
+        findIndex(propEq('id', historyId), state.histories), 
+        {
+          ...find(propEq('id', historyId), state.histories),
+          restaurant,
+        },
+      ),
+    )(state.histories),
   }),
 
   [CLEAR]: state => INITIAL_STATE,
