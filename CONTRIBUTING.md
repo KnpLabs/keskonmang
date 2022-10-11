@@ -42,13 +42,12 @@ To suggest Keskonmang enhancements please open a [GitHub issue](https://github.c
 
 A pull request, is the best way to provide a bug fix or to propose enhancements to Keskonmang.
 
-When submitting a pull request please be sure to follow the same rules described above in [Reporting a bug](#reporting-a-bug) and [Suggesting enhancements](suggesting-enhancements)
+When submitting a pull request please be sure to follow the same rules described above in [Reporting a bug](#reporting-a-bug) and [Suggesting enhancements](#suggesting-enhancements)
 sections depending on the nature of your change.
 
 > Before starting to work on a large change please open an issue to ask the maintainers if they are fine with it (no one likes to work for nothing!).
 
-1. Fork the repository
-2. Once the repository has been forked clone it locally
+1. Clone the repository locally
 ```
 git clone git@github.com:USERNAME/keskonmang.git
 ```
