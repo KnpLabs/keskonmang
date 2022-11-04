@@ -1,7 +1,7 @@
 import Histories from './Histories'
 import { connect } from 'react-redux'
-import { componentDidMount } from 'react-functional-lifecycle'
-import { getHistories, getNextHistories } from './../../Redux/State/History'
+import { componentDidMount, componentWillUnmount } from 'react-functional-lifecycle'
+import { clear, getHistories, getNextHistories } from './../../Redux/State/History'
 import { compose } from 'ramda'
 
 // mapStateToProps :: State -> Props
@@ -16,11 +16,13 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getHistories: compose(dispatch, getHistories),
   getNextHistories: compose(dispatch, getNextHistories),
+  clear: compose(dispatch, clear),
 })
 
-const didMount = ({ getHistories }) => getHistories()
-
-const lifecycles = componentDidMount(didMount)(Histories)
+const lifecycles = compose(
+  componentDidMount(({ getHistories }) => getHistories()),
+  componentWillUnmount(({ clear }) => clear()),
+)(Histories)
 
 // Histories :: Props -> React.Component
 export default connect(

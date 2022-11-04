@@ -1,20 +1,27 @@
 import { ifElse, isNil } from 'ramda'
 import { combineEpics, ofType } from 'redux-observable'
-import { logObservableError } from './../Util'
+import { findPropertyById, logObservableError } from './../Util'
 import { addToast } from './../Redux/State/Toast'
 import {
   filter,
+  ignoreElements,
   map,
   mergeMap,
   withLatestFrom,
 } from 'rxjs/operators'
 import {
   ADD_HISTORY,
+  CLEAR,
   GET_HISTORIES,
+  GET_HISTORY_RESTAURANT,
   GET_NEXT_HISTORIES,
   historiesReceived,
+  historyRestaurantReceived,
   nextHistoriesReceived,
 } from './../Redux/State/History'
+
+// pageName :: String
+const pageName = 'history-page'
 
 // addHistoryEpic :: Epic -> Observable Action ADD_TOAST
 export const addHistoryEpic = (action$, state$, { fetchApi }) =>
@@ -60,7 +67,46 @@ export const getHistoriesEpic = (action$, state$, { fetchApi }) =>
     logObservableError(),
   )
 
+// getHistoryRestaurantEpic :: Epic -> Observable Action HISTORY_RESTAURANT_RECEIVED
+export const getHistoryRestaurantEpic = (action$, state$, { fetchApi }) =>
+  action$.pipe(
+    ofType(GET_HISTORY_RESTAURANT),
+    withLatestFrom(state$),
+    filter(([ { historyId }, state ]) =>
+      isNil(findPropertyById('restaurant', historyId, state.History.histories))
+    ),
+    mergeMap(([{ historyId, restaurantId }]) => Promise.all([
+      fetchApi(`/restaurants/${restaurantId}`),
+      historyId
+    ])),
+    map(([response, historyId]) => historyRestaurantReceived(historyId, response.body)),
+    logObservableError(),
+  )
+
+// applyHistoryPageBodyClass :: Epic -> Observable _
+export const applyHistoryPageBodyClass =  (action$, state$, { window }) =>
+  action$.pipe(
+    ofType(GET_HISTORIES),
+    filter(() => !window.document.querySelector('body').classList.contains(pageName)),
+    map(() => window.document.querySelector('body').classList.add(pageName)),
+    ignoreElements(),
+    logObservableError(),
+  )
+
+// removeHistoryPageBodyClass :: Epic -> Observable _
+export const removeHistoryPageBodyClass =  (action$, state$, { window }) =>
+  action$.pipe(
+    ofType(CLEAR),
+    filter(() => window.document.querySelector('body').classList.contains(pageName)),
+    map(() => window.document.querySelector('body').classList.remove(pageName)),
+    ignoreElements(),
+    logObservableError(),
+  )
+
 export default combineEpics(
   addHistoryEpic,
+  applyHistoryPageBodyClass,
   getHistoriesEpic,
+  getHistoryRestaurantEpic,
+  removeHistoryPageBodyClass,
 )

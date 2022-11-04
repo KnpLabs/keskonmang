@@ -1,7 +1,11 @@
 import React from 'react'
+import Restaurant from './Restaurant'
 import './Histories.css'
-import { map } from 'ramda'
-import { getExternalRestaurantUrl } from '../../Util'
+import Loader from '../Loader/Loader'
+import { groupBy, isEmpty, map, mapObjIndexed, values } from 'ramda'
+
+// formatByDate :: Array -> Object
+const formatByDate = groupBy(history => new Date(history.createdAt).toLocaleDateString())
 
 // Histories :: Props -> React.Component
 export default ({
@@ -11,30 +15,23 @@ export default ({
   getHistories,
   getNextHistories,
   loading,
-}) => <section data-is="histories">
+}) => loading && isEmpty(histories)
+  ? <Loader/>
+  : <section data-is="histories">
     <h1 className="title">Historique</h1>
 
-    <div className="history-list">
-      {map(history => 
-        <div key={ history.id } className="history columns">
-          <div className="date is-6 column">
-            {new Date(history.createdAt).toLocaleDateString()}
-            <span className="time">{new Date(history.createdAt).toLocaleTimeString()}</span>
-          </div>
-          <div className="name is-6 column">
-            <a
-              href={getExternalRestaurantUrl(history.restaurantId)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="website"
-            >{history.restaurantName}</a>
-          </div>
-        </div>,
-      )(histories)}
-    </div>
+    { values(mapObjIndexed((historiesByDate, index) =>
+      <div key={ index } className="history-day">
+        <h4>{ new Date(historiesByDate[0].createdAt).toLocaleDateString() }</h4>
+
+        { map(history =>
+          <Restaurant key={ `history-${history.id}` } history={ history } />
+        )(historiesByDate) }
+      </div>,
+    )(formatByDate(histories))) }
 
     { page < totalPages &&
-      <button className={`button show-more ${ loading ? 'is-loading' : '' }`} onClick={  getNextHistories }>
+      <button className={`button show-more ${ loading ? 'is-loading' : '' }`} onClick={ getNextHistories }>
         Afficher plus!
       </button>
     }

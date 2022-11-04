@@ -1,10 +1,12 @@
 import {
   always,
+  find,
   identity,
   length,
   multiply,
   pipe,
   prop,
+  propEq,
   propOr,
   tap,
 } from 'ramda'
@@ -60,3 +62,10 @@ export const getRandomElementFromArray = array => pipe(
   Math.floor,
   key => array[key],
 )(array)
+
+// findPropertyById :: (String, Number, Array) -> Any
+export const findPropertyById = (propName, id, array) => propOr(
+  null,
+  propName,
+  find(propEq('id', id), array)
+)

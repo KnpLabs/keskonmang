@@ -6,11 +6,9 @@ import {
   withLatestFrom
 } from 'rxjs/operators'
 import { ifElse, prop } from 'ramda'
-import { RESTAURANT_RECEIVED } from './../Redux/State/RestaurantWheel'
 import {
   GET_RESTAURANT_DETAILS,
   restaurantDetailsReceived,
-  getRestaurantDetails
 } from './../Redux/State/RestaurantDetails'
 
 // getRestaurantDetailsEpic :: Epic -> Observable Action RESTAURANT_DETAILS_RECEIVED
