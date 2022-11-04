@@ -27,15 +27,10 @@ export default ({
     <Link to="/">
       {restaurantShown || historiesShown
         ? <HorizontalLogo />
-        : null
-      }
-
-      {!historiesShown && !restaurantShown 
-        ? <>
+        : <>
           <FullWidthLogo className="is-hidden-touch"/>
           <HorizontalLogo className="is-hidden-desktop"/>
         </>
-        : null
       }
     </Link>
   </figure>
